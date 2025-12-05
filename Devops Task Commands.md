@@ -1,4 +1,4 @@
-Task 1 - Task 36 : Kodekloud Cheatsheat SysAdmin Task Commands.txt
+Task 1 - Task 36 : SysAdmin Task Commands.txt
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 37 : 14/Feb/2022
 Create Replicaset in Kubernetes Cluster
