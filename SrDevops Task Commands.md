@@ -1,5 +1,4 @@
-Task 01 - Task 36 : Kodekloud Cheatsheat SysAdmin Task Commands.txt
-Task 37 - Task 87 : Kodekloud Cheatsheat DevOps Task Commands.txt
+
 --------------------------------------------------------------------------------------------------------------------------------
 Task 88: 11/Oct/2022
 
