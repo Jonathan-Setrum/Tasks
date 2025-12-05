@@ -1859,6 +1859,7 @@ Note: The kubectl utility on jump_host has been configured to work with the kube
 		      targetPort: 80
 		      nodePort: 30009
 
+```
 11.Create Backend Master deployment
 
 kubectl apply -f Back-end-Deploy-Redis-Master-Guest-Book-App.yaml
@@ -1888,7 +1889,6 @@ kubectl apply -f Front-end-Deploy-Redis-php-Guest-Book-App.yaml
 
 kubectl apply -f Front-end-service-Redis-php-Guest-Book-App.yaml
 	service/frontend created
-
 
 17.kubectl get deploy
 	NAME           READY   UP-TO-DATE   AVAILABLE   AGE
@@ -1928,7 +1928,7 @@ kubectl apply -f Front-end-service-Redis-php-Guest-Book-App.yaml
 	  0   921    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
 
 21. View Port <Advanced setting> : 30009
-    
+```    
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 52 : 15/Apr/2022
 Puppet Setup Database
@@ -1947,7 +1947,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 1. Login to root user on jump host and go to mention manifest directory
 	root@jump_host ~# cd /etc/puppetlabs/code/environments/production/manifests/
 	root@jump_host /etc/puppetlabs/code/environments/production/manifests# 
@@ -2063,7 +2063,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 		MariaDB [kodekloud_db1]> exit
 		Bye
 	[root@stdb01 ~]# 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 53 : 21/Apr/2022
 Puppet Create Symlinks
@@ -2081,6 +2081,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
+```
 thor@jump_host ~$ sudo su -
 
 We trust you have received the usual lecture from the local System
@@ -2091,9 +2092,6 @@ Administrator. It usually boils down to these three things:
     #3) With great power comes great responsibility.
 
 [sudo] password for thor: 
-root@jump_host ~# 
-root@jump_host ~# 
-root@jump_host ~# 
 root@jump_host ~# cd /etc/puppetlabs/code/environments/production/manifests
 root@jump_host /etc/puppetlabs/code/environments/production/manifests# 
 root@jump_host /etc/puppetlabs/code/environments/production/manifests# ls -ahl
@@ -2184,6 +2182,8 @@ total 0
 -rw-r--r-- 1 root root 0 Apr 21 07:33 blog.txt
 [root@stapp03 ~]# 
 [root@stapp03 ~]# 
+```
+
 --------------------------------------------------------------------------------------------------------------------------------
 Task 54: 24/Apr/2022
 Install Docker Package
@@ -2193,6 +2193,7 @@ Last week the Nautilus DevOps team met with the application development team and
 
     Start docker service.
 
+```
 1. Login to App Server 3 and switch to root
  ssh banner@stapp03
 
@@ -2331,6 +2332,7 @@ Last week the Nautilus DevOps team met with the application development team and
 
 # docker-compose --version
 	docker-compose version 1.28.6, build 5db8d86f
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 55 : 1/May/2022
@@ -2346,7 +2348,7 @@ There is an application that needs to be deployed on Kubernetes cluster under Ap
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 thor@jump_host ~$ kubectl get namespace
 NAME                 STATUS   AGE
 default              Active   61m
@@ -2425,6 +2427,7 @@ thor@jump_host ~$ kubectl get pods -n  httpd-namespace-devops
 NAME                                      READY   STATUS    RESTARTS   AGE
 httpd-deployment-devops-867b499f4-qdx2m   1/1     Running   0          47s
 httpd-deployment-devops-867b499f4-sw7qc   1/1     Running   0          47s
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 56: 3/May/2022
@@ -2433,6 +2436,7 @@ The Nautilus application development team has been working on a project reposito
 
 a. Create a new branch nautilus in /usr/src/kodekloudrepos/beta repo from master and copy the /tmp/index.html file (on storage server itself). Add/commit this file in the new branch and merge back that branch to the master branch. Finally, push the changes to origin for both of the branches.
 
+```
 thor@jump_host ~$ ssh natasha@ststor01
 The authenticity of host 'ststor01 (172.16.238.15)' can't be established.
 ECDSA key fingerprint is SHA256:AMgD8K2XIX3sOAvahEWXDs51RbPFOGSsgp8+UWIfXNc.
@@ -2520,6 +2524,7 @@ Branch master set up to track remote branch master from origin.
 [root@ststor01 beta]# git status
 # On branch master
 nothing to commit, working directory clean
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 57: 17/May/2022
@@ -2537,6 +2542,7 @@ The Nautilus DevOps team is working on to create few jobs in Kubernetes cluster.
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 thor@jump_host ~$ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   87m
@@ -2544,8 +2550,6 @@ thor@jump_host ~$
 thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get pods
 No resources found in default namespace.
-
- 
 thor@jump_host ~$ vi /tmp/countdown.yaml
 		apiVersion: batch/v1
 		kind: Job
@@ -2593,6 +2597,7 @@ thor@jump_host ~$ kubectl logs countdown-xfusion-xtgxv
 2
 1
 thor@jump_host ~$
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 58:
@@ -2611,6 +2616,7 @@ b.Make appropriate changes on jump host so that user thor on jump host can SSH i
 
 c. There is an inventory file /home/thor/ansible/inventory on jump host. Using that inventory file test Ansible ping from jump host to App Server 1, make sure ping works.
 
+```
 1. check inventory file on jump_host
 	thor@jump_host ~$ cd /home/thor/ansible/
 	thor@jump_host ~/ansible$ ls -ahl
@@ -2673,6 +2679,7 @@ c. There is an inventory file /home/thor/ansible/inventory on jump host. Using t
 		    "changed": false, 
 		    "ping": "pong"
 		}
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 60: 20/May/2022
 Docker Ports Mapping
@@ -2685,7 +2692,7 @@ b. Create a container named blog using the image you pulled.
 
 c. Map host port 5002 to container port 80. Please keep the container in running state.
 
-
+```
 thor@jump_host ~$ ssh tony@stapp01
 		The authenticity of host 'stapp01 (172.16.238.10)' can't be established.
 		ECDSA key fingerprint is SHA256:2U4MljMQTrcY/I3RlI2CxvvzdmhD0nAnVlhmv+swf2Q.
@@ -2705,8 +2712,6 @@ thor@jump_host ~$ ssh tony@stapp01
 
 		[sudo] password for tony: 
 		
-
-
 [root@stapp01 ~]# docker ps
 		CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
@@ -2738,8 +2743,7 @@ thor@jump_host ~$ ssh tony@stapp01
 		b894ab1eef89   nginx:alpine-perl   "/docker-entrypoint.…"   16 seconds ago   Up 12 seconds   0.0.0.0:5002->80/tcp   blog
 
 [root@stapp01 ~]# curl http://localhost:5002/
-
-[root@stapp01 ~]#
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 61: 25/May/2022
@@ -2754,6 +2758,7 @@ Some of the Nautilus team developers are developing a static website and they wa
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 thor@jump_host ~$ kubectl get namespace
 NAME                 STATUS   AGE
 default              Active   94m
@@ -2816,8 +2821,6 @@ NAME                                READY   STATUS    RESTARTS   AGE
 nginx-deployment-56cbd5d774-6v5jb   1/1     Running   0          20s
 nginx-deployment-56cbd5d774-vm8kr   1/1     Running   0          20s
 nginx-deployment-56cbd5d774-ww7jn   1/1     Running   0          20s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl exec nginx-deployment-56cbd5d774-6v5jb --curl http://localhost
 Error: unknown flag: --curl
 See 'kubectl exec --help' for usage.
@@ -2849,6 +2852,7 @@ Commercial support is available at
 </html>
 100   615  100   615    0     0   600k      0 --:--:-- --:--:-- --:--:--  600k
 thor@jump_host ~$ 
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 62: 26/May/2022
@@ -2862,14 +2866,13 @@ One of the Nautilus DevOps team members was working on to test an Ansible playbo
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
-thor@jump_host ~$ vi /home/thor/ansible/inventory 
- 
+```
 thor@jump_host ~$ cat  /home/thor/ansible/inventory 
+thor@jump_host ~$ vi /home/thor/ansible/inventory  
 stapp02 ansible_host=172.16.238.11 ansible_user=steve ansible_ssh_pass=Am3ric@
 
+thor@jump_host ~$ cat /home/thor/ansible/playbook.yml
 thor@jump_host ~$ vi /home/thor/ansible/plabook.yml
-
-thor@jump_host ~$ cat /home/thor/ansible/plabook.yml
 
 - name: Create file in appserver
   hosts: stapp02
@@ -2947,6 +2950,7 @@ total 8
 -rw-r--r-- 1 root  root     0 May 26 13:22 file.txt
 drwx------ 2 steve steve 4096 May 26 13:22 ansible_command_payload_ld0RbL
 
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 63: 13/Jun/2022
@@ -2958,26 +2962,18 @@ The deployment name is nginx-phpfpm-dp and service name is nginx-service. Figure
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 kubectl get deploy
-
 kubectl get pods
-
 kubectl get svc
-
 kubectl get configmap
-
 kubectl describe pods
-
 kubectl get pods
-
 kubectl describe service
-
 kubectl edit service
-
 kubectl edit configmap
-
 kubectl logs
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 64: 19/Jun/2022
 
@@ -2997,7 +2993,7 @@ You can use any labels as per your choice.
 
 Note: The kubectl on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. kubectl get namespace
 		NAME                 STATUS   AGE
 		default              Active   118m
@@ -3096,7 +3092,7 @@ Note: The kubectl on jump_host has been configured to work with the kubernetes c
 		    </body>
 		</html>
 		100   471  100   471    0     0   1304      0 --:--:-- --:--:-- --:--:--  1304
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 65: 23/Jun/2022
 
@@ -3110,7 +3106,7 @@ Make sure all pods are up and running after the update.
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. kubectl get deploy
 		NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 		nginx-deployment   3/3     3            3           23s
@@ -3228,7 +3224,7 @@ Note: The kubectl utility on jump_host has been configured to work with the kube
 
 11. kubectl rollout status deployment nginx-deployment
 		deployment "nginx-deployment" successfully rolled out
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 66: 27/Jun/2022
 Create Namespaces in Kubernetes Cluster
@@ -3239,6 +3235,7 @@ Create a namespace named dev and create a POD under it; name the pod dev-nginx-p
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1. kubectl get namespaces
 		NAME                 STATUS   AGE
 		default              Active   128m
@@ -3276,6 +3273,7 @@ Note: The kubectl utility on jump_host has been configured to work with the kube
 7. kubectl get pods -n dev
 		NAME            READY   STATUS              RESTARTS   AGE
 		dev-nginx-pod   0/1     ContainerCreating   0          9s
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 67: 4/Jul/2022
@@ -3301,7 +3299,7 @@ f. All users under admins group must be added as sudo users. To do so, simply ma
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory add_users.yml so please make sure playbook works this way, without passing any extra arguments.
 
-
+```
 Last login: Mon Jul  4 11:36:22 UTC 2022 on pts/0
 1.cd playbooks/
   ls -ahl
@@ -3488,14 +3486,13 @@ Last login: Mon Jul  4 11:36:22 UTC 2022 on pts/0
 
 			[sudo] password for ray: 
 			ray is not in the sudoers file.  This incident will be reported.
-		[ray@stapp02 ~]$ 
-		[ray@stapp02 ~]$ 
-		[ray@stapp02 ~]$ 
 		[ray@stapp02 ~]$ exit
 		logout
 		Connection to stapp02 closed.
+
 thor@jump_host ~/playbooks$
 
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 68: 9/Jul/2022
 
@@ -3512,6 +3509,7 @@ Limits: Memory: 20Mi, CPU: 100m
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 thor@jump_host ~$ kubectl get namespace
 NAME                 STATUS   AGE
 default              Active   4h4m
@@ -3609,7 +3607,7 @@ Events:
   Normal  Created    43s   kubelet            Created container httpd-container
   Normal  Started    42s   kubelet            Started container httpd-container
 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 69: 14/Jul/2022
 
@@ -3624,6 +3622,7 @@ b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/s
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
+```
 thor@jump_host ~$ cd /home/thor/ansible/
 thor@jump_host ~/ansible$ ls -ahl
 total 8.0K
@@ -3702,6 +3701,7 @@ drwxr-xr-x 2 root root 4.0K Jul 14 02:52 .
 drwxr-xr-x 1 root root 4.0K Jul 14 02:48 ..
 -rw-r--r-- 1 root root   35 Jul 14 02:52 index.html
 thor@jump_host ~/ansible$
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 70: 17/Jul/2022
@@ -3715,6 +3715,8 @@ Create a playbook.yml under /home/thor/ansible on jump host, an inventory file i
     Create an archive official.tar.gz (make sure archive format is tar.gz) of /usr/src/itadmin/ directory ( present on each app server ) and copy it to /opt/itadmin/ directory on all app servers. The user and group owner of archive official.tar.gz should be tony for App Server 1, steve for App Server 2 and banner for App Server 3.
 
 Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.
+
+```
 thor@jump_host ~$ cd /home/thor/ansible/
 thor@jump_host ~/ansible$ ls -agl
 total 16
@@ -3732,9 +3734,6 @@ thor@jump_host ~/ansible$ cat inventory
 stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n ansible_user=tony
 stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@ ansible_user=steve
 stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n ansible_user=bannerthor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
 thor@jump_host ~/ansible$ ansible all -a "ls -ahl /opt/sysops" -i inventory 
 stapp03 | FAILED | rc=2 >>
 ls: cannot access /opt/sysops: No such file or directorynon-zero return code
@@ -3756,8 +3755,6 @@ total 8.0K
 drwxr-xr-x 2 root root 4.0K Jul 17 16:14 .
 drwxr-xr-x 1 root root 4.0K Jul 17 16:14 ..
 thor@jump_host ~/ansible$ vi playbook.yml
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
 thor@jump_host ~/ansible$ cat playbook.yml 
 - name: Task create archive and copy to host
   hosts: stapp01, stapp02, stapp03
@@ -3814,6 +3811,7 @@ drwxr-xr-x 1 root  root  4.0K Jul 17 16:14 ..
 -rw-r--r-- 1 steve steve  178 Jul 17 16:19 official.tar.gz
 thor@jump_host ~/ansible$
 
+```
 --------------------------------------------------------------------------------------------------------------------------------
 
 Task 71: 21/Jul/2022
@@ -3832,7 +3830,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 thor@jump_host ~$ ssh -t steve@stapp02 "systemctl status httpd"
 The authenticity of host 'stapp02 (172.16.238.11)' can't be established.
 ECDSA key fingerprint is SHA256:cPKTsscSCR1Q3bxjworQ0ZblELpSiTS9fk6221Fg3qA.
@@ -3948,7 +3946,7 @@ Jul 21 14:43:16 stapp02.stratos.xfusioncorp.com systemd[1]: httpd.service: Got n
 Jul 21 14:43:16 stapp02.stratos.xfusioncorp.com systemd[1]: httpd.service: got READY=1
 Jul 21 14:43:16 stapp02.stratos.xfusioncorp.com systemd[1]: httpd.service: got STATUS=Total requests: 0; Current requests/sec: 0; Cu... B/sec
 Hint: Some lines were ellipsized, use -l to show in full.
-
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 72: 2/Aug/2022
@@ -3981,7 +3979,7 @@ d.) The fourth env should be named as POD_SERVICE_ACCOUNT, set valueFrom fieldre
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 thor@jump_host ~$ kubectl get namespace
 NAME                 STATUS   AGE
 default              Active   96m
@@ -4062,7 +4060,7 @@ thor@jump_host ~$ kubectl exec -it envars  -n default  -- /bin/sh
 		KUBERNETES_SERVICE_HOST=10.96.0.1
 		PWD=/
 / # 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 73: 4/Aug/2022
 
@@ -4080,6 +4078,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
+```
 thor@jump_host$ sudo su -
 
 We trust you have received the usual lecture from the local System
@@ -4158,7 +4157,7 @@ This is  Nautilus sample file, created using Puppet!
 Welcome to xFusionCorp Industries!
 Please do not modify this file manually!
 [root@stapp01 ~]#
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 74: 11/Aug/2022
 
@@ -4173,8 +4172,8 @@ b. Configure it to use bridge drivers.
 
 c. Set it to use subnet 172.168.0.0/24 and iprange 172.168.0.1/24.
 
-1.
-thor@jump_host ~$ ssh tony@stapp01
+```
+1.thor@jump_host ~$ ssh tony@stapp01
 	tony@stapp01's password: 
 	Last login: Thu Aug 11 06:00:49 2022 from jump_host.devops-docker-network-v2_app_net
  
@@ -4182,27 +4181,23 @@ thor@jump_host ~$ ssh tony@stapp01
 	[sudo] password for tony: 
 	Last login: Thu Aug 11 06:01:06 UTC 2022 on pts/0
 
-2.
-[root@stapp01 ~]# docker network ls
+2.[root@stapp01 ~]# docker network ls
 	NETWORK ID     NAME      DRIVER    SCOPE
 	820c238da3c4   bridge    bridge    local
 	283b6c449fa5   host      host      local
 	373edcfd5a8e   none      null      local
 
-3. 
-[root@stapp01 ~]# docker network create -d bridge --subnet=172.168.0.0/24 --ip-range=172.168.0.1/24 ecommerce
+3. [root@stapp01 ~]# docker network create -d bridge --subnet=172.168.0.0/24 --ip-range=172.168.0.1/24 ecommerce
 	f167ca63f027883998a63bf2d8f633522a7e7b400f09785afa9da0ccef2948d6
 
-4.
-[root@stapp01 ~]# docker network ls
+4.[root@stapp01 ~]# docker network ls
 	NETWORK ID     NAME        DRIVER    SCOPE
 	820c238da3c4   bridge      bridge    local
 	f167ca63f027   ecommerce   bridge    local
 	283b6c449fa5   host        host      local
 	373edcfd5a8e   none        null      local
 
-5.
-[root@stapp01 ~]# docker network inspect ecommerce
+5.[root@stapp01 ~]# docker network inspect ecommerce
 		[
 		    {
 		        "Name": "ecommerce",
@@ -4233,7 +4228,7 @@ thor@jump_host ~$ ssh tony@stapp01
 		        "Labels": {}
 		    }
 		]
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 75: 20/Aug/2022
 
@@ -4252,7 +4247,7 @@ You can use any labels as per your choice.
 
 Note: The kubectl on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 thor@jump_host ~$ kubectl get deploy
 	No resources found in default namespace.
  
@@ -4376,7 +4371,7 @@ thor@jump_host ~$ kubectl exec -it nagios-deployment-6674945696-hhlzz -- /bin/ba
 
 
 View Port : 30008 on browser username /password 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 76: 23/Aug/2022
 
@@ -4386,7 +4381,7 @@ The Nautilus DevOps team has some conditional data present on App Server 1 in St
 
 On App Server 1 in Stratos Datacenter copy an encrypted file /tmp/nautilus.txt.gpg from docker host to ubuntu_latest container (running on same server) in /tmp/ location. Please do not try to modify this file in any way.
 
-
+```
 thor@jump_host ~$ ssh tony@stapp01
 		The authenticity of host 'stapp01 (172.16.238.10)' can't be established.
 		ECDSA key fingerprint is SHA256:mLdWSn3TjPUitnlhOHi1JPUIS6a/P9zTxc5hRMxVVnA.
@@ -4417,7 +4412,7 @@ thor@jump_host ~$ ssh tony@stapp01
 		drwxrwxrwt  2 root root 4.0K Aug 23 13:54 .
 		drwxr-xr-x 17 root root 4.0K Aug 23 13:52 ..
 		-rw-r--r--  1 root root   74 Aug 23 13:51 nautilus.txt.gpg
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 77: 1/Sep/2022
 
@@ -4438,7 +4433,7 @@ We have a web server container running the nginx image. The access and error log
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 thor@jump_host ~$ kubectl get services
 		NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 		kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   117m
@@ -4563,7 +4558,7 @@ thor@jump_host ~$ kubectl describe pods webserver
 		  Normal  Pulled     23s   kubelet            Successfully pulled image "ubuntu:latest" in 6.621630852s
 		  Normal  Created    22s   kubelet            Created container sidecar-container
 		  Normal  Started    20s   kubelet            Started container sidecar-container 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 78: 9/Sep/2022
 
@@ -4589,6 +4584,7 @@ c. GROUP and its value should be Datacenter
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1.thor@jump_host ~$ kubectl get services
 		NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 		kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   88m
@@ -4633,6 +4629,7 @@ thor@jump_host ~$ kubectl get pods
 
 5.thor@jump_host ~$ kubectl logs -f print-envars-greeting
 		Welcome to Nautilus Datacenter
+```
   
 --------------------------------------------------------------------------------------------------------------------------------
 Task 79: 18/Sep/2022
@@ -4652,6 +4649,7 @@ The Nautilus DevOps team is working to deploy some tools in Kubernetes cluster. 
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1.thor@jump_host ~$ cat /opt/news.txt 
 	5ecur3
 
@@ -4705,6 +4703,7 @@ thor@jump_host ~$ kubectl get pods
 
 6.	thor@jump_host ~$ kubectl exec secret-xfusion -- cat /opt/cluster/news.txt
 	5ecur3
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 80: 20/Sep/2022
@@ -4724,7 +4723,7 @@ Write a playbook.yml under /home/thor/ansible directory on jump host, an invento
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way without passing any extra arguments.
 
-
+```
 1. Verify the ansible inventory file
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -4853,7 +4852,7 @@ thor@jump_host ~/ansible$ ansible all -a "ls -ahl /var/www/html" -i inventory
 	lrwxrwxrwx 1 root root 14 Sep 20 14:57 /var/www/html -> /opt/security/
 
 thor@jump_host ~/ansible$
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 81: 22/Sep/2022
 
@@ -4874,7 +4873,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 1. Switch to root user to avoid reenter password
 
 thor@jump_host ~$ sudo su -
@@ -5142,9 +5141,7 @@ thor@jump_host ~$ cat /tmp/jenkins.yaml
 		    - port: 8080
 		      targetPort: 8080
 		      nodePort: 30008
-
 		---
-
 		apiVersion: apps/v1
 		kind: Deployment
 		metadata:
@@ -5204,7 +5201,7 @@ thor@jump_host ~$ kubectl exec jenkins-deployment-6b6c78f968-vw882 -n jenkins --
 
 		</body></html>                                                                                                                                                                      
 thor@jump_host ~$ 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 83: 29/Sep/2022
 
@@ -5220,9 +5217,8 @@ Notes: :- Before clicking on the Check button please make sure to verify puppet 
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 1. Generate ssh key-pair for user thor on jump_host and check public key
-
 thor@jump_host ~$ ssh-keygen
 		Generating public/private rsa key pair.
 		Enter file in which to save the key (/home/thor/.ssh/id_rsa): 
@@ -5520,7 +5516,7 @@ thor@jump_host ~$ kubectl describe configmap my-redis-config
 		----
 		2mb
 		Events:  <none>
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 85: 05/Oct/2022
 
@@ -5541,7 +5537,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
 
-
+```
 1. Switch to root , list all puppet module and if not found install ntpd module
 thor@jump_host ~$ sudo su -
 
@@ -5782,7 +5778,7 @@ root@jump_host /etc/puppetlabs/code/environments/production/manifests# ssh tony@
 		Connection to stapp01 closed.
 
 8. Repeat the tasks for App server 2 and app server 3.		
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 86: 07/Oct/2022
 
@@ -5805,6 +5801,7 @@ NOTE: You can use ansible_nodename variable from gathered facts with when condit
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments.
 
+```
 1. Check the inventory file and run ansible to verify.
 thor@jump_host ~$ cd /home/thor/ansible/
 
@@ -5927,7 +5924,7 @@ thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/devops"
 		drwxr-xr-x 2 root root 4.0K Oct  7 10:31 .
 		drwxr-xr-x 1 root root 4.0K Oct  7 10:25 ..
 		-rwxrwxrwx 1 tony tony   35 Oct  7 10:31 blog.txt
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 87: 08/Oct/2022
 
@@ -5947,7 +5944,7 @@ You can use any labels as per your choice.
 
 Note: The kubectl on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. Check kubectl utility configuration and working on jump_host
 thor@jump_host ~$ kubectl get all
 		NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -6038,6 +6035,6 @@ thor@jump_host ~$ kubectl get pods
 thor@jump_host ~$ kubectl get deploy
 		NAME              READY   UP-TO-DATE   AVAILABLE   AGE
 		node-deployment   2/2     2            2           71s
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 
