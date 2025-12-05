@@ -303,75 +303,42 @@ drwxr----- 1 thor thor 4096 Feb 24 05:10 ..
 -rw-r--r-- 1 thor thor  237 Feb 24 05:10 inventory
 drwxr-xr-x 2 thor thor 4096 Feb 24 05:10 templates
 thor@jump_host ~/playbooks$ vi httpd.yml
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ cat httpd.yml 
+thor@jump_host ~/playbooks$ cat httpd.yml
+
+---
 - name: Setup Httpd and PHP
-
   hosts: stapp01
-
   become: yes
-
   tasks:
-
     - name: Install latest version of httpd and php
-
       package:
-
         name:
-
           - httpd
-
           - php
-
         state: latest
-
     - name: Replace default DocumentRoot in httpd.conf
-
       replace:
-
         path: /etc/httpd/conf/httpd.conf
-
-        regexp: DocumentRoot \"\/var\/www\/html\"
-
-        replace: DocumentRoot "/var/www/html/myroot"
-
+        regexp: DocumentRoot \"\/var\/www\/html\"        replace: DocumentRoot "/var/www/html/myroot"
     - name: Create the new DocumentRoot directory if it does not exist
-
       file:
-
         path: /var/www/html/myroot
-
         state: directory
-
         owner: apache
-
         group: apache
-
     - name: Use Jinja2 template to generate phpinfo.php
-
       template:
-
         src: /home/thor/playbooks/templates/phpinfo.php.j2
-
         dest: /var/www/html/myroot/phpinfo.php
-
         owner: apache
-
         group: apache
-
     - name: Start and enable service httpd
-
       service:
-
         name: httpd
-
         state: started
+        enabled: yes
+      
 
-        enabled: yes 
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
 thor@jump_host ~/playbooks$ cd templates/
 thor@jump_host ~/playbooks/templates$  ll-a
 bash: ll-a: command not found
@@ -417,17 +384,11 @@ Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added 'stapp01' (ECDSA) to the list of known hosts.
 tony@stapp01's password: 
 Last login: Thu Feb 24 05:15:26 2022 from jump_host.devops-ansible-httpd-php-v2_app_net
-[tony@stapp01 ~]$ 
-[tony@stapp01 ~]$ 
+
 [tony@stapp01 ~]$ sudo su -
 [root@stapp01 ~]# Ir0nM@n
 -bash: Ir0nM@n: command not found
-[root@stapp01 ~]# 
-[root@stapp01 ~]# 
-[root@stapp01 ~]# 
-[root@stapp01 ~]# 
-[root@stapp01 ~]# 
-[root@stapp01 ~]# 
+
 [root@stapp01 ~]# rpm -qa |grep httpd
 httpd-tools-2.4.6-97.el7.centos.4.x86_64
 httpd-2.4.6-97.el7.centos.4.x86_64
@@ -509,25 +470,15 @@ Note: Validation will try to run the playbook using command ansible-playbook -i 
 
 		cat playbook.yml 
 			- name: Create file in appservers
-
 			  hosts: stapp01, stapp02, stapp03
-
 			  become: yes
-
 			  tasks:
-
 			    - name: Create the file and set properties
-
 			      file:
-
 			        path: /opt/nfsshare.txt
-
 			        owner: "{{ ansible_user }}"
-
 			        group: "{{ ansible_user }}"
-
 			        mode: "0755"
-
 			        state: touch
 
 		5. Run the playbook
@@ -748,27 +699,18 @@ maxmemory-policy:
 ----
 allkeys-lru
 Events:  <none>
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl edit deployment
 deployment.apps/redis-deployment edited
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get deploy
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 redis-deployment   1/1     1            1           9m18s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 NAME                                READY   STATUS    RESTARTS   AGE
 redis-deployment-5bb6dd57fd-l4l56   1/1     Running   0          46s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get deploy
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 redis-deployment   1/1     1            1           9m33s
@@ -792,87 +734,53 @@ Note: The kubeclt on jump_host has been configured to work with kubernetes clust
 
 thor@jump_host ~$ kubectl get pods
 No resources found in default namespace.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3h16m
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ vi /tmp/grafana.yaml
 thor@jump_host ~$ 
 thor@jump_host ~$ 
-thor@jump_host ~$ cat /tmp/grafana.yaml 
-apiVersion: v1
-
-kind: Service
-
-metadata:
-
-  name: grafana-service-nautilus
-
-spec:
-
-  type: NodePort
-
-  selector:
-
-    app: grafana
-
-  ports:
-
-    - port: 3000
-
-      targetPort: 3000
-
-      nodePort: 32000
+thor@jump_host ~$ cat /tmp/grafana.yaml
 
 ---
-
-apiVersion: apps/v1
-
-kind: Deployment
-
+apiVersion: v1
+kind: Service
 metadata:
-
-  name: grafana-deployment-nautilus
-
+  name: grafana-service-nautilus
 spec:
-
+  type: NodePort
   selector:
-
+    app: grafana
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 32000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment-nautilus
+spec:
+  selector:
     matchLabels:
-
       app: grafana
-
   template:
-
     metadata:
-
       labels:
-
         app: grafana
-
     spec:
-
       containers:
-
         - name: grafana-container-nautilus
-
           image: grafana/grafana:latest
-
           ports:
-
             - containerPort: 3000
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl create -f /tmp/grafana.yaml 
 service/grafana-service-nautilus created
 deployment.apps/grafana-deployment-nautilus created
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get services
 NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 grafana-service-nautilus   NodePort    10.96.233.148   <none>        3000:32000/TCP   15s
@@ -1019,9 +927,7 @@ ECDSA key fingerprint is MD5:bf:52:2a:cd:74:f5:9f:ad:8a:28:a4:d7:09:3e:e9:d1.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added 'ststor01,172.16.238.15' (ECDSA) to the list of known hosts.
 natasha@ststor01's password: 
-[natasha@ststor01 ~]$ 
-[natasha@ststor01 ~]$ 
-[natasha@ststor01 ~]$ 
+
 [natasha@ststor01 ~]$ sudo su -
 
 We trust you have received the usual lecture from the local System
@@ -1032,9 +938,7 @@ Administrator. It usually boils down to these three things:
     #3) With great power comes great responsibility.
 
 [sudo] password for natasha: 
-[root@ststor01 ~]# 
-[root@ststor01 ~]# 
-[root@ststor01 ~]# 
+
 [root@ststor01 ~]# cd /usr/src/kodekloudrepos/
 [root@ststor01 kodekloudrepos]# ls -ahl
 total 12K
@@ -1042,7 +946,7 @@ drwxr-xr-x 3 root root 4.0K Mar 17 18:35 .
 drwxr-xr-x 1 root root 4.0K Mar 17 18:35 ..
 drwxr-xr-x 3 root root 4.0K Mar 17 18:35 beta
 [root@ststor01 kodekloudrepos]# cd beta/
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# ls -ahl
 total 16K
 drwxr-xr-x 3 root root 4.0K Mar 17 18:35 .
@@ -1050,9 +954,7 @@ drwxr-xr-x 3 root root 4.0K Mar 17 18:35 ..
 drwxr-xr-x 8 root root 4.0K Mar 17 18:35 .git
 -rw-r--r-- 1 root root   34 Mar 17 18:35 info.txt
 [root@ststor01 beta]# git remote add dev_beta /opt/xfusioncorp_beta.git
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# cp /tmp/index.html ./
 [root@ststor01 beta]# ls -ahl
 total 20K
@@ -1061,22 +963,17 @@ drwxr-xr-x 3 root root 4.0K Mar 17 18:35 ..
 drwxr-xr-x 8 root root 4.0K Mar 17 18:38 .git
 -rw-r--r-- 1 root root  120 Mar 17 18:39 index.html
 -rw-r--r-- 1 root root   34 Mar 17 18:35 info.txt
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# git init
 Reinitialized existing Git repository in /usr/src/kodekloudrepos/beta/.git/
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# git add index.html 
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# git commit -m "Added index.html"
 [master 36e84d4] Added index.html
  1 file changed, 10 insertions(+)
  create mode 100644 index.html
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# git push -u dev_beta master
 Counting objects: 6, done.
 Delta compression using up to 36 threads.
@@ -1086,9 +983,6 @@ Total 6 (delta 0), reused 0 (delta 0)
 To /opt/xfusioncorp_beta.git
  * [new branch]      master -> master
 Branch master set up to track remote branch master from dev_beta.
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 46: 19/Mar/2022
@@ -1109,9 +1003,7 @@ ECDSA key fingerprint is MD5:98:c0:60:13:6b:23:d6:a3:d9:02:dc:28:f6:2b:14:d5.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added 'stapp01,172.16.238.10' (ECDSA) to the list of known hosts.
 tony@stapp01's password: 
-[tony@stapp01 ~]$ 
-[tony@stapp01 ~]$ 
-[tony@stapp01 ~]$ 
+
 [tony@stapp01 ~]$ sudo su - 
 
 We trust you have received the usual lecture from the local System
@@ -1122,236 +1014,20 @@ Administrator. It usually boils down to these three things:
     #3) With great power comes great responsibility.
 
 [sudo] password for tony: 
-[root@stapp01 ~]# 
-[root@stapp01 ~]# 
-[root@stapp01 ~]# 
+
 [root@stapp01 ~]# docker ps
 CONTAINER ID   IMAGE           COMMAND   CREATED              STATUS              PORTS     NAMES
 b71b6813474d   ubuntu:latest   "bash"    About a minute ago   Up About a minute             kkloud
-[root@stapp01 ~]# 
-[root@stapp01 ~]# 
+
 [root@stapp01 ~]# docker exec -it kkloud /bin/sh
+
 # 
 # 
 # apt install apache2 -y
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
-The following additional packages will be installed:
-  apache2-bin apache2-data apache2-utils file libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap libexpat1 libgdbm-compat4
-  libgdbm6 libicu66 libjansson4 liblua5.2-0 libmagic-mgc libmagic1 libperl5.30 libxml2 mime-support netbase perl perl-modules-5.30 ssl-cert
-  tzdata xz-utils
-Suggested packages:
-  apache2-doc apache2-suexec-pristine | apache2-suexec-custom www-browser ufw gdbm-l10n perl-doc libterm-readline-gnu-perl
-  | libterm-readline-perl-perl make libb-debug-perl liblocale-codes-perl openssl-blacklist
-The following NEW packages will be installed:
-  apache2 apache2-bin apache2-data apache2-utils file libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap libexpat1
-  libgdbm-compat4 libgdbm6 libicu66 libjansson4 liblua5.2-0 libmagic-mgc libmagic1 libperl5.30 libxml2 mime-support netbase perl
-  perl-modules-5.30 ssl-cert tzdata xz-utils
-0 upgraded, 26 newly installed, 0 to remove and 0 not upgraded.
-Need to get 18.8 MB of archives.
-After this operation, 101 MB of additional disk space will be used.
-Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 perl-modules-5.30 all 5.30.0-9ubuntu0.2 [2738 kB]
-Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 libgdbm6 amd64 1.18.1-5 [27.4 kB]
-Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 libgdbm-compat4 amd64 1.18.1-5 [6244 B]
-Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libperl5.30 amd64 5.30.0-9ubuntu0.2 [3952 kB]
-Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 perl amd64 5.30.0-9ubuntu0.2 [224 kB]
-Get:6 http://archive.ubuntu.com/ubuntu focal/main amd64 libapr1 amd64 1.6.5-1ubuntu1 [91.4 kB]
-Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libexpat1 amd64 2.2.9-1ubuntu0.4 [74.4 kB]
-Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libaprutil1 amd64 1.6.1-4ubuntu2 [84.7 kB]
-Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 libaprutil1-dbd-sqlite3 amd64 1.6.1-4ubuntu2 [10.5 kB]
-Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libaprutil1-ldap amd64 1.6.1-4ubuntu2 [8736 B]
-Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 libjansson4 amd64 2.12-1build1 [28.9 kB]
-Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 liblua5.2-0 amd64 5.2.4-1.1build3 [106 kB]
-Get:13 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 tzdata all 2021e-0ubuntu0.20.04 [295 kB]
-Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
-Get:15 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.2 [640 kB]
-Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 apache2-bin amd64 2.4.41-4ubuntu3.10 [1181 kB]
-Get:17 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 apache2-data all 2.4.41-4ubuntu3.10 [158 kB]
-Get:18 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 apache2-utils amd64 2.4.41-4ubuntu3.10 [84.5 kB]
-Get:19 http://archive.ubuntu.com/ubuntu focal/main amd64 mime-support all 3.64ubuntu1 [30.6 kB]
-Get:20 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 apache2 amd64 2.4.41-4ubuntu3.10 [95.5 kB]
-Get:21 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
-Get:22 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
-Get:23 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
-Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 netbase all 6.1 [13.1 kB]
-Get:25 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 xz-utils amd64 5.2.4-1ubuntu1 [82.5 kB]
-Get:26 http://archive.ubuntu.com/ubuntu focal/main amd64 ssl-cert all 1.0.39 [17.0 kB]
-Fetched 18.8 MB in 1s (30.2 MB/s)     
-debconf: delaying package configuration, since apt-utils is not installed
-Selecting previously unselected package perl-modules-5.30.
-(Reading database ... 4660 files and directories currently installed.)
-Preparing to unpack .../00-perl-modules-5.30_5.30.0-9ubuntu0.2_all.deb ...
-Unpacking perl-modules-5.30 (5.30.0-9ubuntu0.2) ...
-Selecting previously unselected package libgdbm6:amd64.
-Preparing to unpack .../01-libgdbm6_1.18.1-5_amd64.deb ...
-Unpacking libgdbm6:amd64 (1.18.1-5) ...
-Selecting previously unselected package libgdbm-compat4:amd64.
-Preparing to unpack .../02-libgdbm-compat4_1.18.1-5_amd64.deb ...
-Unpacking libgdbm-compat4:amd64 (1.18.1-5) ...
-Selecting previously unselected package libperl5.30:amd64.
-Preparing to unpack .../03-libperl5.30_5.30.0-9ubuntu0.2_amd64.deb ...
-Unpacking libperl5.30:amd64 (5.30.0-9ubuntu0.2) ...
-Selecting previously unselected package perl.
-Preparing to unpack .../04-perl_5.30.0-9ubuntu0.2_amd64.deb ...
-Unpacking perl (5.30.0-9ubuntu0.2) ...
-Selecting previously unselected package libapr1:amd64.
-Preparing to unpack .../05-libapr1_1.6.5-1ubuntu1_amd64.deb ...
-Unpacking libapr1:amd64 (1.6.5-1ubuntu1) ...
-Selecting previously unselected package libexpat1:amd64.
-Preparing to unpack .../06-libexpat1_2.2.9-1ubuntu0.4_amd64.deb ...
-Unpacking libexpat1:amd64 (2.2.9-1ubuntu0.4) ...
-Selecting previously unselected package libaprutil1:amd64.
-Preparing to unpack .../07-libaprutil1_1.6.1-4ubuntu2_amd64.deb ...
-Unpacking libaprutil1:amd64 (1.6.1-4ubuntu2) ...
-Selecting previously unselected package libaprutil1-dbd-sqlite3:amd64.
-Preparing to unpack .../08-libaprutil1-dbd-sqlite3_1.6.1-4ubuntu2_amd64.deb ...
-Unpacking libaprutil1-dbd-sqlite3:amd64 (1.6.1-4ubuntu2) ...
-Selecting previously unselected package libaprutil1-ldap:amd64.
-Preparing to unpack .../09-libaprutil1-ldap_1.6.1-4ubuntu2_amd64.deb ...
-Unpacking libaprutil1-ldap:amd64 (1.6.1-4ubuntu2) ...
-Selecting previously unselected package libjansson4:amd64.
-Preparing to unpack .../10-libjansson4_2.12-1build1_amd64.deb ...
-Unpacking libjansson4:amd64 (2.12-1build1) ...
-Selecting previously unselected package liblua5.2-0:amd64.
-Preparing to unpack .../11-liblua5.2-0_5.2.4-1.1build3_amd64.deb ...
-Unpacking liblua5.2-0:amd64 (5.2.4-1.1build3) ...
-Selecting previously unselected package tzdata.
-Preparing to unpack .../12-tzdata_2021e-0ubuntu0.20.04_all.deb ...
-Unpacking tzdata (2021e-0ubuntu0.20.04) ...
-Selecting previously unselected package libicu66:amd64.
-Preparing to unpack .../13-libicu66_66.1-2ubuntu2.1_amd64.deb ...
-Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
-Selecting previously unselected package libxml2:amd64.
-Preparing to unpack .../14-libxml2_2.9.10+dfsg-5ubuntu0.20.04.2_amd64.deb ...
-Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.2) ...
-Selecting previously unselected package apache2-bin.
-Preparing to unpack .../15-apache2-bin_2.4.41-4ubuntu3.10_amd64.deb ...
-Unpacking apache2-bin (2.4.41-4ubuntu3.10) ...
-Selecting previously unselected package apache2-data.
-Preparing to unpack .../16-apache2-data_2.4.41-4ubuntu3.10_all.deb ...
-Unpacking apache2-data (2.4.41-4ubuntu3.10) ...
-Selecting previously unselected package apache2-utils.
-Preparing to unpack .../17-apache2-utils_2.4.41-4ubuntu3.10_amd64.deb ...
-Unpacking apache2-utils (2.4.41-4ubuntu3.10) ...
-Selecting previously unselected package mime-support.
-Preparing to unpack .../18-mime-support_3.64ubuntu1_all.deb ...
-Unpacking mime-support (3.64ubuntu1) ...
-Selecting previously unselected package apache2.
-Preparing to unpack .../19-apache2_2.4.41-4ubuntu3.10_amd64.deb ...
-Unpacking apache2 (2.4.41-4ubuntu3.10) ...
-Selecting previously unselected package libmagic-mgc.
-Preparing to unpack .../20-libmagic-mgc_1%3a5.38-4_amd64.deb ...
-Unpacking libmagic-mgc (1:5.38-4) ...
-Selecting previously unselected package libmagic1:amd64.
-Preparing to unpack .../21-libmagic1_1%3a5.38-4_amd64.deb ...
-Unpacking libmagic1:amd64 (1:5.38-4) ...
-Selecting previously unselected package file.
-Preparing to unpack .../22-file_1%3a5.38-4_amd64.deb ...
-Unpacking file (1:5.38-4) ...
-Selecting previously unselected package netbase.
-Preparing to unpack .../23-netbase_6.1_all.deb ...
-Unpacking netbase (6.1) ...
-Selecting previously unselected package xz-utils.
-Preparing to unpack .../24-xz-utils_5.2.4-1ubuntu1_amd64.deb ...
-Unpacking xz-utils (5.2.4-1ubuntu1) ...
-Selecting previously unselected package ssl-cert.
-Preparing to unpack .../25-ssl-cert_1.0.39_all.deb ...
-Unpacking ssl-cert (1.0.39) ...
-Setting up libexpat1:amd64 (2.2.9-1ubuntu0.4) ...
-Setting up perl-modules-5.30 (5.30.0-9ubuntu0.2) ...
-Setting up mime-support (3.64ubuntu1) ...
-Setting up libmagic-mgc (1:5.38-4) ...
-Setting up libmagic1:amd64 (1:5.38-4) ...
-Setting up libapr1:amd64 (1.6.5-1ubuntu1) ...
-Setting up file (1:5.38-4) ...
-Setting up libjansson4:amd64 (2.12-1build1) ...
-Setting up tzdata (2021e-0ubuntu0.20.04) ...
-debconf: unable to initialize frontend: Dialog
-debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
-debconf: falling back to frontend: Readline
-Configuring tzdata
-------------------
 
-Please select the geographic area in which you live. Subsequent configuration questions will narrow this down by presenting a list of
-cities, representing the time zones in which they are located.
-
-  1. Africa   3. Antarctica  5. Arctic  7. Atlantic  9. Indian    11. SystemV  13. Etc
-  2. America  4. Australia   6. Asia    8. Europe    10. Pacific  12. US
-Geographic area: 12
-
-Please select the city or region corresponding to your time zone.
-
-  1. Alaska    3. Arizona  5. Eastern  7. Indiana-Starke  9. Mountain  11. Samoa
-  2. Aleutian  4. Central  6. Hawaii   8. Michigan        10. Pacific
-Time zone: 1
-
-
-Current default time zone: 'US/Alaska'
-Local time is now:      Fri Mar 18 20:46:13 AKDT 2022.
-Universal Time is now:  Sat Mar 19 04:46:13 UTC 2022.
-Run 'dpkg-reconfigure tzdata' if you wish to change it.
-
-Setting up ssl-cert (1.0.39) ...
-debconf: unable to initialize frontend: Dialog
-debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
-debconf: falling back to frontend: Readline
-Setting up xz-utils (5.2.4-1ubuntu1) ...
-update-alternatives: using /usr/bin/xz to provide /usr/bin/lzma (lzma) in auto mode
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzma.1.gz because associated file /usr/share/man/man1/xz.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/unlzma.1.gz because associated file /usr/share/man/man1/unxz.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzcat.1.gz because associated file /usr/share/man/man1/xzcat.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzmore.1.gz because associated file /usr/share/man/man1/xzmore.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzless.1.gz because associated file /usr/share/man/man1/xzless.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzdiff.1.gz because associated file /usr/share/man/man1/xzdiff.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzcmp.1.gz because associated file /usr/share/man/man1/xzcmp.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzgrep.1.gz because associated file /usr/share/man/man1/xzgrep.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzegrep.1.gz because associated file /usr/share/man/man1/xzegrep.1.gz (of link group lzma) doesn't exist
-update-alternatives: warning: skip creation of /usr/share/man/man1/lzfgrep.1.gz because associated file /usr/share/man/man1/xzfgrep.1.gz (of link group lzma) doesn't exist
-Setting up liblua5.2-0:amd64 (5.2.4-1.1build3) ...
-Setting up netbase (6.1) ...
-Setting up apache2-data (2.4.41-4ubuntu3.10) ...
-Setting up libgdbm6:amd64 (1.18.1-5) ...
-Setting up libaprutil1:amd64 (1.6.1-4ubuntu2) ...
-Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
-Setting up libaprutil1-ldap:amd64 (1.6.1-4ubuntu2) ...
-Setting up libaprutil1-dbd-sqlite3:amd64 (1.6.1-4ubuntu2) ...
-Setting up libgdbm-compat4:amd64 (1.18.1-5) ...
-Setting up libperl5.30:amd64 (5.30.0-9ubuntu0.2) ...
-Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.2) ...
-Setting up apache2-utils (2.4.41-4ubuntu3.10) ...
-Setting up perl (5.30.0-9ubuntu0.2) ...
-Setting up apache2-bin (2.4.41-4ubuntu3.10) ...
-Setting up apache2 (2.4.41-4ubuntu3.10) ...
-Enabling module mpm_event.
-Enabling module authz_core.
-Enabling module authz_host.
-Enabling module authn_core.
-Enabling module auth_basic.
-Enabling module access_compat.
-Enabling module authn_file.
-Enabling module authz_user.
-Enabling module alias.
-Enabling module dir.
-Enabling module autoindex.
-Enabling module env.
-Enabling module mime.
-Enabling module negotiation.
-Enabling module setenvif.
-Enabling module filter.
-Enabling module deflate.
-Enabling module status.
-Enabling module reqtimeout.
-Enabling conf charset.
-Enabling conf localized-error-pages.
-Enabling conf other-vhosts-access-log.
-Enabling conf security.
-Enabling conf serve-cgi-bin.
-Enabling site 000-default.
-invoke-rc.d: could not determine current runlevel
-invoke-rc.d: policy-rc.d denied execution of start.
-Processing triggers for libc-bin (2.31-0ubuntu9.7) ...
-# 
 # 
 # 
 # cd /etc/apache2
@@ -1586,9 +1262,6 @@ Include ports.conf
 #       Require all granted
 #</Directory>
 
-
-
-
 # AccessFileName: The name of the file to look for in each directory
 # for additional configuration directives.  See also the AllowOverride
 # directive.
@@ -1677,17 +1350,14 @@ We are working on an application that will be deployed on multiple containers wi
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-1.
-kubectl get services
+1.kubectl get services
 	NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 	kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   13m
 
-2.
-kubectl get pods
+2.kubectl get pods
 	No resources found in default namespace.
 
-3.
-vi /tmp/volume.yaml
+3. vi /tmp/volume.yaml
 		apiVersion: v1
 		kind: Pod
 		metadata:
@@ -1712,26 +1382,21 @@ vi /tmp/volume.yaml
 		        - name: volume-share
 		          mountPath: /tmp/cluster
 
-4.
-kubectl create -f /tmp/volume.yaml 
+4.kubectl create -f /tmp/volume.yaml 
 	pod/volume-share-devops created
 
-5.
-kubectl get pods
+5.kubectl get pods
 	NAME                  READY   STATUS              RESTARTS   AGE
 	volume-share-devops   0/2     ContainerCreating   0          7s
-6.
-kubectl get pods
+6.kubectl get pods
 	NAME                  READY   STATUS    RESTARTS   AGE
 	volume-share-devops   2/2     Running   0          26s
 
-7.
-kubectl get pods -o wide
+7.kubectl get pods -o wide
 	NAME                  READY   STATUS    RESTARTS   AGE   IP           NODE                      NOMINATED NODE   READINESS GATES
 	volume-share-devops   2/2     Running   0          40s   10.244.0.5   kodekloud-control-plane   <none>           <none>
 
-8.
-kubectl exec -it volume-share-devops -c volume-container-devops-1 -- /bin/bash
+8.kubectl exec -it volume-share-devops -c volume-container-devops-1 -- /bin/bash
 	[root@volume-share-devops /]# 
 	[root@volume-share-devops /]# echo "Welcome to xFusionCorps!" > /tmp/media/media.txt
 	[root@volume-share-devops /]# 
@@ -1741,8 +1406,7 @@ kubectl exec -it volume-share-devops -c volume-container-devops-1 -- /bin/bash
 	[root@volume-share-devops /]# exit
 exit
 
-9.
-kubectl exec -it volume-share-devops -c volume-container-devops-2 -- ls /tmp/cluster
+9.kubectl exec -it volume-share-devops -c volume-container-devops-2 -- ls /tmp/cluster
 	media.txt
 
 --------------------------------------------------------------------------------------------------------------------------------------------
@@ -1766,77 +1430,48 @@ kube-node-lease      Active   62m
 kube-public          Active   62m
 kube-system          Active   62m
 local-path-storage   Active   62m
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 No resources found in default namespace.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+ 
 thor@jump_host ~$ vi /tmp/replica.yml
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ cat /tmp/replica.yml 
+
+---
 apiVersion: v1
-
 kind: ReplicationController
-
 metadata:
-
   name: nginx-replicationcontroller
-
   labels:
-
     app: nginx_app
-
     type: front-end
-
 spec:
-
   replicas: 3
-
   selector:
-
     app: nginx_app
-
   template:
-
     metadata:
-
       name: nginx_pod
-
       labels:
-
         app: nginx_app
-
         type: front-end
-
     spec:
-
       containers:
-
         - name: nginx-container
-
           image: nginx:latest
-
           ports:
-
             - containerPort: 80 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl create -f /tmp/replica.yml 
 replicationcontroller/nginx-replicationcontroller created
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 NAME                                READY   STATUS              RESTARTS   AGE
 nginx-replicationcontroller-6tk8s   0/1     ContainerCreating   0          17s
 nginx-replicationcontroller-8sfw5   1/1     Running             0          17s
 nginx-replicationcontroller-959vx   1/1     Running             0          17s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 NAME                                READY   STATUS    RESTARTS   AGE
 nginx-replicationcontroller-6tk8s   1/1     Running   0          22s
@@ -1992,10 +1627,7 @@ Ansible managed node IP is <default ipv4 address>
 Note: Do not create a separate role for this task, just add all of the changes in index.yml playbook.
 
 thor@jump_host ~$ cd /home/thor/playbooks/
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
+
 thor@jump_host ~/playbooks$ ls -ahl
 total 16K
 drwxr-xr-x 2 thor thor 4.0K Mar 25 11:16 .
@@ -2006,11 +1638,9 @@ thor@jump_host ~/playbooks$ cat inventory
 stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n ansible_user=tony
 stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@ ansible_user=steve
 stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n ansible_user=bannerthor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
+
 thor@jump_host ~/playbooks$ vi index.yml
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
+
 thor@jump_host ~/playbooks$ cat index.yml 
 ---
 -
@@ -2161,24 +1791,20 @@ You can use any labels as per your choice.
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-1.
-kubectl get deploy
+1.kubectl get deploy
 	No resources found in default namespace.
 
-2.
-kubectl get pods
+2.kubectl get pods
 	No resources found in default namespace.
 
-3.
-kubectl get service
+3.kubectl get service
 	NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 	kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   4h13m
 
-4.
-cd /tmp
+4.cd /tmp
 
-5.
-vi Back-end-Deploy-Redis-Master-Guest-Book-App.yaml
+5.vi Back-end-Deploy-Redis-Master-Guest-Book-App.yaml
+
 		---
 		apiVersion: apps/v1
 		kind: Deployment
@@ -2207,8 +1833,8 @@ vi Back-end-Deploy-Redis-Master-Guest-Book-App.yaml
 		            - containerPort: 6379
 
 
-6.
-vi Back-end-Deploy-Redis-slave-Guest-Book-App.yaml
+6.vi Back-end-Deploy-Redis-slave-Guest-Book-App.yaml
+
 		---
 		apiVersion: apps/v1
 		kind: Deployment
@@ -2239,8 +1865,8 @@ vi Back-end-Deploy-Redis-slave-Guest-Book-App.yaml
 		          ports:
 		            - containerPort: 6379
 
-7.
-vi Back-end-service-Redis-Master-Guest-Book-App.yaml
+7.vi Back-end-service-Redis-Master-Guest-Book-App.yaml
+
 		---
 		apiVersion: v1
 		kind: Service
@@ -2255,8 +1881,8 @@ vi Back-end-service-Redis-Master-Guest-Book-App.yaml
 		    - port: 6379
 		      targetPort: 6379
 
-8.
-vi Back-end-service-Redis-slave-Guest-Book-App.yaml
+8.vi Back-end-service-Redis-slave-Guest-Book-App.yaml
+
 		---
 		apiVersion: v1
 		kind: Service
@@ -2271,8 +1897,8 @@ vi Back-end-service-Redis-slave-Guest-Book-App.yaml
 		    - port: 6379
 		      targetPort: 6379
 
-9.
-vi Front-end-Deploy-Redis-php-Guest-Book-App.yaml
+9.vi Front-end-Deploy-Redis-php-Guest-Book-App.yaml
+
 		---
 		apiVersion: apps/v1
 		kind: Deployment
@@ -2303,8 +1929,8 @@ vi Front-end-Deploy-Redis-php-Guest-Book-App.yaml
 		          ports:
 		            - containerPort: 80
 
-10.
-vi Front-end-service-Redis-php-Guest-Book-App.yaml
+10.vi Front-end-service-Redis-php-Guest-Book-App.yaml
+
 		---
 		apiVersion: v1
 		kind: Service
@@ -2351,15 +1977,13 @@ kubectl apply -f Front-end-service-Redis-php-Guest-Book-App.yaml
 	service/frontend created
 
 
-17.
- kubectl get deploy
+17.kubectl get deploy
 	NAME           READY   UP-TO-DATE   AVAILABLE   AGE
 	frontend       0/3     3            0           30s
 	redis-master   1/1     1            1           88s
 	redis-slave    2/2     2            2           59s
 
-18.
-kubectl get pods
+18.kubectl get pods
 	NAME                           READY   STATUS    RESTARTS   AGE
 	frontend-586bdcd8bb-hkqm6      1/1     Running   0          118s
 	frontend-586bdcd8bb-nts2c      1/1     Running   0          118s
@@ -2368,16 +1992,14 @@ kubectl get pods
 	redis-slave-8b57b5779-7pgc4    1/1     Running   0          2m27s
 	redis-slave-8b57b5779-92szx    1/1     Running   0          2m27s
 
-19.
- kubectl get service
+19.kubectl get service
 	NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 	frontend       NodePort    10.96.79.21     <none>        80:30009/TCP   30s
 	kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP        4h20m
 	redis-master   ClusterIP   10.96.104.169   <none>        6379/TCP       92s
 	redis-slave    ClusterIP   10.96.203.200   <none>        6379/TCP       65s
 
-20.
- kubectl exec frontend-586bdcd8bb-hkqm6 -- curl -I http://localhost/
+20.kubectl exec frontend-586bdcd8bb-hkqm6 -- curl -I http://localhost/
 	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 	                                 Dload  Upload   Total   Spent    Left  Speed
 	  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0HTTP/1.1 200 OK
@@ -2621,9 +2243,7 @@ Administrator. It usually boils down to these three things:
     #3) With great power comes great responsibility.
 
 [sudo] password for banner: 
-[root@stapp03 ~]# 
-[root@stapp03 ~]# 
-[root@stapp03 ~]# 
+
 [root@stapp03 ~]# puppet agent -tv
 Info: Using configured environment 'production'
 Info: Retrieving pluginfacts
@@ -2733,102 +2353,6 @@ Last week the Nautilus DevOps team met with the application development team and
 	Install  2 Packages (+20 Dependent packages)
 	Upgrade             (  2 Dependent packages)
 
-	Total download size: 104 M
-	Is this ok [y/d/N]: y
-	Downloading packages:
-	Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
-	(1/24): audit-libs-python-2.8.5-4.el7.x86_64.rpm                                                                      |  76 kB  00:00:00     
-	(2/24): audit-libs-2.8.5-4.el7.x86_64.rpm                                                                             | 102 kB  00:00:00     
-	(3/24): checkpolicy-2.5-8.el7.x86_64.rpm                                                                              | 295 kB  00:00:00     
-	(4/24): container-selinux-2.119.2-1.911c772.el7_8.noarch.rpm                                                          |  40 kB  00:00:00     
-	warning: /var/cache/yum/x86_64/7/docker-ce-stable/packages/docker-ce-20.10.14-3.el7.x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID 621e9f35: NOKEY
-	Public key for docker-ce-20.10.14-3.el7.x86_64.rpm is not installed
-	(5/24): docker-ce-20.10.14-3.el7.x86_64.rpm                                                                           |  22 MB  00:00:00     
-	(6/24): containerd.io-1.5.11-3.1.el7.x86_64.rpm                                                                       |  29 MB  00:00:00     
-	(7/24): docker-ce-rootless-extras-20.10.14-3.el7.x86_64.rpm                                                           | 8.1 MB  00:00:00     
-	(8/24): docker-ce-cli-20.10.14-3.el7.x86_64.rpm                                                                       |  30 MB  00:00:00     
-	(9/24): docker-scan-plugin-0.17.0-3.el7.x86_64.rpm                                                                    | 3.7 MB  00:00:00     
-	(10/24): fuse-overlayfs-0.7.2-6.el7_8.x86_64.rpm                                                                      |  54 kB  00:00:00     
-	(11/24): libcgroup-0.41-21.el7.x86_64.rpm                                                                             |  66 kB  00:00:00     
-	(12/24): libselinux-2.5-15.el7.x86_64.rpm                                                                             | 162 kB  00:00:00     
-	(13/24): fuse3-libs-3.6.1-4.el7.x86_64.rpm                                                                            |  82 kB  00:00:00     
-	(14/24): libselinux-python-2.5-15.el7.x86_64.rpm                                                                      | 236 kB  00:00:00     
-	(15/24): libselinux-utils-2.5-15.el7.x86_64.rpm                                                                       | 151 kB  00:00:00     
-	(16/24): libseccomp-2.3.1-4.el7.x86_64.rpm                                                                            |  56 kB  00:00:00     
-	(17/24): libsemanage-python-2.5-14.el7.x86_64.rpm                                                                     | 113 kB  00:00:00     
-	(18/24): policycoreutils-python-2.5-34.el7.x86_64.rpm                                                                 | 457 kB  00:00:00     
-	(19/24): python-IPy-0.75-6.el7.noarch.rpm                                                                             |  32 kB  00:00:00     
-	(20/24): setools-libs-3.3.8-4.el7.x86_64.rpm                                                                          | 620 kB  00:00:00     
-	(21/24): policycoreutils-2.5-34.el7.x86_64.rpm                                                                        | 917 kB  00:00:00     
-	(22/24): slirp4netns-0.4.3-4.el7_8.x86_64.rpm                                                                         |  81 kB  00:00:00     
-	(23/24): selinux-policy-3.13.1-268.el7_9.2.noarch.rpm                                                                 | 498 kB  00:00:00     
-	(24/24): selinux-policy-targeted-3.13.1-268.el7_9.2.noarch.rpm                                                        | 7.0 MB  00:00:02     
-	---------------------------------------------------------------------------------------------------------------------------------------------
-	Total                                                                                                         23 MB/s | 104 MB  00:00:04     
-	Retrieving key from https://download.docker.com/linux/centos/gpg
-	Importing GPG key 0x621E9F35:
-	 Userid     : "Docker Release (CE rpm) <docker@docker.com>"
-	 Fingerprint: 060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35
-	 From       : https://download.docker.com/linux/centos/gpg
-	Is this ok [y/N]: y
-	Running transaction check
-	Running transaction test
-	Transaction test succeeded
-	Running transaction
-	  Updating   : libselinux-2.5-15.el7.x86_64                                                                                             1/26 
-	  Installing : libseccomp-2.3.1-4.el7.x86_64                                                                                            2/26 
-	  Installing : libselinux-utils-2.5-15.el7.x86_64                                                                                       3/26 
-	  Installing : libcgroup-0.41-21.el7.x86_64                                                                                             4/26 
-	  Updating   : audit-libs-2.8.5-4.el7.x86_64                                                                                            5/26 
-	  Installing : policycoreutils-2.5-34.el7.x86_64                                                                                        6/26 
-	  Installing : selinux-policy-3.13.1-268.el7_9.2.noarch                                                                                 7/26 
-	  Installing : selinux-policy-targeted-3.13.1-268.el7_9.2.noarch                                                                        8/26 
-	  Installing : audit-libs-python-2.8.5-4.el7.x86_64                                                                                     9/26 
-	  Installing : slirp4netns-0.4.3-4.el7_8.x86_64                                                                                        10/26 
-	  Installing : setools-libs-3.3.8-4.el7.x86_64                                                                                         11/26 
-	  Installing : libselinux-python-2.5-15.el7.x86_64                                                                                     12/26 
-	  Installing : 1:docker-ce-cli-20.10.14-3.el7.x86_64                                                                                   13/26 
-	  Installing : docker-scan-plugin-0.17.0-3.el7.x86_64                                                                                  14/26 
-	  Installing : libsemanage-python-2.5-14.el7.x86_64                                                                                    15/26 
-	  Installing : fuse3-libs-3.6.1-4.el7.x86_64                                                                                           16/26 
-	  Installing : fuse-overlayfs-0.7.2-6.el7_8.x86_64                                                                                     17/26 
-	  Installing : python-IPy-0.75-6.el7.noarch                                                                                            18/26 
-	  Installing : checkpolicy-2.5-8.el7.x86_64                                                                                            19/26 
-	  Installing : policycoreutils-python-2.5-34.el7.x86_64                                                                                20/26 
-	  Installing : 2:container-selinux-2.119.2-1.911c772.el7_8.noarch                                                                      21/26 
-	setsebool:  SELinux is disabled.
-	  Installing : containerd.io-1.5.11-3.1.el7.x86_64                                                                                     22/26 
-	  Installing : docker-ce-rootless-extras-20.10.14-3.el7.x86_64                                                                         23/26 
-	  Installing : 3:docker-ce-20.10.14-3.el7.x86_64                                                                                       24/26 
-	  Cleanup    : audit-libs-2.8.4-4.el7.x86_64                                                                                           25/26 
-	  Cleanup    : libselinux-2.5-14.1.el7.x86_64                                                                                          26/26 
-	  Verifying  : containerd.io-1.5.11-3.1.el7.x86_64                                                                                      1/26 
-	  Verifying  : fuse-overlayfs-0.7.2-6.el7_8.x86_64                                                                                      2/26 
-	  Verifying  : libselinux-2.5-15.el7.x86_64                                                                                             3/26 
-	  Verifying  : docker-ce-rootless-extras-20.10.14-3.el7.x86_64                                                                          4/26 
-	  Verifying  : 2:container-selinux-2.119.2-1.911c772.el7_8.noarch                                                                       5/26 
-	  Verifying  : selinux-policy-targeted-3.13.1-268.el7_9.2.noarch                                                                        6/26 
-	  Verifying  : audit-libs-2.8.5-4.el7.x86_64                                                                                            7/26 
-	  Verifying  : checkpolicy-2.5-8.el7.x86_64                                                                                             8/26 
-	  Verifying  : policycoreutils-2.5-34.el7.x86_64                                                                                        9/26 
-	  Verifying  : python-IPy-0.75-6.el7.noarch                                                                                            10/26 
-	  Verifying  : libseccomp-2.3.1-4.el7.x86_64                                                                                           11/26 
-	  Verifying  : libselinux-utils-2.5-15.el7.x86_64                                                                                      12/26 
-	  Verifying  : policycoreutils-python-2.5-34.el7.x86_64                                                                                13/26 
-	  Verifying  : docker-scan-plugin-0.17.0-3.el7.x86_64                                                                                  14/26 
-	  Verifying  : setools-libs-3.3.8-4.el7.x86_64                                                                                         15/26 
-	  Verifying  : 3:docker-ce-20.10.14-3.el7.x86_64                                                                                       16/26 
-	  Verifying  : fuse3-libs-3.6.1-4.el7.x86_64                                                                                           17/26 
-	  Verifying  : libsemanage-python-2.5-14.el7.x86_64                                                                                    18/26 
-	  Verifying  : slirp4netns-0.4.3-4.el7_8.x86_64                                                                                        19/26 
-	  Verifying  : libselinux-python-2.5-15.el7.x86_64                                                                                     20/26 
-	  Verifying  : selinux-policy-3.13.1-268.el7_9.2.noarch                                                                                21/26 
-	  Verifying  : audit-libs-python-2.8.5-4.el7.x86_64                                                                                    22/26 
-	  Verifying  : 1:docker-ce-cli-20.10.14-3.el7.x86_64                                                                                   23/26 
-	  Verifying  : libcgroup-0.41-21.el7.x86_64                                                                                            24/26 
-	  Verifying  : audit-libs-2.8.4-4.el7.x86_64                                                                                           25/26 
-	  Verifying  : libselinux-2.5-14.1.el7.x86_64                                                                                          26/26 
-
 	Installed:
 	  docker-ce.x86_64 3:20.10.14-3.el7                                   docker-ce-cli.x86_64 1:20.10.14-3.el7                                  
 
@@ -2910,8 +2434,6 @@ There is an application that needs to be deployed on Kubernetes cluster under Ap
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get namespace
 NAME                 STATUS   AGE
 default              Active   61m
@@ -2919,12 +2441,10 @@ kube-node-lease      Active   61m
 kube-public          Active   62m
 kube-system          Active   62m
 local-path-storage   Active   61m
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl create namespace httpd-namespace-devops
 namespace/httpd-namespace-devops created
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get namespace
 NAME                     STATUS   AGE
 default                  Active   62m
@@ -2933,19 +2453,15 @@ kube-node-lease          Active   62m
 kube-public              Active   62m
 kube-system              Active   62m
 local-path-storage       Active   62m
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods -n  httpd-namespace-devops
 No resources found in httpd-namespace-devops namespace.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get service  -n  httpd-namespace-devops
 No resources found in httpd-namespace-devops namespace.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ vi /tmp/httpd.yaml
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ cat /tmp/httpd.yaml 
 apiVersion: v1
 kind: Service
@@ -2983,23 +2499,20 @@ spec:
           image: httpd:latest
           ports:
             - containerPort: 80
+			
 thor@jump_host ~$ kubectl create -f /tmp/httpd.yaml
 service/httpd-service-devops created
 deployment.apps/httpd-deployment-devops created
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get service  -n  httpd-namespace-devops
 NAME                   TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
 httpd-service-devops   NodePort   10.96.72.224   <none>        80:30004/TCP   40s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods -n  httpd-namespace-devops
 NAME                                      READY   STATUS    RESTARTS   AGE
 httpd-deployment-devops-867b499f4-qdx2m   1/1     Running   0          47s
 httpd-deployment-devops-867b499f4-sw7qc   1/1     Running   0          47s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 --------------------------------------------------------------------------------------------------------------------------------
 Task 56: 3/May/2022
 Git Merge Branches
@@ -3014,8 +2527,7 @@ ECDSA key fingerprint is MD5:9b:83:09:6b:3b:a8:af:dc:8b:6a:b8:99:35:a0:8d:c0.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added 'ststor01,172.16.238.15' (ECDSA) to the list of known hosts.
 natasha@ststor01's password: 
-[natasha@ststor01 ~]$ 
-[natasha@ststor01 ~]$ 
+
 [natasha@ststor01 ~]$ sudo su - 
 
 We trust you have received the usual lecture from the local System
@@ -3026,9 +2538,7 @@ Administrator. It usually boils down to these three things:
     #3) With great power comes great responsibility.
 
 [sudo] password for natasha: 
-[root@ststor01 ~]# 
-[root@ststor01 ~]# 
-[root@ststor01 ~]# 
+
 [root@ststor01 ~]# cd /usr/src/kodekloudrepos/beta/
 [root@ststor01 beta]# ls -ahl
 total 20K
@@ -3047,15 +2557,13 @@ Switched to a new branch 'nautilus'
 [root@ststor01 beta]# git status
 # On branch nautilus
 nothing to commit, working directory clean
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+[
 [root@ststor01 beta]# git branch
   master
 * nautilus
 [root@ststor01 beta]# 
 [root@ststor01 beta]# cp /tmp/index.html /usr/src/kodekloudrepos/beta/
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# ls -ahl
 total 24K
 drwxr-xr-x 3 root root 4.0K May  3 03:48 .
@@ -3072,16 +2580,14 @@ drwxr-xr-x 8 root root 4.0K May  3 03:47 .git
 [root@ststor01 beta]# 
 [root@ststor01 beta]# git checkout master
 Switched to branch 'master'
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# git merge nautilus
 Updating 440bde1..71d74be
 Fast-forward
  index.html | 1 +
  1 file changed, 1 insertion(+)
  create mode 100644 index.html
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# git push -u origin nautilus
 Counting objects: 4, done.
 Delta compression using up to 36 threads.
@@ -3097,8 +2603,7 @@ Total 0 (delta 0), reused 0 (delta 0)
 To /opt/beta.git
    440bde1..71d74be  master -> master
 Branch master set up to track remote branch master from origin.
-[root@ststor01 beta]# 
-[root@ststor01 beta]# 
+
 [root@ststor01 beta]# git status
 # On branch master
 nothing to commit, working directory clean
@@ -3118,8 +2623,6 @@ The Nautilus DevOps team is working on to create few jobs in Kubernetes cluster.
     Use command for i in 10 9 8 7 6 5 4 3 2 1 ; do echo $i ; done
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
-
-
 
 thor@jump_host ~$ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -3153,15 +2656,11 @@ thor@jump_host ~$ vi /tmp/countdown.yaml
 
 thor@jump_host ~$ kubectl create -f /tmp/countdown.yaml 
 job.batch/countdown-xfusion created
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 NAME                      READY   STATUS      RESTARTS   AGE
 countdown-xfusion-xtgxv   0/1     Completed   0          14s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 NAME                      READY   STATUS      RESTARTS   AGE
 countdown-xfusion-xtgxv   0/1     Completed   0          20s
@@ -3292,7 +2791,8 @@ thor@jump_host ~$ ssh tony@stapp01
 		    #3) With great power comes great responsibility.
 
 		[sudo] password for tony: 
-[root@stapp01 ~]# 
+		
+
 
 [root@stapp01 ~]# docker ps
 		CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
@@ -3317,42 +2817,15 @@ thor@jump_host ~$ ssh tony@stapp01
 		REPOSITORY   TAG           IMAGE ID       CREATED      SIZE
 		nginx        alpine-perl   c0800a068427   2 days ago   58.4MB
 
-
-
 [root@stapp01 ~]# docker container run -d --name blog -p 5002:80 nginx:alpine-perl
 		b894ab1eef89fe6711927203135074b90e6b08c02f294bf89f615c285fc380b8
-
-
 
 [root@stapp01 ~]# docker ps
 		CONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS          PORTS                  NAMES
 		b894ab1eef89   nginx:alpine-perl   "/docker-entrypoint.…"   16 seconds ago   Up 12 seconds   0.0.0.0:5002->80/tcp   blog
 
-
 [root@stapp01 ~]# curl http://localhost:5002/
-		<!DOCTYPE html>
-		<html>
-		<head>
-		<title>Welcome to nginx!</title>
-		<style>
-		html { color-scheme: light dark; }
-		body { width: 35em; margin: 0 auto;
-		font-family: Tahoma, Verdana, Arial, sans-serif; }
-		</style>
-		</head>
-		<body>
-		<h1>Welcome to nginx!</h1>
-		<p>If you see this page, the nginx web server is successfully installed and
-		working. Further configuration is required.</p>
 
-		<p>For online documentation and support please refer to
-		<a href="http://nginx.org/">nginx.org</a>.<br/>
-		Commercial support is available at
-		<a href="http://nginx.com/">nginx.com</a>.</p>
-
-		<p><em>Thank you for using nginx.</em></p>
-		</body>
-		</html>
 [root@stapp01 ~]#
 
 --------------------------------------------------------------------------------------------------------------------------------
@@ -3381,82 +2854,47 @@ thor@jump_host ~$
 thor@jump_host ~$ vi /tmp/nginx.yml
 thor@jump_host ~$ 
 thor@jump_host ~$ 
-thor@jump_host ~$ cat /tmp/nginx.yml 
+thor@jump_host ~$ cat /tmp/nginx.yml
+
+---
 apiVersion: v1
-
 kind: Service
-
 metadata:
-
   name: nginx-service
-
 spec:
-
   type: NodePort
-
   selector:
-
     app: nginx-app
-
     type: front-end
-
   ports:
-
     - port: 80
-
       targetPort: 80
-
       nodePort: 30011
-
 ---
 
 apiVersion: apps/v1
-
 kind: Deployment
-
 metadata:
-
   name: nginx-deployment
-
   labels:
-
     app: nginx-app
-
     type: front-end
-
 spec:
-
   replicas: 3
-
   selector:
-
     matchLabels:
-
       app: nginx-app
-
       type: front-end
-
   template:
-
     metadata:
-
       labels:
-
         app: nginx-app
-
         type: front-end
-
     spec:
-
       containers:
-
         - name: nginx-container
-
           image: nginx:latest 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl create -f /tmp/nginx.yml
 service/nginx-service created
 deployment.apps/nginx-deployment created
@@ -3512,33 +2950,23 @@ One of the Nautilus DevOps team members was working on to test an Ansible playbo
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
 thor@jump_host ~$ vi /home/thor/ansible/inventory 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+ 
 thor@jump_host ~$ cat  /home/thor/ansible/inventory 
 stapp02 ansible_host=172.16.238.11 ansible_user=steve ansible_ssh_pass=Am3ric@
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ vi /home/thor/ansible/plabook.yml
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ cat /home/thor/ansible/plabook.yml
+
 - name: Create file in appserver
-
   hosts: stapp02
-
   become: yes
-
   tasks:
-
     - name: Create the file
-
       file:
-
         path: /tmp/file.txt
-
         state: touch
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ ansible all -a "ls -ltr /tmp/" -i inventory
 [WARNING]: Unable to parse /home/thor/inventory as an inventory source
 [WARNING]: No inventory was parsed, only implicit localhost is available
@@ -3568,23 +2996,16 @@ drwxr----- 1 thor thor 4.0K May 26 13:19 ..
 -rw-r--r-- 1 thor thor   79 May 26 13:18 inventory
 -rw-rw-r-- 1 thor thor  169 May 26 13:19 playbook.yml
 thor@jump_host ~/ansible$ cat /home/thor/ansible/playbook.yml
+
 - name: Create file in appserver
-
   hosts: stapp02
-
   become: yes
-
   tasks:
-
     - name: Create the file
-
       file:
-
         path: /tmp/file.txt
-
         state: touch
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+
 thor@jump_host ~/ansible$ ansible-playbook -i inventory playbook.yml 
 
 PLAY [Create file in appserver] *************************************************************************************************************
@@ -3689,82 +3110,50 @@ Note: The kubectl on jump_host has been configured to work with the kubernetes c
 		tomcat-namespace-xfusion   Active   4s
 4. vi /tmp/tomcat.yaml
   
-   cat /tmp/tomcat.yaml 
+   cat /tmp/tomcat.yaml
+   
 			apiVersion: v1
-
 			kind: Service
-
 			metadata:
-
 			  name: tomcat-service-xfusion
-
 			  namespace: tomcat-namespace-xfusion
-
 			spec:
-
 			  type: NodePort
-
 			  selector:
-
 			    app: tomcat
-
 			  ports:
-
 			    - port: 80
-
 			      protocol: TCP
-
 			      targetPort: 8080
-
 			      nodePort: 32227
-
 			---
 
 			apiVersion: apps/v1                          
-
 			kind: Deployment
-
 			metadata:
-
 			  name: tomcat-deployment-xfusion
-
 			  namespace: tomcat-namespace-xfusion
-
 			spec:
-
 			  replicas: 1
-
 			  selector:
-
 			    matchLabels:
-
 			      app: tomcat
-
 			  template:
-
 			    metadata:
-
 			      labels:
-
 			        app: tomcat
-
 			    spec:
-
 			      containers:
-
 			        - name: tomcat-container-xfusion
-
 			          image: gcr.io/kodekloud/centos-ssh-enabled:tomcat
-
 			          ports:
-
 			            - containerPort: 8080
 
-5. kubectl create -f /tmp/tomcat.yaml 
+6. kubectl create -f /tmp/tomcat.yaml 
 		service/tomcat-service-xfusion created
 		deployment.apps/tomcat-deployment-xfusion created
 
-6. kubectl get deploy -n tomcat-namespace-xfusion
+7. kubectl get deploy -n tomcat-namespace-xfusion
 		NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
 		tomcat-deployment-xfusion   0/1     1            0           31s
    
@@ -3772,7 +3161,7 @@ Note: The kubectl on jump_host has been configured to work with the kubernetes c
 		NAME                                         READY   STATUS    RESTARTS   AGE
 		tomcat-deployment-xfusion-654c5b77ff-qvnqh   1/1     Running   0          52s
 
-7. kubectl exec tomcat-deployment-xfusion-654c5b77ff-qvnqh -n tomcat-namespace-xfusion -- curl http://localhost:8080
+8. kubectl exec tomcat-deployment-xfusion-654c5b77ff-qvnqh -n tomcat-namespace-xfusion -- curl http://localhost:8080
 		  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 		                                 Dload  Upload   Total   Spent    Left  Speed
 		  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0<!DOCTYPE html>
@@ -4056,7 +3445,7 @@ Last login: Mon Jul  4 11:36:22 UTC 2022 on pts/0
 		steve:x:1001:1001::/home/steve:/bin/bash
 
 6. vi ~/playbooks/add_users.yml
-   cat add_users.yml 
+
 			---                                                                                                              
 			- name: Ansbile Add User & Group                                                                       
 			  hosts: stapp02                                                                                                
@@ -4095,7 +3484,7 @@ Last login: Mon Jul  4 11:36:22 UTC 2022 on pts/0
 			    - mark                                                                                                       
 			    - ray  
 
-7. ansible-playbook -i inventory add_users.yml 
+8. ansible-playbook -i inventory add_users.yml 
 
 			PLAY [Ansbile Add User & Group] *************************************************************************************************************
 
@@ -4122,7 +3511,7 @@ Last login: Mon Jul  4 11:36:22 UTC 2022 on pts/0
 			PLAY RECAP **********************************************************************************************************************************
 			stapp02                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
-8. ansible stapp02 -a "cat /etc/passwd" -i inventory
+9. ansible stapp02 -a "cat /etc/passwd" -i inventory
 			stapp02 | CHANGED | rc=0 >>
 			root:x:0:0:root:/root:/bin/bash
 			bin:x:1:1:bin:/bin:/sbin/nologin
@@ -4150,7 +3539,7 @@ Last login: Mon Jul  4 11:36:22 UTC 2022 on pts/0
 			mark:x:1007:1003::/var/www/mark:/bin/bash
 			ray:x:1008:1003::/var/www/ray:/bin/bash
 
-9. ssh rob@stapp02
+10. ssh rob@stapp02
 		The authenticity of host 'stapp02 (172.16.238.11)' can't be established.
 		ECDSA key fingerprint is SHA256:7RCf6YZUPBcZw8m3zXVF7SaKj4h3sMVtsQb1QBHyIwE.
 		ECDSA key fingerprint is MD5:74:a3:7f:20:34:82:27:27:3a:27:4f:32:25:a3:67:c4.
@@ -4159,7 +3548,7 @@ Last login: Mon Jul  4 11:36:22 UTC 2022 on pts/0
 		rob@stapp02's password: 
 		[rob@stapp02 ~]$ 
 
-10. [rob@stapp02 ~]$ sudo su -
+11. [rob@stapp02 ~]$ sudo su -
 		[root@stapp02 ~]# 
 		[root@stapp02 ~]# pwd
 		/root
@@ -4171,14 +3560,10 @@ Last login: Mon Jul  4 11:36:22 UTC 2022 on pts/0
 		[rob@stapp02 ~]$ exit
 		logout
 		Connection to stapp02 closed.
-11. ssh ray@stapp02
+12. ssh ray@stapp02
 		ray@stapp02's password: 
-		[ray@stapp02 ~]$ 
-		[ray@stapp02 ~]$ 
 		[ray@stapp02 ~]$ pwd
 		/var/www/ray
-		[ray@stapp02 ~]$ 
-		[ray@stapp02 ~]$ 
 		[ray@stapp02 ~]$ sudo su -
 
 			We trust you have received the usual lecture from the local System
@@ -4221,17 +3606,15 @@ kube-node-lease      Active   4h4m
 kube-public          Active   4h4m
 kube-system          Active   4h4m
 local-path-storage   Active   4h3m
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 No resources found in default namespace.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ vi /tmp/reslimit.yaml
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ cat /tmp/reslimit.yaml 
+
+thor@jump_host ~$ cat /tmp/reslimit.yaml
+
+----
 apiVersion: v1
 kind: Pod
 metadata:
@@ -4247,19 +3630,14 @@ spec:
       limits:
         memory: "20Mi"
         cpu: "100m"
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl create -f /tmp/reslimit.yaml 
 pod/httpd-pod created
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 NAME        READY   STATUS    RESTARTS   AGE
 httpd-pod   1/1     Running   0          14s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl describe pods http-pod
 Error from server (NotFound): pods "http-pod" not found
 thor@jump_host ~$ kubectl describe pods httpd-pod
@@ -4338,20 +3716,16 @@ thor@jump_host ~/ansible$ ls -ahl
 total 8.0K
 drwxr-xr-x 2 thor thor 4.0K Jul 14 02:48 .
 drwxr----- 1 thor thor 4.0K Jul 14 02:48 ..
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+
 thor@jump_host ~/ansible$ vi inventory
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+
 thor@jump_host ~/ansible$ cat inventory 
 stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n  ansible_user=tony
 
 stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@  ansible_user=steve
 
 stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n  ansible_user=banner
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+
 thor@jump_host ~/ansible$ ansible all -a "ls -ahl /opt/sysops" -i inventory 
 stapp03 | CHANGED | rc=0 >>
 total 8.0K
@@ -4365,26 +3739,20 @@ stapp01 | CHANGED | rc=0 >>
 total 8.0K
 drwxr-xr-x 2 root root 4.0K Jul 14 02:48 .
 drwxr-xr-x 1 root root 4.0K Jul 14 02:48 ..
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+
 thor@jump_host ~/ansible$ vi playbook.yml
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+
 thor@jump_host ~/ansible$ cat playbook.yml 
+
+---
 - name: Ansible copy
-
   hosts: all
-
   become: yes
-
   tasks:
-
     - name: copy index.html to sysops folder
-
       copy: src=/usr/src/sysops/index.html dest=/opt/sysops
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+      
+
 thor@jump_host ~/ansible$ ansible-playbook -i inventory playbook.yml
 
 PLAY [Ansible copy] *************************************************************************************************************************
@@ -4479,34 +3847,22 @@ thor@jump_host ~/ansible$
 thor@jump_host ~/ansible$ 
 thor@jump_host ~/ansible$ cat playbook.yml 
 - name: Task create archive and copy to host
-
   hosts: stapp01, stapp02, stapp03
-
   become: yes
-
   tasks:
-
     - name: As per the task create the archive file and set the owner
-
       archive:
-
         path: /usr/src/itadmin/
-
         dest: /opt/itadmin/official.tar.gz
-
         format: gz
-
         force_archive: true
-
         owner: "{{ ansible_user }}"
-
         group: "{{ ansible_user }}"
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+      
+
 thor@jump_host ~/ansible$ ls -ahl /usr/src/itadmin
 ls: cannot access /usr/src/itadmin: No such file or directory
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+
 thor@jump_host ~/ansible$ ansible-playbook -i inventory playbook.yml
 
 PLAY [Task create archive and copy to host] *************************************************************************************************
@@ -4526,9 +3882,7 @@ stapp01                    : ok=2    changed=1    unreachable=0    failed=0    s
 stapp02                    : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 stapp03                    : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
-thor@jump_host ~/ansible$ 
+
 thor@jump_host ~/ansible$ ansible all -a "ls -ahl /opt/itadmin" -i inventory 
 stapp01 | CHANGED | rc=0 >>
 total 12K
@@ -4547,8 +3901,8 @@ drwxr-xr-x 1 root  root  4.0K Jul 17 16:14 ..
 -rw-r--r-- 1 steve steve  178 Jul 17 16:19 official.tar.gz
 thor@jump_host ~/ansible$
 
-
 --------------------------------------------------------------------------------------------------------------------------------
+
 Task 71: 21/Jul/2022
 
  Puppet Manage Services
@@ -4566,8 +3920,6 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
 
-
-
 thor@jump_host ~$ ssh -t steve@stapp02 "systemctl status httpd"
 The authenticity of host 'stapp02 (172.16.238.11)' can't be established.
 ECDSA key fingerprint is SHA256:cPKTsscSCR1Q3bxjworQ0ZblELpSiTS9fk6221Fg3qA.
@@ -4577,9 +3929,7 @@ Warning: Permanently added 'stapp02,172.16.238.11' (ECDSA) to the list of known 
 steve@stapp02's password: 
 Unit httpd.service could not be found.
 Connection to stapp02 closed.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ sudo su -
 
 We trust you have received the usual lecture from the local System
@@ -4590,9 +3940,7 @@ Administrator. It usually boils down to these three things:
     #3) With great power comes great responsibility.
 
 [sudo] password for thor: 
-root@jump_host ~# 
-root@jump_host ~# 
-root@jump_host ~# 
+
 root@jump_host ~# cd /etc/puppetlabs/code/environments/production/manifests/
 root@jump_host /etc/puppetlabs/code/environments/production/manifests# ls -ahl
 total 8.0K
@@ -4648,9 +3996,7 @@ Administrator. It usually boils down to these three things:
     #3) With great power comes great responsibility.
 
 [sudo] password for steve: 
-[root@stapp02 ~]# 
-[root@stapp02 ~]# 
-[root@stapp02 ~]# 
+
 [root@stapp02 ~]# puppet agent -tv
 Info: Using configured environment 'production'
 Info: Retrieving pluginfacts
@@ -4689,9 +4035,7 @@ Jul 21 14:43:16 stapp02.stratos.xfusioncorp.com systemd[1]: httpd.service: Got n
 Jul 21 14:43:16 stapp02.stratos.xfusioncorp.com systemd[1]: httpd.service: got READY=1
 Jul 21 14:43:16 stapp02.stratos.xfusioncorp.com systemd[1]: httpd.service: got STATUS=Total requests: 0; Current requests/sec: 0; Cu... B/sec
 Hint: Some lines were ellipsized, use -l to show in full.
-[root@stapp02 ~]# 
-[root@stapp02 ~]# 
-[root@stapp02 ~]#
+
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 72: 2/Aug/2022
@@ -4736,7 +4080,9 @@ thor@jump_host ~$ kubectl get pods
 No resources found in default namespace.
 
 thor@jump_host ~$ vi /tmp/envars.yml
-thor@jump_host ~$ cat /tmp/envars.yml 
+thor@jump_host ~$ cat /tmp/envars.yml
+
+---
 apiVersion: v1
 kind: Pod
 metadata:
@@ -4775,14 +4121,11 @@ spec:
 
 thor@jump_host ~$ kubectl create -f /tmp/envars.yml 
 pod/envars created
-thor@jump_host ~$ 
+
 
 thor@jump_host ~$ kubectl get pods
 NAME     READY   STATUS    RESTARTS   AGE
 envars   1/1     Running   0          6s
-
-thor@jump_host ~$ 
-thor@jump_host ~$ 
  
 thor@jump_host ~$ kubectl exec -it envars  -n default  -- /bin/sh
 
@@ -4823,9 +4166,6 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 :- Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first.
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
-
-
-
 
 thor@jump_host$ sudo su -
 
@@ -5195,75 +4535,45 @@ thor@jump_host ~$ kubectl get pods
 
 thor@jump_host ~$ vi /tmp/webserver.yaml
 thor@jump_host ~$ cat /tmp/webserver.yaml
+
 		apiVersion: v1
-
 		kind: Pod
-
 		metadata:
-
 		  name: webserver
-
 		  labels:
-
 		    name: webserver
-
 		spec:
-
 		  volumes:
-
 		    - name: shared-logs
-
 		      emptyDir: {}
-
 		  containers:
-
 		    - name: nginx-container
-
 		      image: nginx:latest
-
 		      volumeMounts:
-
 		        - name: shared-logs
-
 		          mountPath: /var/log/nginx
-
 		    - name: sidecar-container
-
 		      image: ubuntu:latest
-
 		      command:
-
 		        [
-
 		          "/bin/bash",
-
 		          "-c",
-
 		          "while true; do cat /var/log/nginx/access.log /var/log/nginx/error.log; sleep 30; done",
-
 		        ]
-
 		      volumeMounts:
-
 		        - name: shared-logs
-
 		          mountPath: /var/log/nginx
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+ 
 thor@jump_host ~$ kubectl create -f /tmp/webserver.yaml 
 		pod/webserver created
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl get pods
 		NAME        READY   STATUS              RESTARTS   AGE
 		webserver   0/2     ContainerCreating   0          8s
 thor@jump_host ~$ kubectl get pods
 		NAME        READY   STATUS    RESTARTS   AGE
 		webserver   2/2     Running   0          32s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl describe pods webserver
 		Name:         webserver
 		Namespace:    default
@@ -5366,63 +4676,41 @@ c. GROUP and its value should be Datacenter
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-1.
-thor@jump_host ~$ kubectl get services
+1.thor@jump_host ~$ kubectl get services
 		NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 		kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   88m
 
 thor@jump_host ~$ kubectl get pods
 		No resources found in default namespace.
 
-2.
-thor@jump_host ~$ vi /tmp/env.yml
+2.thor@jump_host ~$ vi /tmp/env.yml
 
 thor@jump_host ~$ cat /tmp/env.yml
+
 		apiVersion: v1
-
 		kind: Pod
-
 		metadata:
-
 		  name: print-envars-greeting
-
 		  labels:
-
 		    name: print-envars-greeting
-
 		spec:
-
 		  containers:
-
 		    - name: print-env-container
-
 		      image: bash
-
 		      env:
-
 		        - name: GREETING
-
 		          value: "Welcome to"
-
 		        - name: COMPANY
-
 		          value: "Nautilus"
-
 		        - name: GROUP
-
 		          value: "Datacenter"
-
 		      command: ["echo"]
-
 		      args: ["$(GREETING) $(COMPANY) $(GROUP)"]
 
-
-3.
-thor@jump_host ~$ kubectl create -f /tmp/env.yml
+3.thor@jump_host ~$ kubectl create -f /tmp/env.yml
 		pod/print-envars-greeting created
 
-4.
-thor@jump_host ~$ kubectl get pods
+4.thor@jump_host ~$ kubectl get pods
 		NAME                    READY   STATUS      RESTARTS   AGE
 		print-envars-greeting   0/1     Completed   1          14s
 
@@ -5430,12 +4718,9 @@ thor@jump_host ~$ kubectl get pods
 		NAME                    READY   STATUS      RESTARTS   AGE
 		print-envars-greeting   0/1     Completed   2          30s
 
-5.
-thor@jump_host ~$ kubectl logs -f print-envars-greeting
+5.thor@jump_host ~$ kubectl logs -f print-envars-greeting
 		Welcome to Nautilus Datacenter
-thor@jump_host ~$
-
-
+  
 --------------------------------------------------------------------------------------------------------------------------------
 Task 79: 18/Sep/2022
 
@@ -5454,12 +4739,10 @@ The Nautilus DevOps team is working to deploy some tools in Kubernetes cluster. 
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-1.
-thor@jump_host ~$ cat /opt/news.txt 
+1.thor@jump_host ~$ cat /opt/news.txt 
 	5ecur3
 
-2. 
-thor@jump_host ~$ kubectl create secret generic news --from-file=/opt/news.txt 
+2. thor@jump_host ~$ kubectl create secret generic news --from-file=/opt/news.txt 
 	secret/news created
  
 thor@jump_host ~$ ls -ahl /opt/
@@ -5468,54 +4751,34 @@ thor@jump_host ~$ ls -ahl /opt/
 	drwxr-xr-x 1 root root 4.0K Sep 18 17:35 ..
 	-rw-r--r-- 1 root root    7 Sep 18 17:35 news.txt
 
-3.
-thor@jump_host ~$ vi /tmp/secret.yml
+3.thor@jump_host ~$ vi /tmp/secret.yml
  
-thor@jump_host ~$ cat /tmp/secret.yml 
+thor@jump_host ~$ cat /tmp/secret.yml
+
 		apiVersion: v1
-
 		kind: Pod
-
 		metadata:
-
 		  name: secret-xfusion
-
 		  labels:
-
 		    name: myapp
-
 		spec:
-
 		  volumes:
-
 		    - name: secret-volume-xfusion
-
 		      secret:
-
 		        secretName: news
-
 		  containers:
-
 		    - name: secret-container-xfusion
-
 		      image: fedora:latest
-
 		      command: ["/bin/bash", "-c", "sleep 10000"]
-
 		      volumeMounts:
-
 		        - name: secret-volume-xfusion
-
 		          mountPath: /opt/cluster
-
 		          readOnly: true
 
-4.
-thor@jump_host ~$ kubectl create -f /tmp/secret.yml 
+4.thor@jump_host ~$ kubectl create -f /tmp/secret.yml 
 	pod/secret-xfusion created
 
-5.
-thor@jump_host ~$ kubectl get pods 
+5.thor@jump_host ~$ kubectl get pods 
 	NAME             READY   STATUS              RESTARTS   AGE
 	secret-xfusion   0/1     ContainerCreating   0          7s
 
@@ -5527,11 +4790,8 @@ thor@jump_host ~$ kubectl get pods
 	NAME             READY   STATUS    RESTARTS   AGE
 	secret-xfusion   1/1     Running   0          78s
 
-6.	
-thor@jump_host ~$ kubectl exec secret-xfusion -- cat /opt/cluster/news.txt
+6.	thor@jump_host ~$ kubectl exec secret-xfusion -- cat /opt/cluster/news.txt
 	5ecur3
-thor@jump_host ~$ 
-
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 80: 20/Sep/2022
@@ -5585,64 +4845,36 @@ thor@jump_host ~/ansible$ pwd
 thor@jump_host ~/ansible$ vi playbook.yml
  
 thor@jump_host ~/ansible$ cat playbook.yml 
+
 	- name: Create text files and create soft link
-
 	  hosts: stapp01, stapp02, stapp03
-
 	  become: yes
-
 	  tasks:
-
 	    - name: Create the blog.txt on stapp01
-
 	      file:
-
 	        path: /opt/security/blog.txt
-
 	        owner: tony
-
 	        group: tony
-
 	        state: touch
-
 	      when: inventory_hostname == "stapp01"
-
 	    - name: Create the story.txt on stapp02
-
 	      file:
-
 	        path: /opt/security/story.txt
-
 	        owner: steve
-
 	        group: steve
-
 	        state: touch
-
 	      when: inventory_hostname == "stapp02"
-
 	    - name: Create the media.txt on stapp03
-
 	      file:
-
 	        path: /opt/security/media.txt
-
 	        owner: banner
-
 	        group: banner
-
 	        state: touch
-
 	      when: inventory_hostname == "stapp03"
-
 	    - name: Link /opt/security directory
-
 	      file:
-
 	        src: /opt/security/
-
 	        dest: /var/www/html
-
 	        state: link
 
 3. Run the playbook	        
@@ -5802,12 +5034,10 @@ root@jump_host ~# ping puppet
 root@jump_host ~# vi /etc/puppetlabs/puppet/autosign.conf
 
 root@jump_host ~# cat /etc/puppetlabs/puppet/autosign.conf
+
 		jump_host.stratos.xfusioncorp.com
-
 		stapp01.stratos.xfusioncorp.com
-
 		stapp02.stratos.xfusioncorp.com
-
 		stapp03.stratos.xfusioncorp.com
 
 4. Restart Puppet Server for changes to take into effect
@@ -5985,76 +5215,44 @@ thor@jump_host ~$ kubectl get namespace
 thor@jump_host ~$ vi /tmp/jenkins.yaml
 
 thor@jump_host ~$ cat /tmp/jenkins.yaml
+
 		apiVersion: v1
-
 		kind: Service
-
 		metadata:
-
 		  name: jenkins-service
-
 		  namespace: jenkins
-
 		spec:
-
 		  type: NodePort
-
 		  selector:
-
 		    app: jenkins
-
 		  ports:
-
 		    - port: 8080
-
 		      targetPort: 8080
-
 		      nodePort: 30008
 
 		---
 
 		apiVersion: apps/v1
-
 		kind: Deployment
-
 		metadata:
-
 		  name: jenkins-deployment
-
 		  namespace: jenkins
-
 		  labels:
-
 		    app: jenkins
-
 		spec:
-
 		  replicas: 1
-
 		  selector:
-
 		    matchLabels:
-
 		      app: jenkins
-
 		  template:
-
 		    metadata:
-
 		      labels:
-
 		        app: jenkins
-
 		    spec:
-
 		      containers:
-
 		        - name: jenkins-container
-
 		          image: jenkins/jenkins
-
 		          ports:
-
 		            - containerPort: 8080
 
 4. Create pod
@@ -6329,6 +5527,7 @@ thor@jump_host ~$ kubectl get all
 thor@jump_host ~$ vi /tmp/redis.yml
 
 thor@jump_host ~$ cat /tmp/redis.yml 
+
 		---
 		kind: ConfigMap
 		apiVersion: v1
@@ -6737,61 +5936,35 @@ thor@jump_host ~/ansible$ pwd
 
 thor@jump_host ~/ansible$ vi playbook.yml
  
-thor@jump_host ~/ansible$ cat playbook.yml 
+thor@jump_host ~/ansible$ cat playbook.yml
+
 		- name: Copy text files to Appservers
-
 		  hosts: all
-
 		  become: yes
-
 		  tasks:
-
 		    - name: Copy blog.txt to stapp01
-
 		      ansible.builtin.copy:
-
 		        src: /usr/src/devops/blog.txt
-
 		        dest: /opt/devops/
-
 		        owner: tony
-
 		        group: tony
-
 		        mode: "0777"
-
 		      when: inventory_hostname == "stapp01"
-
 		    - name: Copy story.txt to stapp02
-
 		      ansible.builtin.copy:
-
 		        src: /usr/src/devops/story.txt
-
 		        dest: /opt/devops/
-
 		        owner: steve
-
 		        group: steve
-
 		        mode: "0777"
-
 		      when: inventory_hostname == "stapp02"
-
 		    - name: Copy media.txt to stapp03
-
 		      ansible.builtin.copy:
-
 		        src: /usr/src/devops/media.txt
-
 		        dest: /opt/devops/
-
 		        owner: banner
-
 		        group: banner
-
 		        mode: "0777"
-
 		      when: inventory_hostname == "stapp03"
 
 4. Run/execute the playbook
