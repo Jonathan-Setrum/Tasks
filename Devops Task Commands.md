@@ -284,26 +284,8 @@ d. Start and enable httpd service.
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory httpd.yml, so please make sure the playbook works this way without passing any extra arguments.
 
-
-thor@jump_host ~$ cd playbooks/
-thor@jump_host ~/playbooks$ ll -a
-total 20
-drwxr-xr-x 3 thor thor 4096 Feb 24 05:10 .
-drwxr----- 1 thor thor 4096 Feb 24 05:10 ..
--rw-r--r-- 1 thor thor   36 Feb 24 05:10 ansible.cfg
--rw-r--r-- 1 thor thor  237 Feb 24 05:10 inventory
-drwxr-xr-x 2 thor thor 4096 Feb 24 05:10 templates
-thor@jump_host ~/playbooks$ cd inventory 
-bash: cd: inventory: Not a directory
-thor@jump_host ~/playbooks$ ll -a
-total 20
-drwxr-xr-x 3 thor thor 4096 Feb 24 05:10 .
-drwxr----- 1 thor thor 4096 Feb 24 05:10 ..
--rw-r--r-- 1 thor thor   36 Feb 24 05:10 ansible.cfg
--rw-r--r-- 1 thor thor  237 Feb 24 05:10 inventory
-drwxr-xr-x 2 thor thor 4096 Feb 24 05:10 templates
+```
 thor@jump_host ~/playbooks$ vi httpd.yml
-thor@jump_host ~/playbooks$ cat httpd.yml
 
 ---
 - name: Setup Httpd and PHP
@@ -337,17 +319,9 @@ thor@jump_host ~/playbooks$ cat httpd.yml
         name: httpd
         state: started
         enabled: yes
-      
+```      
 
-thor@jump_host ~/playbooks$ cd templates/
-thor@jump_host ~/playbooks/templates$  ll-a
-bash: ll-a: command not found
-thor@jump_host ~/playbooks/templates$  ll -a
-total 12
-drwxr-xr-x 2 thor thor 4096 Feb 24 05:10 .
-drwxr-xr-x 3 thor thor 4096 Feb 24 05:13 ..
--rw-r--r-- 1 thor thor   19 Feb 24 05:10 phpinfo.php.j2
-thor@jump_host ~/playbooks/templates$ cd ../
+```
 thor@jump_host ~/playbooks$ ansible-playbook -i inventory httpd.yml 
 
 PLAY [Setup Httpd and PHP] ******************************************************************************************************************
@@ -405,6 +379,7 @@ drwxr-xr-x 3 root   root   4.0K Feb 24 05:15 .
 drwxr-xr-x 4 root   root   4.0K Feb 24 05:15 ..
 drwxr-xr-x 2 apache apache 4.0K Feb 24 05:15 myroot
 [root@stapp01 html]# 
+```
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -521,22 +496,13 @@ The deployment name is redis-deployment. The pods are not in running state right
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-thor@jump_host ~$ kubectl get-deployment
-Error: unknown command "get-deployment" for "kubectl"
-Run 'kubectl --help' for usage.
+```
 thor@jump_host ~$ kubectl get deployment
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 redis-deployment   0/1     1            0           71s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get pods
 NAME                               READY   STATUS              RESTARTS   AGE
 redis-deployment-8bdf985f7-65g4j   0/1     ContainerCreating   0          106s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get configmap
 NAME               DATA   AGE
 kube-root-ca.crt   1      20m
@@ -587,9 +553,6 @@ Events:
   Type    Reason             Age    From                   Message
   ----    ------             ----   ----                   -------
   Normal  ScalingReplicaSet  2m45s  deployment-controller  Scaled up replica set redis-deployment-8bdf985f7 to 1
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl describe pods
 Name:           redis-deployment-8bdf985f7-65g4j
 Namespace:      default
@@ -684,7 +647,6 @@ zZiAqUXdZmZQXDWK6mlQELlg0u48IhGrHrF6
 
 Events:  <none>
 
-
 Name:         redis-config
 Namespace:    default
 Labels:       <none>
@@ -716,7 +678,7 @@ NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 redis-deployment   1/1     1            1           9m33s
 thor@jump_host ~$ 
 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 43 : 12/Mar/2022
 Deploy Grafana on Kubernetes Cluster
@@ -731,7 +693,7 @@ You need not to make any configuration changes inside the Grafana app once deplo
 
 Note: The kubeclt on jump_host has been configured to work with kubernetes cluster.
 
-
+```
 thor@jump_host ~$ kubectl get pods
 No resources found in default namespace.
 
@@ -739,10 +701,8 @@ thor@jump_host ~$ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3h16m
 
-thor@jump_host ~$ vi /tmp/grafana.yaml
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ cat /tmp/grafana.yaml
+thor@jump_host ~$ vi /tmp/grafana.yaml
 
 ---
 apiVersion: v1
@@ -790,7 +750,7 @@ thor@jump_host ~$
 thor@jump_host ~$ kubectl get pods
 NAME                                           READY   STATUS    RESTARTS   AGE
 grafana-deployment-nautilus-66bb8cdd8b-xkrwz   1/1     Running   0          22s
-
+```
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 44 : 16/Mar/2022
 
@@ -811,66 +771,37 @@ There are some jobs/tasks that need to be run regularly on different schedules. 
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 thor@jump_host ~$ kubectl get pods
 No resources found in default namespace.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get cronjobs
 No resources found in default namespace.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get cronjob
 No resources found in default namespace.
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ vi /tmp/cron.yml
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ cat /tmp/cron.yml 
+
 apiVersion: batch/v1beta1
-
 kind: CronJob
-
 metadata:
-
   name: devops
-
 spec:
-
   schedule: "*/5 * * * *"
-
   jobTemplate:
-
     spec:
-
       template:
-
         spec:
-
           containers:
-
             - name: cron-devops
-
               image: nginx:latest
-
               command:
-
                 - /bin/sh
-
                 - -c
-
                 - echo Welcome to xfusioncorp!
-
           restartPolicy: OnFailure
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
+
 thor@jump_host ~$ kubectl create -f /tmp/cron.yml 
 cronjob.batch/devops created
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get pods
 No resources found in default namespace.
 thor@jump_host ~$ kubectl get pod
@@ -878,8 +809,6 @@ No resources found in default namespace.
 thor@jump_host ~$ kubectl get cronjob
 NAME     SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
 devops   */5 * * * *   False     0        <none>          35s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get pod
 No resources found in default namespace.
 thor@jump_host ~$ kubectl get pod
@@ -889,10 +818,6 @@ No resources found in default namespace.
 thor@jump_host ~$ kubectl get cronjob
 NAME     SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
 devops   */5 * * * *   False     0        <none>          61s
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
-thor@jump_host ~$ 
 thor@jump_host ~$ kubectl get cronjob
 NAME     SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
 devops   */5 * * * *   False     0        <none>          67s
@@ -906,7 +831,7 @@ thor@jump_host ~$ kubectl get pod
 NAME                      READY   STATUS              RESTARTS   AGE
 devops-1647415500-7jhh7   0/1     ContainerCreating   0          16s
 thor@jump_host ~$ kubectl logs devops-1647415500-7jhh7
-
+```
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 Task 45 : 18/Mar/2022
@@ -920,6 +845,7 @@ b. There is a file /tmp/index.html on same server; copy this file to the repo an
 
 c. Finally push master branch to this new remote origin.
 
+```
 thor@jump_host ~$ ssh natasha@ststor01
 The authenticity of host 'ststor01 (172.16.238.15)' can't be established.
 ECDSA key fingerprint is SHA256:ZYks87RZDpXlv4gMTVaz+GZFGeGKd3ziPSVrZQSr8vI.
@@ -983,6 +909,7 @@ Total 6 (delta 0), reused 0 (delta 0)
 To /opt/xfusioncorp_beta.git
  * [new branch]      master -> master
 Branch master set up to track remote branch master from dev_beta.
+```
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 46: 19/Mar/2022
@@ -996,6 +923,7 @@ b. Configure Apache to listen on port 5001 instead of default http port. Do not 
 
 c. Make sure Apache service is up and running inside the container. Keep the container in running state at the end.
 
+```
 thor@jump_host ~$ ssh tony@stapp01
 The authenticity of host 'stapp01 (172.16.238.10)' can't be established.
 ECDSA key fingerprint is SHA256:4yH914g0tXmYd6hoQ6Lf3EOXLvLr0mE6XM97FGBFex0.
@@ -1020,8 +948,6 @@ CONTAINER ID   IMAGE           COMMAND   CREATED              STATUS            
 b71b6813474d   ubuntu:latest   "bash"    About a minute ago   Up About a minute             kkloud
 
 [root@stapp01 ~]# docker exec -it kkloud /bin/sh
-
-```
 # 
 # 
 # apt install apache2 -y
@@ -1353,6 +1279,7 @@ We are working on an application that will be deployed on multiple containers wi
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1.kubectl get services
 	NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 	kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   13m
@@ -1411,7 +1338,7 @@ exit
 
 9.kubectl exec -it volume-share-devops -c volume-container-devops-2 -- ls /tmp/cluster
 	media.txt
-
+```
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 48 : 22/Mar/2022
 ReplicationController in Kubernetes
@@ -1426,6 +1353,7 @@ All pods should be running state after deployment.
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 thor@jump_host ~$ kubectl get namespace
 NAME                 STATUS   AGE
 default              Active   62m
@@ -1514,6 +1442,7 @@ Commercial support is available at
 </html>
 100   615  100   615    0     0   600k      0 --:--:-- --:--:-- --:--:--  600k
 
+```
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 49 : 24/Mar/2022
 Git Revert Some Changes
@@ -1524,7 +1453,7 @@ The Nautilus application development team was working on a git repository /usr/s
 
     Use revert beta message (please use all small letters for commit message) for the new revert commit.
 
-
+```
 thor@jump_host ~$ ssh natasha@ststor01
 The authenticity of host 'ststor01 (172.16.238.15)' can't be established.
 ECDSA key fingerprint is SHA256:T7UXzHW+LeEeNkv73OTPOhek8Of2LkVCFEhN9lBPkfE.
@@ -1542,9 +1471,6 @@ Administrator. It usually boils down to these three things:
     #3) With great power comes great responsibility.
 
 [sudo] password for natasha: 
-[root@ststor01 ~]# 
-[root@ststor01 ~]# 
-[root@ststor01 ~]# 
 [root@ststor01 ~]# cd /usr/src/kodekloudrepos/beta/
 [root@ststor01 beta]# ls -ahl
 total 16K
@@ -1610,7 +1536,7 @@ Date:   Thu Mar 24 07:33:32 2022 +0000
 
     initial commit
 [root@ststor01 beta]# 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 50 : 25/Mar/2022
 
@@ -1629,6 +1555,7 @@ Ansible managed node IP is <default ipv4 address>
 
 Note: Do not create a separate role for this task, just add all of the changes in index.yml playbook.
 
+```
 thor@jump_host ~$ cd /home/thor/playbooks/
 
 thor@jump_host ~/playbooks$ ls -ahl
@@ -1642,9 +1569,10 @@ stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n ansible_user=tony
 stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@ ansible_user=steve
 stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n ansible_user=bannerthor@jump_host ~/playbooks$ 
 
-thor@jump_host ~/playbooks$ vi index.yml
 
 thor@jump_host ~/playbooks$ cat index.yml 
+thor@jump_host ~/playbooks$ vi index.yml
+
 ---
 -
   hosts: stapp01, stapp02, stapp03
@@ -1718,6 +1646,7 @@ ETag: "63-5db092b69f1bb"
 Accept-Ranges: bytes
 Content-Length: 99
 Content-Type: text/html; charset=UTF-8
+```
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 51 : 9/Apr/2022
@@ -1999,6 +1928,7 @@ kubectl apply -f Front-end-service-Redis-php-Guest-Book-App.yaml
 	  0   921    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
 
 21. View Port <Advanced setting> : 30009
+    
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 52 : 15/Apr/2022
 Puppet Setup Database
