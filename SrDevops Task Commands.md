@@ -18,7 +18,7 @@ There are some applications that need to be deployed on Kubernetes cluster and t
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. Check existing running services,deployment and pods
 thor@jump_host ~$ kubectl get all
 	NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -116,6 +116,7 @@ thor@jump_host ~$ kubectl logs -f ic-deploy-devops-68f4dcbdfb-grg6v
 
 thor@jump_host ~$ kubectl exec ic-deploy-devops-68f4dcbdfb-grg6v -- cat /ic/news
 		Init Done - Welcome to xFusionCorp Industries
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 89: 13/Oct/2022
@@ -131,7 +132,7 @@ One of the junior DevOps team members was working on to deploy a stack on Kubern
 Look into the issue and fix it, make sure pod is in running state and you are able to access the app.
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
-
+```
 Name:         webserver
 Namespace:    default
 Priority:     0
@@ -208,8 +209,8 @@ Events:
   Normal   Pulling    12s (x3 over 60s)  kubelet            Pulling image "nginx:latests"
   Warning  Failed     11s (x3 over 60s)  kubelet            Failed to pull image "nginx:latests": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/nginx:latests": failed to resolve reference "docker.io/library/nginx:latests": docker.io/library/nginx:latests: not found
   Warning  Failed     11s (x3 over 60s)  kubelet            Error: ErrImagePull
-
-
+```
+```
 1. Check pod running status using kubectl utility
 thor@jump_host ~$ kubectl get pods
 	NAME        READY   STATUS             RESTARTS   AGE
@@ -393,7 +394,7 @@ thor@jump_host ~$ kubectl describe pod webserver
 thor@jump_host ~$ kubectl get pods
 	NAME        READY   STATUS    RESTARTS   AGE
 	webserver   2/2     Running   0          3m46s
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 90: 15/Oct/2022
 
@@ -410,7 +411,7 @@ The Nautilus DevOps team is working on a Kubernetes template to deploy a web app
     Create a node port type service named web-datacenter using node port 30008 to expose the web server running within the pod.
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
-
+```
 1. Check kubectl utility for currently running services and pods
 thor@jump_host ~$ kubectl get all
 	NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -520,7 +521,7 @@ thor@jump_host ~$ kubectl get pv
 	pv-datacenter   5Gi        RWO            Retain           Bound    default/pvc-datacenter   manual                  45s
 
 6. Validate task by View port on website
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 91: 17/Oct/2022
 
@@ -534,6 +535,7 @@ Click on the Gitea UI button on the top bar. You should be able to access the Gi
 
 Note: For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.
 
+```
 1. SSH to storage server with user max
 thor@jump_host ~$ ssh max@ststor01
 		The authenticity of host 'ststor01 (172.16.238.15)' can't be established.
@@ -664,7 +666,7 @@ max (master)$ git status
 	nothing to commit, working directory clean
 
 max (master)$ 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 92: 19/Oct/2022
 
@@ -682,7 +684,7 @@ d. The user/group owner of /var/www/html/index.html file must be respective sudo
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
-
+```
 1. Go to mentioned folder and verify playbook and inventory
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -799,7 +801,7 @@ thor@jump_host ~/ansible$ ansible stapp02 -i inventory  -a "cat /var/www/html/in
 thor@jump_host ~/ansible$ ansible stapp03 -i inventory  -a "cat /var/www/html/index.html"
 		stapp03 | FAILED | rc=1 >>
 		cat: /var/www/html/index.html: No such file or directorynon-zero return code
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 93: 20/Oct/2022
 
@@ -815,7 +817,7 @@ c. The inventory hostname of the host should be the server name as per the wiki,
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
-
+```
 1. Verify mentioned playbook and other files 
 
 thor@jump_host ~$ cd /home/thor/playbook/
@@ -870,7 +872,7 @@ thor@jump_host ~/playbook$ ansible-playbook -i inventory playbook.yml
 		stapp03                    : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 thor@jump_host ~/playbook$
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 94: 22/Oct/2022
 
@@ -907,7 +909,7 @@ One of the Nautilus developer was working to test new changes on a container. He
 
 a. Create an image apps:xfusion on Application Server 2 from a container ubuntu_latest that is running on same server.
 
-
+```
 1. 1. Login on app server  & Switch to  root user
 
 thor@jump_host ~$ ssh steve@stapp02
@@ -953,7 +955,7 @@ thor@jump_host ~$ ssh steve@stapp02
 		REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
 		apps         xfusion   2158e1542b17   6 seconds ago   116MB
 		ubuntu       latest    216c552ea5ba   2 weeks ago     77.8MB
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 96: 25/Oct/2022
 
@@ -973,7 +975,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 1. Switch to root user on jump host to create puppet programming file
 
 thor@jump_host ~$ sudo su - 
@@ -1053,7 +1055,7 @@ root@jump_host /etc/puppetlabs/code/environments/production/manifests# ssh steve
 		net-tools-2.0-0.25.20131004git.el7.x86_64
 
 [root@stapp02 ~]#
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 97: 27/Oct/2022
 
@@ -1072,7 +1074,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 1. Switch to root user and go to mentioned folder
 
 thor@jump_host ~$ sudo su -
@@ -1150,7 +1152,7 @@ root@jump_host /etc/puppetlabs/code/environments/production/manifests# ssh tony@
 
 [root@stapp01 ~]# cat /etc/passwd |grep ravi
 	ravi:x:1879:1879::/home/ravi:/bin/bash
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 98: 28/Oct/2022
 
@@ -1168,7 +1170,7 @@ The Nautilus DevOps team want to create a time check pod in a particular Kuberne
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. Check kubectl utility config on jump server 
 
 thor@jump_host ~$ kubectl get namespace
@@ -1257,7 +1259,7 @@ thor@jump_host ~$ kubectl get pods -n datacenter
 thor@jump_host ~$ kubectl get pods -n datacenter
 		NAME         READY   STATUS    RESTARTS   AGE
 		time-check   1/1     Running   0          32s
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 99: 04/Nov/2022
 
@@ -1289,7 +1291,7 @@ d) name: MYSQL_PASSWORD, should pick value from secretKeyRef name: mysql-user-pa
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. Check Kubectl service status and config
 
 thor@jump_host ~$ kubectl get all
@@ -1510,7 +1512,7 @@ bash-4.4# printenv
 		MYSQL_SERVICE_HOST=10.96.210.211
 		_=/usr/bin/printenv
 bash-4.4# 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 100: 05/Nov/2022
 
@@ -1522,7 +1524,7 @@ The Nautilus development team shared requirements with the DevOps team regarding
 
     After that create a bare repository /opt/news.git (make sure to use exact name).
 
-
+```
 1. Login on storage server and switch to root user
 
 thor@jump_host ~$ ssh natasha@ststor01
@@ -1663,7 +1665,7 @@ thor@jump_host ~$ ssh natasha@ststor01
 		drwxr-xr-x 4 root root 4.0K Nov  5 15:32 refs
 
 [root@ststor01 news.git]# 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 101: 16/Nov/2022
 
@@ -1697,6 +1699,7 @@ You can use any labels as per your choice.
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1. Check kubectl utility and current configuration
 
 thor@jump_host ~$ kubectl get all
@@ -1811,6 +1814,7 @@ thor@jump_host ~$ kubectl get all
 thor@jump_host ~$ kubectl cp /opt/index.php nginx-phpfpm:/var/www/html --container=nginx-container
 
 6. Validate by clicking on the App Button top right side side of the terminal. If the app is running then the task is done.
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 102: 18/Nov/2022
@@ -1822,6 +1826,7 @@ Nautilus DevOps team is testing some applications deployment on some of the appl
 
     On Application Server 3 create a container named nginx_3 using image nginx with alpine tag and make sure container is in running state.
 
+```
 1.Login to app server 3 and switch to root user 
 
 thor@jump_host ~$ ssh banner@stapp03
@@ -1877,6 +1882,7 @@ thor@jump_host ~$ ssh banner@stapp03
 		nginx        alpine    19dd4d73108a   6 days ago   23.5MB
 
 5. Validate by clicking on the view port top right side side of the terminal and select port 80. If the container is running then we see nginx page and the task is done.
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 103: 20/Nov/2022
@@ -1889,7 +1895,7 @@ Nautilus developers are actively working on one of the project repositories, /us
 
     Please do not try to make any changes in code.
 
-
+```
 1. Login to Storage server and switch to root user 
 
 thor@jump_host ~$ ssh natasha@ststor01
@@ -1953,6 +1959,7 @@ thor@jump_host ~$ ssh natasha@ststor01
 [root@ststor01 apps]# git status
 		# On branch xfusioncorp_apps
 		nothing to commit, working directory clean
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 104: 28/Nov/2022
@@ -1965,7 +1972,7 @@ One of the Nautilus DevOps team members was working on to update an existing Kub
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 thor@jump_host ~$ pwd 
 		/home/thor
 thor@jump_host ~$ ls -ahl
@@ -2680,7 +2687,7 @@ thor@jump_host ~$ kubectl get pvc
 		NAME             STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 		mysql-pv-claim   Bound    mysql-pv   250Mi      RWO            standard       19s
 thor@jump_host ~$ 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 105: 29/Nov/2022
 
@@ -2696,6 +2703,7 @@ c. Load that image archive on App Server 3 with same name and tag which was used
 
 Note: Docker is already installed on both servers; however, if its service is down please make sure to start it.
 
+```
 1. Login to App Server and switch to root
 
 thor@jump_host ~$ ssh tony@stapp01
@@ -2928,7 +2936,7 @@ thor@jump_host ~$ kubectl describe pod httpd-84898796c-cxk8c
 		  Normal  Created    28s   kubelet            Created container httpd
 		  Normal  Started    28s   kubelet            Started container httpd
 thor@jump_host ~$
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 107: 02/Dec/2022
 
@@ -2948,6 +2956,7 @@ d. Create a new branch max_apps from master.
 
 e. Copy a file story-index-max.txt from location /tmp/stories/ to the repository. This file has a typo, which you can fix by changing the word Mooose to Mouse. Commit and push the changes to the newly created branch. Commit message must be "typo fixed for Mooose" (must be done in single commit).
 
+```
 1. Login to Gitea UI using given credentials .
 
 2. Create a new repository 
@@ -3155,7 +3164,7 @@ max (max_apps)$ git push origin max_apps
 max (max_apps)$ git status
 		On branch max_apps
 		nothing to commit, working directory clean
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 108: 03/Dec/2022
 
@@ -3170,7 +3179,7 @@ Use Puppet file resource and perform the below given task:
     Using /etc/puppetlabs/code/environments/production/manifests/apps.pp create a file news.txt under /opt/sysops directory on App Server 1.
 
 
-
+```
 1. Switch to root user on jump server / puppet master and got to mentione folder location
 
 thor@jump_host ~$ sudo su -
@@ -3266,7 +3275,7 @@ root@jump_host /etc/puppetlabs/code/environments/production/manifests# ssh tony@
 		drwxr-xr-x 2 root root 4.0K Dec  3 16:15 .
 		drwxr-xr-x 1 root root 4.0K Dec  3 16:10 ..
 		-rw-r--r-- 1 root root    0 Dec  3 16:15 news.txt
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 109: 05/Dec/2022
 
@@ -3296,7 +3305,7 @@ i. Validation will try to run the playbook using command ansible-playbook -i inv
 
 ii. Do not use any custom or empty marker for blockinfile module.
 
-
+```
 1. Go to mentioned folder and check inventory file.
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -3413,7 +3422,7 @@ thor@jump_host ~/ansible$ curl http://stapp03
 		Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually!
 		# END ANSIBLE MANAGED BLOCK
 thor@jump_host ~/ansible$
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 110: 07/Dec/2022
 
@@ -3427,6 +3436,7 @@ b. Create a new container with name demo from the image you just pulled.
 
 c. Map the host volume /opt/dba with container volume /tmp. There is an sample.txt file present on same server under /tmp; copy that file to /opt/dba. Also please keep the container in running state.
 
+```
 1. Login to App Server and switch to root user
 
 thor@jump_host ~$ ssh steve@stapp02
@@ -3501,7 +3511,7 @@ root@695a584a84ce:/# ls -ahl /tmp/
 		-rw-r--r--  1 root root   23 Dec  7 11:05 sample.txt
 
 root@695a584a84ce:/# 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 111: 08/Dec/2022
 
@@ -3519,6 +3529,7 @@ Write a playbook.yml under /home/thor/ansible on jump host, an inventory is alre
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
+```
 1. Go to mentioned folder and check ansible inventory file 
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -3611,7 +3622,7 @@ thor@jump_host ~/ansible$ ansible -i inventory stapp02 -a 'cat /opt/devops/story
 thor@jump_host ~/ansible$ ansible -i inventory stapp03 -a 'cat /opt/devops/media.txt'
 		stapp03 | CHANGED | rc=0 >>
 		Welcome to xFusionCorp Industries !
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 112: 10/Dec/2022
 
@@ -3621,7 +3632,7 @@ Nautilus project developers are planning to start testing on a new project. As p
 
 a. Pull busybox:musl image on App Server 1 in Stratos DC and re-tag (create new tag) this image as busybox:news
 
-
+```
 1. Login to App Server and switch to root user 
 
 thor@jump_host ~$ ssh tony@stapp01
@@ -3669,7 +3680,7 @@ thor@jump_host ~$ ssh tony@stapp01
 		REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
 		busybox      musl      24d4c1fb43e8   3 days ago   1.41MB
 		busybox      news      24d4c1fb43e8   3 days ago   1.41MB
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 113: 11/Dec/2022
 
@@ -3687,6 +3698,7 @@ Create a playbook.yml under /home/thor/ansible on jump host, an inventory file i
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way, without passing any extra arguments.
 
+```
 1. Go to mentioned folder and check ansible inventory file 
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -3814,7 +3826,6 @@ thor@jump_host ~/ansible$ ansible-playbook -i inventory playbook.yml
 		stapp02                    : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 		stapp03                    : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
-
 4. Validate the task by checking the files on each server 
 
 thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/sysops/"
@@ -3833,7 +3844,7 @@ thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/sysops/"
 		drwxr-xr-x  2 root root 4.0K Dec 11 05:25 .
 		drwxr-xr-x  1 root root 4.0K Dec 11 05:22 ..
 		-rw-rw-r--+ 1 root root    0 Dec 11 05:25 media.txt
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 114: 12/Dec/2022
 
@@ -3845,6 +3856,7 @@ There is a deployment named nginx-deployment; roll it back to the previous revis
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1. check existing deployment and pods running status
 
 thor@jump_host ~$ kubectl  get all
@@ -3928,7 +3940,7 @@ thor@jump_host ~$ kubectl  get all
 		replicaset.apps/nginx-deployment-594c94667b   0         0         0       2m17s
 		replicaset.apps/nginx-deployment-74fb588559   3         3         3       2m28s
 thor@jump_host ~$
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 115: 13/Dec/2022
 
@@ -3938,7 +3950,7 @@ To manage all servers within the stack using Ansible, the Nautilus DevOps team i
 
 On jump host make appropriate changes so that Ansible can use kareem as a default ssh user for all hosts. Make changes in Ansible's default configuration only —please do not try to create a new config.
 
-
+```
 1. Switch to root user on jump_host
 
 		thor@jump_host ~$ sudo su -
@@ -3965,6 +3977,7 @@ On jump host make appropriate changes so that Ansible can use kareem as a defaul
 		remote_user = kareem
 
 [root@jump_host ~]#
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 116: 14/Dec/2022
@@ -3977,6 +3990,7 @@ The Nautilus development team shared with the DevOps team requirements for new a
 
     After that create/init a git repository /opt/apps.git (use the exact name as asked and make sure not to create a bare repository).
 
+```
 1. Login to Storage server and switch to root user
 
 thor@jump_host ~$ ssh natasha@ststor01
@@ -4106,6 +4120,7 @@ thor@jump_host ~$ ssh natasha@ststor01
 		drwxr-xr-x 1 root root 4.0K Dec 14 14:12 ..
 		drwxr-xr-x 7 root root 4.0K Dec 14 14:12 .git
 [root@ststor01 apps.git]#
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 117: 18/Dec/2022
@@ -4134,6 +4149,7 @@ Also make sure this new line is added at the top of the file.
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
+```
 1. Go to mentioned  ansible folder and check inventory and confing files
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -4257,6 +4273,7 @@ thor@jump_host ~/ansible$ curl http://stapp03
 		Welcome to Nautilus Group!
 		This is a Nautilus sample file, created using Ansible!
 thor@jump_host ~/ansible$ 
+```
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 118: 20/Dec/2022
@@ -4277,6 +4294,7 @@ e. There is a readme.md file in /tmp on storage server itself; copy that to repo
 
 f. Also create master branch from your branch and remember you should not be able to push to master as per hook you have set up.
 
+```
 1. Login to Storage server and swithc to root user 
 
 thor@jump_host ~$ ssh natasha@ststor01
@@ -4518,7 +4536,7 @@ thor@jump_host ~$ ssh natasha@ststor01
 		 ! [remote rejected] master -> master (hook declined)
 		error: failed to push some refs to '/opt/beta.git'
 [root@ststor01 beta]#
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 119: 23/Dec/2022
 
@@ -4537,7 +4555,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 1. Switch to root user on puppet master / jump host server
 
 thor@jump_host ~$ sudo su -
@@ -4617,7 +4635,7 @@ root@jump_host /etc/puppetlabs/code/environments/production/manifests# ssh banne
 		vsftpd-3.0.2-29.el7_9.x86_64
 
 [root@stapp03 ~]# 
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 120: 24/Dec/2022
 
@@ -4631,6 +4649,7 @@ Once issue is fixed, copy /home/thor/index.php file from jump host into nginx-co
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1. Check existing running pods
 
 thor@jump_host ~$ kubectl get pods
@@ -4741,7 +4760,7 @@ thor@jump_host ~$ kubectl exec -it nginx-phpfpm -c nginx-container  -- curl -I  
 		X-Powered-By: PHP/7.2.34
 
 thor@jump_host ~$
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 121: 25/Dec/2022
 
@@ -4755,7 +4774,7 @@ The Nautilus DevOps team has started practicing some pods and services deploymen
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. Check kubectl utility config
 
 thor@jump_host ~$ kubectl get all
@@ -4942,7 +4961,7 @@ thor@jump_host ~$ ssh natasha@ststor01
 		origin  /opt/blog.git (push)
 
 [root@ststor01 blog]#
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 123: 28/Dec/2022
 
@@ -4964,7 +4983,7 @@ Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.
 
-
+```
 1. Check current config and inventory file on jump host
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -5062,7 +5081,7 @@ thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/devops/"
 		drwxr-xr-x 3 root  root  4.0K Dec 28 03:31 .
 		drwxr-xr-x 1 root  root  4.0K Dec 28 03:26 ..
 		drwxr-xr-x 2 steve steve 4.0K Dec 28 03:26 unarchive
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 124: 29/Dec/2022
 
@@ -5080,6 +5099,7 @@ We already have a deployment named nginx-deployment and service named nginx-serv
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1. Check current runnning / existing setup
 
 thor@jump_host ~$ kubectl get all
@@ -5163,7 +5183,7 @@ thor@jump_host ~$ kubectl get deployment
 		NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 		nginx-deployment   5/5     5            5           4m37s
 thor@jump_host ~$
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 125: 30/Dec/2022
 
@@ -5185,7 +5205,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 1. Switch to root on jump host/ puppet master server
 
 thor@jump_host ~$ sudo su -
@@ -5271,7 +5291,7 @@ root@jump_host /etc/puppetlabs/code/environments/production/manifests# ssh steve
 		drwxr-xr-x 1 root root 4.0K Dec 30 10:26 ..
 		-rwxrwxrwx 1 root root   34 Dec 30 10:30 beta.txt
 [root@stapp02 ~]#
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 126: 31/Dec/2022
 
@@ -5286,7 +5306,7 @@ The deployment name is python-deployment-nautilus, its using poroko/flask-demo-a
 
 Note: The kubectl on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. Get current running status and configuration
 
 thor@jump_host ~$ kubectl get all
@@ -5445,7 +5465,7 @@ thor@jump_host ~$ kubectl logs python-deployment-nautilus-767b6d4c9b-t4jzx
 		 * Debug mode: off
 		 * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 thor@jump_host ~$
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 127: 02/Jan/2023
 
@@ -5457,6 +5477,7 @@ The deployment name is nginx-phpfpm-dp and service name is nginx-service. Figure
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1. Get current running status and config
 
 thor@jump_host ~$ kubectl get all
@@ -5796,7 +5817,7 @@ root@nginx-phpfpm-dp-6b5c45c6c7-zq6nr:/# ls -ahl /var/www/html
 root@nginx-phpfpm-dp-6b5c45c6c7-zq6nr:/# 
 
 9. Validate by clicking on the view port top right side side of the terminal and select port 30008. If the container is running then we see nginx page and the task is done.
-
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 128: 03/Jan/2023
 
@@ -5813,6 +5834,7 @@ There is a production deployment planned for next week. The Nautilus DevOps team
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1. Get current configuration
 
 thor@jump_host ~$ kubectl get namespace
@@ -5976,6 +5998,7 @@ thor@jump_host ~$ kubectl rollout history deployment httpd-deploy -n nautilus
 		3         <none>
 
 thor@jump_host ~$
+```
 --------------------------------------------------------------------------------------------------------------------------------
 Task 129: 04/Jan/2023
 
@@ -5993,6 +6016,7 @@ d. The user/group owner of /var/www/html/index.html file must be respective sudo
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
+```
 1. Check current inventory and playbook
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -6099,7 +6123,7 @@ thor@jump_host ~/ansible$ ansible -i inventory stapp01 -a "cat /var/www/html/ind
 		This file was created using Ansible on stapp01
 
 thor@jump_host ~/ansible$
-
+```
 ---------------------------------------------------------------------------------------------------------------------------------
 Task 130: 06/Jan/2023
 
@@ -6126,7 +6150,7 @@ f. All users under admins group must be added as sudo users. To do so, simply ma
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory add_users.yml so please make sure playbook works this way, without passing any extra arguments.
 
-
+```
 1. Check inventory file , users file and password vault file
 
 thor@jump_host ~$ cd /home/thor/playbooks/
@@ -6332,7 +6356,7 @@ logout
 		logout
 		Connection to stapp02 closed.
 thor@jump_host ~/playbooks$
-
+```
 ---------------------------------------------------------------------------------------------------------------------------------
 Task 131: 07/Jan/2023
 
@@ -6350,7 +6374,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
 
-
+```
 1. Login to root user on jump host
 
 thor@jump_host ~$ sudo su -
@@ -6531,7 +6555,7 @@ thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/devops"
 		-rw-r--r-- 1 root root   35 Jan  8 14:08 index.html
 
 thor@jump_host ~/ansible$
-
+```
 ---------------------------------------------------------------------------------------------------------------------------------
 Task 133: 10/Jan/2023
 
@@ -6553,6 +6577,7 @@ Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.
 
+```
 1. Check ansible configuration and connection to all app servers
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -6642,7 +6667,7 @@ thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/itadmin/"
 		drwxr-xr-x 1 root   root   4.0K Jan 10 04:43 ..
 		drwxr-xr-x 2 banner banner 4.0K Jan 10 04:43 unarchive
 thor@jump_host ~/ansible$
-
+```
 ---------------------------------------------------------------------------------------------------------------------------------
 Task 134: 11/Jan/2023
 
@@ -6660,6 +6685,7 @@ The Nautilus DevOps team is working on a Kubernetes template to deploy a web app
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
+```
 1. Check kubectl utility for currently running services and pods
 
 thor@jump_host ~$ kubectl get all
@@ -6774,7 +6800,7 @@ thor@jump_host ~$ kubectl get pv
 		pv-xfusion   5Gi        RWO            Retain           Bound    default/pvc-xfusion   manual                  34s
 
 6. Validate task by View Website on right top corner
-
+```
 ---------------------------------------------------------------------------------------------------------------------------------
 Task 135: 13/Jan/2023
 
@@ -6790,7 +6816,7 @@ There is an application that needs to be deployed on Kubernetes cluster under Ap
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
-
+```
 1. Check current kubernetes namespace
 
 thor@jump_host ~$ kubectl get namespace
@@ -6885,7 +6911,7 @@ thor@jump_host ~$ kubectl get pods -n  httpd-namespace-devops
 thor@jump_host ~$
 
 7. Validate the task by checking website on top right corner
-
+```
 ---------------------------------------------------------------------------------------------------------------------------------
 Task 136: 14/Jan/2023
 
@@ -6903,6 +6929,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 
 :- Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first.
 
+```
 1. 1. Switch to root user on jump host to create puppet programming file
 
 thor@jump_host ~$ sudo su - 
@@ -6976,6 +7003,7 @@ unzip-6.0-24.el7_9.x86_64
 net-tools-2.0-0.25.20131004git.el7.x86_64
 [root@stapp03 ~]# 
 
+```
 ---------------------------------------------------------------------------------------------------------------------------------
 Task 137: 16/Jan/2023
 
@@ -7032,6 +7060,7 @@ Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.
 
+```
 playbook.yml
 
 - name: Extract archive
@@ -7045,7 +7074,7 @@ playbook.yml
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         mode: "0644"
-
+```
 
 Kindly Check Task 123 for solution
 
@@ -7090,7 +7119,7 @@ Notes: :- Please make sure to run the puppet agent test using sudo on agent node
 :- Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first.
 
 :- Please note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
-
+```
 apps.pp
 
 class symlink {
@@ -7110,7 +7139,7 @@ node 'stapp03.stratos.xfusioncorp.com' {
 }
 
 Kindly Check Task 53 for solution
-
+```
 ---------------------------------------------------------------------------------------------------------------------------------
 Task 143: 25/Jan/2023
 
