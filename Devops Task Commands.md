@@ -2693,85 +2693,7 @@ Last week the Nautilus DevOps team met with the application development team and
 
 6. Install docker
 # yum install docker-ce docker-ce-cli containerd-io
-	Loaded plugins: fastestmirror, ovl
-	Determining fastest mirrors
-	 * base: mirrors.gigenet.com
-	 * extras: mirror.vacares.com
-	 * updates: bay.uchicago.edu
-	base                                                                                                                  | 3.6 kB  00:00:00     
-	docker-ce-stable                                                                                                      | 3.5 kB  00:00:00     
-	extras                                                                                                                | 2.9 kB  00:00:00     
-	updates                                                                                                               | 2.9 kB  00:00:00     
-	(1/6): base/7/x86_64/group_gz                                                                                         | 153 kB  00:00:00     
-	(2/6): extras/7/x86_64/primary_db                                                                                     | 246 kB  00:00:00     
-	(3/6): docker-ce-stable/7/x86_64/primary_db                                                                           |  75 kB  00:00:00     
-	(4/6): docker-ce-stable/7/x86_64/updateinfo                                                                           |   55 B  00:00:00     
-	(5/6): base/7/x86_64/primary_db                                                                                       | 6.1 MB  00:00:02     
-	(6/6): updates/7/x86_64/primary_db                                                                                    |  15 MB  00:00:04     
-	No package containerd-io available.
-	Resolving Dependencies
-	--> Running transaction check
-	---> Package docker-ce.x86_64 3:20.10.14-3.el7 will be installed
-	--> Processing Dependency: container-selinux >= 2:2.74 for package: 3:docker-ce-20.10.14-3.el7.x86_64
-	--> Processing Dependency: containerd.io >= 1.4.1 for package: 3:docker-ce-20.10.14-3.el7.x86_64
-	--> Processing Dependency: libseccomp >= 2.3 for package: 3:docker-ce-20.10.14-3.el7.x86_64
-	--> Processing Dependency: docker-ce-rootless-extras for package: 3:docker-ce-20.10.14-3.el7.x86_64
-	--> Processing Dependency: libcgroup for package: 3:docker-ce-20.10.14-3.el7.x86_64
-	---> Package docker-ce-cli.x86_64 1:20.10.14-3.el7 will be installed
-	--> Processing Dependency: docker-scan-plugin(x86-64) for package: 1:docker-ce-cli-20.10.14-3.el7.x86_64
-	--> Running transaction check
-	---> Package container-selinux.noarch 2:2.119.2-1.911c772.el7_8 will be installed
-	--> Processing Dependency: selinux-policy-targeted >= 3.13.1-216.el7 for package: 2:container-selinux-2.119.2-1.911c772.el7_8.noarch
-	--> Processing Dependency: selinux-policy-base >= 3.13.1-216.el7 for package: 2:container-selinux-2.119.2-1.911c772.el7_8.noarch
-	--> Processing Dependency: selinux-policy >= 3.13.1-216.el7 for package: 2:container-selinux-2.119.2-1.911c772.el7_8.noarch
-	--> Processing Dependency: policycoreutils >= 2.5-11 for package: 2:container-selinux-2.119.2-1.911c772.el7_8.noarch
-	--> Processing Dependency: policycoreutils-python for package: 2:container-selinux-2.119.2-1.911c772.el7_8.noarch
-	--> Processing Dependency: libselinux-utils for package: 2:container-selinux-2.119.2-1.911c772.el7_8.noarch
-	---> Package containerd.io.x86_64 0:1.5.11-3.1.el7 will be installed
-	---> Package docker-ce-rootless-extras.x86_64 0:20.10.14-3.el7 will be installed
-	--> Processing Dependency: fuse-overlayfs >= 0.7 for package: docker-ce-rootless-extras-20.10.14-3.el7.x86_64
-	--> Processing Dependency: slirp4netns >= 0.4 for package: docker-ce-rootless-extras-20.10.14-3.el7.x86_64
-	---> Package docker-scan-plugin.x86_64 0:0.17.0-3.el7 will be installed
-	---> Package libcgroup.x86_64 0:0.41-21.el7 will be installed
-	---> Package libseccomp.x86_64 0:2.3.1-4.el7 will be installed
-	--> Running transaction check
-	---> Package fuse-overlayfs.x86_64 0:0.7.2-6.el7_8 will be installed
-	--> Processing Dependency: libfuse3.so.3(FUSE_3.2)(64bit) for package: fuse-overlayfs-0.7.2-6.el7_8.x86_64
-	--> Processing Dependency: libfuse3.so.3(FUSE_3.0)(64bit) for package: fuse-overlayfs-0.7.2-6.el7_8.x86_64
-	--> Processing Dependency: libfuse3.so.3()(64bit) for package: fuse-overlayfs-0.7.2-6.el7_8.x86_64
-	---> Package libselinux-utils.x86_64 0:2.5-15.el7 will be installed
-	--> Processing Dependency: libselinux(x86-64) = 2.5-15.el7 for package: libselinux-utils-2.5-15.el7.x86_64
-	---> Package policycoreutils.x86_64 0:2.5-34.el7 will be installed
-	---> Package policycoreutils-python.x86_64 0:2.5-34.el7 will be installed
-	--> Processing Dependency: setools-libs >= 3.3.8-4 for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: libsemanage-python >= 2.5-14 for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: audit-libs-python >= 2.1.3-4 for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: python-IPy for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: libselinux-python for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: libqpol.so.1(VERS_1.4)(64bit) for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: libqpol.so.1(VERS_1.2)(64bit) for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: libapol.so.4(VERS_4.0)(64bit) for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: checkpolicy for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: libqpol.so.1()(64bit) for package: policycoreutils-python-2.5-34.el7.x86_64
-	--> Processing Dependency: libapol.so.4()(64bit) for package: policycoreutils-python-2.5-34.el7.x86_64
-	---> Package selinux-policy.noarch 0:3.13.1-268.el7_9.2 will be installed
-	---> Package selinux-policy-targeted.noarch 0:3.13.1-268.el7_9.2 will be installed
-	---> Package slirp4netns.x86_64 0:0.4.3-4.el7_8 will be installed
-	--> Running transaction check
-	---> Package audit-libs-python.x86_64 0:2.8.5-4.el7 will be installed
-	--> Processing Dependency: audit-libs(x86-64) = 2.8.5-4.el7 for package: audit-libs-python-2.8.5-4.el7.x86_64
-	---> Package checkpolicy.x86_64 0:2.5-8.el7 will be installed
-	---> Package fuse3-libs.x86_64 0:3.6.1-4.el7 will be installed
-	---> Package libselinux.x86_64 0:2.5-14.1.el7 will be updated
-	---> Package libselinux.x86_64 0:2.5-15.el7 will be an update
-	---> Package libselinux-python.x86_64 0:2.5-15.el7 will be installed
-	---> Package libsemanage-python.x86_64 0:2.5-14.el7 will be installed
-	---> Package python-IPy.noarch 0:0.75-6.el7 will be installed
-	---> Package setools-libs.x86_64 0:3.3.8-4.el7 will be installed
-	--> Running transaction check
-	---> Package audit-libs.x86_64 0:2.8.4-4.el7 will be updated
-	---> Package audit-libs.x86_64 0:2.8.5-4.el7 will be an update
-	--> Finished Dependency Resolution
+
 
 	Dependencies Resolved
 
@@ -3721,10 +3643,6 @@ kubectl edit service
 kubectl edit configmap
 
 kubectl logs
-
-
-
-
 
 --------------------------------------------------------------------------------------------------------------------------------
 Task 64: 19/Jun/2022
@@ -7036,6 +6954,4 @@ thor@jump_host ~$ kubectl get deploy
 		node-deployment   2/2     2            2           71s
 
 --------------------------------------------------------------------------------------------------------------------------------
-Task 88 Onwards : Kodekloud Cheatsheat SrDevOps Task Commands.txt
 
----------------------------------------------------------------------------------------------------------------------------------
