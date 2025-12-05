@@ -38,92 +38,51 @@ thor@jump_host ~$ kubectl get pods
 thor@jump_host ~$ vi /tmp/init.yml
  
 thor@jump_host ~$ cat /tmp/init.yml 
+
 		apiVersion: apps/v1
-
 		kind: Deployment
-
 		metadata:
-
 		  name: ic-deploy-devops
-
 		  labels:
-
 		    app: ic-devops
-
 		spec:
-
 		  replicas: 1
-
 		  selector:
-
 		    matchLabels:
-
 		      app: ic-devops
-
 		  template:
-
 		    metadata:
-
 		      labels:
-
 		        app: ic-devops
-
 		    spec:
-
 		      volumes:
-
 		        - name: ic-volume-devops
-
 		          emptyDir: {}
-
 		      initContainers:
-
 		        - name: ic-msg-devops
-
 		          image: debian:latest
-
 		          command:
-
 		            [
-
 		              "/bin/bash",
-
 		              "-c",
-
 		              "echo Init Done - Welcome to xFusionCorp Industries > /ic/news",
-
 		            ]
-
 		          volumeMounts:
-
 		            - name: ic-volume-devops
-
-		              mountPath: /ic
-
-		 
+		              mountPath: /ic		 
 
 		      containers:
-
 		        - name: ic-main-devops
-
 		          image: debian:latest
-
 		          command:
-
 		            [
-
 		              "/bin/bash",
-
 		              "-c",
-
 		              "while true; do cat /ic/news; sleep 5; done",
-
 		            ]
 
 		          volumeMounts:
-
 		            - name: ic-volume-devops
-
 		              mountPath: /ic
 
 3. Create pod and deployment 
@@ -172,8 +131,6 @@ One of the junior DevOps team members was working on to deploy a stack on Kubern
 Look into the issue and fix it, make sure pod is in running state and you are able to access the app.
 
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
-
-
 
 Name:         webserver
 Namespace:    default
@@ -466,7 +423,7 @@ thor@jump_host ~$ kubectl get pvc
 thor@jump_host ~$ vi /tmp/pvc_httpd.yml
 
 thor@jump_host ~$ cat /tmp/pvc_httpd.yml 
-		---
+
 		apiVersion: v1
 		kind: PersistentVolume
 		metadata:
@@ -550,12 +507,15 @@ thor@jump_host ~$ kubectl get all
 	service/kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP        73m
 	service/web-datacenter   NodePort    10.96.147.100   <none>        80:30008/TCP   30s
 
-5. Validate Psersistent Volume Claim and Peristent volume 
+5. Validate Psersistent Volume Claim and Peristent volume
+   
 thor@jump_host ~$ kubectl get pvc
+
 	NAME             STATUS   VOLUME          CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 	pvc-datacenter   Bound    pv-datacenter   5Gi        RWO            manual         40s
  
 thor@jump_host ~$ kubectl get pv
+
 	NAME            CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                    STORAGECLASS   REASON   AGE
 	pv-datacenter   5Gi        RWO            Retain           Bound    default/pvc-datacenter   manual                  45s
 
@@ -588,6 +548,7 @@ max@ststor01's password:
 max $ cd /home/max/story-blog/
 
 max (master)$ ls -ahl
+	
 		total 32
 		drwxr-sr-x    3 max      max         4.0K Oct 17 14:06 .
 		drwxr-sr-x    1 max      max         4.0K Oct 17 14:06 ..
@@ -630,6 +591,7 @@ max (master)$ git config --global --add user.email max@stratos.xfusioncorp.com
 max (master)$ git config --global --add user.name max
 
 max (master)$ git config -l
+
 	user.email=max@stratos.xfusioncorp.com
 	user.name=max
 	core.repositoryformatversion=0
@@ -726,6 +688,7 @@ Note: Validation will try to run the playbook using command ansible-playbook -i 
 thor@jump_host ~$ cd /home/thor/ansible/
 
 thor@jump_host ~/ansible$ ls -ahl
+
 		total 20K
 		drwxr-xr-x 3 thor thor 4.0K Oct 19 05:55 .
 		drwxr----- 1 thor thor 4.0K Oct 19 05:55 ..
@@ -733,7 +696,8 @@ thor@jump_host ~/ansible$ ls -ahl
 		-rw-r--r-- 1 thor thor   73 Oct 19 05:55 playbook.yml
 		drwxr-xr-x 3 thor thor 4.0K Oct 19 05:55 role
 
-thor@jump_host ~/ansible$ cat inventory 
+thor@jump_host ~/ansible$ cat inventory
+
 		stapp01 ansible_host=172.16.238.10 ansible_user=tony ansible_ssh_pass=Ir0nM@n
 		stapp02 ansible_host=172.16.238.11 ansible_user=steve ansible_ssh_pass=Am3ric@
 		stapp03 ansible_host=172.16.238.12 ansible_user=banner ansible_ssh_pass=BigGr33n
@@ -741,6 +705,7 @@ thor@jump_host ~/ansible$ cat inventory
  
 thor@jump_host ~/ansible$ cat playbook.yml 
 		---
+		
 		- hosts: 
 		  become: yes
 		  become_user: root
@@ -752,8 +717,9 @@ thor@jump_host ~/ansible$ cat playbook.yml
 thor@jump_host ~/ansible$ vi playbook.yml 
 
 thor@jump_host ~/ansible$ cat playbook.yml 
+
 		---
-		- hosts: stapp01						<--------------------------
+		- hosts: stapp01						
 		  become: yes
 		  become_user: root
 		  roles:
@@ -772,7 +738,7 @@ thor@jump_host ~/ansible$ cat /home/thor/ansible/role/httpd/templates/index.html
 thor@jump_host ~/ansible$ vi /home/thor/ansible/role/httpd/tasks/main.yml
 
 thor@jump_host ~/ansible$ cat /home/thor/ansible/role/httpd/tasks/main.yml
-		---
+
 		# tasks file for role/test
 
 		- name: install the latest version of HTTPD
@@ -862,6 +828,7 @@ thor@jump_host ~/playbook$ ls -ahl
 		-rw-r--r-- 1 thor thor  250 Oct 20 09:36 playbook.yml
 
 thor@jump_host ~/playbook$ cat playbook.yml 
+
 		---
 		- hosts: all
 		  become: yes
@@ -1367,7 +1334,8 @@ thor@jump_host ~$ kubectl get secrets
  
 thor@jump_host ~$ vi /tmp/mysql_deploy.yaml
  
-thor@jump_host ~$ cat /tmp/mysql_deploy.yaml 
+thor@jump_host ~$ cat /tmp/mysql_deploy.yaml
+
 		---                                                                                           
 		apiVersion: v1                                                                                
 		kind: PersistentVolume                                                                        
@@ -1460,6 +1428,7 @@ thor@jump_host ~$ cat /tmp/mysql_deploy.yaml
 5. Create Pods  using the YAML file
 
 thor@jump_host ~$ kubectl create -f  /tmp/mysql_deploy.yaml 
+
 		persistentvolume/mysql-pv created
 		persistentvolumeclaim/mysql-pv-claim created
 		service/mysql created
@@ -1632,134 +1601,6 @@ thor@jump_host ~$ ssh natasha@ststor01
 		Install  1 Package  (+35 Dependent packages)
 		Upgrade             (  2 Dependent packages)
 
-		Total download size: 19 M
-		Downloading packages:
-		Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
-		(1/38): groff-base-1.22.2-8.el7.x86_64.rpm                                                                            | 942 kB  00:00:00     
-		(2/38): git-1.8.3.1-23.el7_8.x86_64.rpm                                                                               | 4.4 MB  00:00:00     
-		(3/38): less-458-9.el7.x86_64.rpm                                                                                     | 120 kB  00:00:00     
-		(4/38): libedit-3.0-12.20121213cvs.el7.x86_64.rpm                                                                     |  92 kB  00:00:00     
-		(5/38): openssh-7.4p1-22.el7_9.x86_64.rpm                                                                             | 510 kB  00:00:00     
-		(6/38): openssh-clients-7.4p1-22.el7_9.x86_64.rpm                                                                     | 655 kB  00:00:00     
-		(7/38): openssh-server-7.4p1-22.el7_9.x86_64.rpm                                                                      | 459 kB  00:00:00     
-		(8/38): perl-Carp-1.26-244.el7.noarch.rpm                                                                             |  19 kB  00:00:00     
-		(9/38): perl-Error-0.17020-2.el7.noarch.rpm                                                                           |  32 kB  00:00:00     
-		(10/38): perl-Exporter-5.68-3.el7.noarch.rpm                                                                          |  28 kB  00:00:00     
-		(11/38): perl-File-Path-2.09-2.el7.noarch.rpm                                                                         |  26 kB  00:00:00     
-		(12/38): perl-File-Temp-0.23.01-3.el7.noarch.rpm                                                                      |  56 kB  00:00:00     
-		(13/38): perl-Filter-1.49-3.el7.x86_64.rpm                                                                            |  76 kB  00:00:00     
-		(14/38): perl-Getopt-Long-2.40-3.el7.noarch.rpm                                                                       |  56 kB  00:00:00     
-		(15/38): perl-Git-1.8.3.1-23.el7_8.noarch.rpm                                                                         |  56 kB  00:00:00     
-		(16/38): perl-HTTP-Tiny-0.033-3.el7.noarch.rpm                                                                        |  38 kB  00:00:00     
-		(17/38): perl-PathTools-3.40-5.el7.x86_64.rpm                                                                         |  82 kB  00:00:00     
-		(18/38): perl-Pod-Escapes-1.04-299.el7_9.noarch.rpm                                                                   |  52 kB  00:00:00     
-		(19/38): perl-Encode-2.51-7.el7.x86_64.rpm                                                                            | 1.5 MB  00:00:00     
-		(20/38): perl-Pod-Perldoc-3.20-4.el7.noarch.rpm                                                                       |  87 kB  00:00:00     
-		(21/38): perl-5.16.3-299.el7_9.x86_64.rpm                                                                             | 8.0 MB  00:00:00     
-		(22/38): perl-Pod-Usage-1.63-3.el7.noarch.rpm                                                                         |  27 kB  00:00:00     
-		(23/38): perl-Pod-Simple-3.28-4.el7.noarch.rpm                                                                        | 216 kB  00:00:00     
-		(24/38): perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm                                                               |  36 kB  00:00:00     
-		(25/38): perl-Storable-2.45-3.el7.x86_64.rpm                                                                          |  77 kB  00:00:00     
-		(26/38): perl-TermReadKey-2.30-20.el7.x86_64.rpm                                                                      |  31 kB  00:00:00     
-		(27/38): perl-Text-ParseWords-3.29-4.el7.noarch.rpm                                                                   |  14 kB  00:00:00     
-		(28/38): perl-Time-HiRes-1.9725-3.el7.x86_64.rpm                                                                      |  45 kB  00:00:00     
-		(29/38): perl-Time-Local-1.2300-2.el7.noarch.rpm                                                                      |  24 kB  00:00:00     
-		(30/38): perl-Socket-2.010-5.el7.x86_64.rpm                                                                           |  49 kB  00:00:00     
-		(31/38): perl-constant-1.27-2.el7.noarch.rpm                                                                          |  19 kB  00:00:00     
-		(32/38): perl-parent-0.225-244.el7.noarch.rpm                                                                         |  12 kB  00:00:00     
-		(33/38): perl-podlators-2.5.1-3.el7.noarch.rpm                                                                        | 112 kB  00:00:00     
-		(34/38): perl-libs-5.16.3-299.el7_9.x86_64.rpm                                                                        | 690 kB  00:00:00     
-		(35/38): perl-threads-shared-1.43-6.el7.x86_64.rpm                                                                    |  39 kB  00:00:00     
-		(36/38): perl-threads-1.87-4.el7.x86_64.rpm                                                                           |  49 kB  00:00:00     
-		(37/38): rsync-3.1.2-11.el7_9.x86_64.rpm                                                                              | 408 kB  00:00:00     
-		(38/38): perl-macros-5.16.3-299.el7_9.x86_64.rpm                                                                      |  44 kB  00:00:00     
-		---------------------------------------------------------------------------------------------------------------------------------------------
-		Total                                                                                                         18 MB/s |  19 MB  00:00:01     
-		Running transaction check
-		Running transaction test
-		Transaction test succeeded
-		Running transaction
-		  Installing : groff-base-1.22.2-8.el7.x86_64                                                                                           1/40 
-		  Updating   : openssh-7.4p1-22.el7_9.x86_64                                                                                            2/40 
-		  Installing : 1:perl-parent-0.225-244.el7.noarch                                                                                       3/40 
-		  Installing : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                                        4/40 
-		  Installing : perl-podlators-2.5.1-3.el7.noarch                                                                                        5/40 
-		  Installing : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                                       6/40 
-		  Installing : 1:perl-Pod-Escapes-1.04-299.el7_9.noarch                                                                                 7/40 
-		  Installing : perl-Encode-2.51-7.el7.x86_64                                                                                            8/40 
-		  Installing : perl-Text-ParseWords-3.29-4.el7.noarch                                                                                   9/40 
-		  Installing : perl-Pod-Usage-1.63-3.el7.noarch                                                                                        10/40 
-		  Installing : 4:perl-macros-5.16.3-299.el7_9.x86_64                                                                                   11/40 
-		  Installing : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                                                   12/40 
-		  Installing : perl-Exporter-5.68-3.el7.noarch                                                                                         13/40 
-		  Installing : perl-constant-1.27-2.el7.noarch                                                                                         14/40 
-		  Installing : perl-Socket-2.010-5.el7.x86_64                                                                                          15/40 
-		  Installing : perl-Time-Local-1.2300-2.el7.noarch                                                                                     16/40 
-		  Installing : perl-Carp-1.26-244.el7.noarch                                                                                           17/40 
-		  Installing : perl-Storable-2.45-3.el7.x86_64                                                                                         18/40 
-		  Installing : perl-PathTools-3.40-5.el7.x86_64                                                                                        19/40 
-		  Installing : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                                              20/40 
-		  Installing : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                                     21/40 
-		  Installing : perl-File-Temp-0.23.01-3.el7.noarch                                                                                     22/40 
-		  Installing : perl-File-Path-2.09-2.el7.noarch                                                                                        23/40 
-		  Installing : perl-threads-shared-1.43-6.el7.x86_64                                                                                   24/40 
-		  Installing : perl-threads-1.87-4.el7.x86_64                                                                                          25/40 
-		  Installing : perl-Filter-1.49-3.el7.x86_64                                                                                           26/40 
-		  Installing : 4:perl-libs-5.16.3-299.el7_9.x86_64                                                                                     27/40 
-		  Installing : perl-Getopt-Long-2.40-3.el7.noarch                                                                                      28/40 
-		  Installing : 4:perl-5.16.3-299.el7_9.x86_64                                                                                          29/40 
-		  Installing : 1:perl-Error-0.17020-2.el7.noarch                                                                                       30/40 
-		  Installing : perl-TermReadKey-2.30-20.el7.x86_64                                                                                     31/40 
-		  Installing : less-458-9.el7.x86_64                                                                                                   32/40 
-		  Installing : libedit-3.0-12.20121213cvs.el7.x86_64                                                                                   33/40 
-		  Installing : openssh-clients-7.4p1-22.el7_9.x86_64                                                                                   34/40 
-		  Installing : rsync-3.1.2-11.el7_9.x86_64                                                                                             35/40 
-		  Installing : perl-Git-1.8.3.1-23.el7_8.noarch                                                                                        36/40 
-		  Installing : git-1.8.3.1-23.el7_8.x86_64                                                                                             37/40 
-		  Updating   : openssh-server-7.4p1-22.el7_9.x86_64                                                                                    38/40 
-		  Cleanup    : openssh-server-7.4p1-21.el7.x86_64                                                                                      39/40 
-		  Cleanup    : openssh-7.4p1-21.el7.x86_64                                                                                             40/40 
-		  Verifying  : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                                        1/40 
-		  Verifying  : perl-threads-shared-1.43-6.el7.x86_64                                                                                    2/40 
-		  Verifying  : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                                                    3/40 
-		  Verifying  : openssh-clients-7.4p1-22.el7_9.x86_64                                                                                    4/40 
-		  Verifying  : perl-Exporter-5.68-3.el7.noarch                                                                                          5/40 
-		  Verifying  : perl-constant-1.27-2.el7.noarch                                                                                          6/40 
-		  Verifying  : perl-PathTools-3.40-5.el7.x86_64                                                                                         7/40 
-		  Verifying  : openssh-7.4p1-22.el7_9.x86_64                                                                                            8/40 
-		  Verifying  : 4:perl-macros-5.16.3-299.el7_9.x86_64                                                                                    9/40 
-		  Verifying  : git-1.8.3.1-23.el7_8.x86_64                                                                                             10/40 
-		  Verifying  : 1:perl-parent-0.225-244.el7.noarch                                                                                      11/40 
-		  Verifying  : perl-Socket-2.010-5.el7.x86_64                                                                                          12/40 
-		  Verifying  : rsync-3.1.2-11.el7_9.x86_64                                                                                             13/40 
-		  Verifying  : perl-TermReadKey-2.30-20.el7.x86_64                                                                                     14/40 
-		  Verifying  : groff-base-1.22.2-8.el7.x86_64                                                                                          15/40 
-		  Verifying  : perl-File-Temp-0.23.01-3.el7.noarch                                                                                     16/40 
-		  Verifying  : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                                     17/40 
-		  Verifying  : perl-Time-Local-1.2300-2.el7.noarch                                                                                     18/40 
-		  Verifying  : 1:perl-Pod-Escapes-1.04-299.el7_9.noarch                                                                                19/40 
-		  Verifying  : perl-Git-1.8.3.1-23.el7_8.noarch                                                                                        20/40 
-		  Verifying  : perl-Carp-1.26-244.el7.noarch                                                                                           21/40 
-		  Verifying  : 1:perl-Error-0.17020-2.el7.noarch                                                                                       22/40 
-		  Verifying  : perl-Storable-2.45-3.el7.x86_64                                                                                         23/40 
-		  Verifying  : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                                              24/40 
-		  Verifying  : perl-Pod-Usage-1.63-3.el7.noarch                                                                                        25/40 
-		  Verifying  : perl-Encode-2.51-7.el7.x86_64                                                                                           26/40 
-		  Verifying  : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                                      27/40 
-		  Verifying  : perl-podlators-2.5.1-3.el7.noarch                                                                                       28/40 
-		  Verifying  : 4:perl-5.16.3-299.el7_9.x86_64                                                                                          29/40 
-		  Verifying  : perl-File-Path-2.09-2.el7.noarch                                                                                        30/40 
-		  Verifying  : libedit-3.0-12.20121213cvs.el7.x86_64                                                                                   31/40 
-		  Verifying  : perl-threads-1.87-4.el7.x86_64                                                                                          32/40 
-		  Verifying  : openssh-server-7.4p1-22.el7_9.x86_64                                                                                    33/40 
-		  Verifying  : perl-Filter-1.49-3.el7.x86_64                                                                                           34/40 
-		  Verifying  : perl-Getopt-Long-2.40-3.el7.noarch                                                                                      35/40 
-		  Verifying  : perl-Text-ParseWords-3.29-4.el7.noarch                                                                                  36/40 
-		  Verifying  : 4:perl-libs-5.16.3-299.el7_9.x86_64                                                                                     37/40 
-		  Verifying  : less-458-9.el7.x86_64                                                                                                   38/40 
-		  Verifying  : openssh-7.4p1-21.el7.x86_64                                                                                             39/40 
-		  Verifying  : openssh-server-7.4p1-21.el7.x86_64                                                                                      40/40 
-
 		Installed:
 		  git.x86_64 0:1.8.3.1-23.el7_8                                                                                                              
 
@@ -1867,6 +1708,7 @@ thor@jump_host ~$ kubectl get all
 thor@jump_host ~$ vi /tmp/nginx_phpfpm.yml
 
 thor@jump_host ~$ cat /tmp/nginx_phpfpm.yml 
+
 		#ConfigMap Configuration
 		---
 		apiVersion: v1
@@ -1941,6 +1783,7 @@ thor@jump_host ~$ cat /tmp/nginx_phpfpm.yml
 3. Create the service and pods
 
 thor@jump_host ~$ kubectl create -f /tmp/nginx_phpfpm.yml 
+
 		configmap/nginx-config created
 		pod/nginx-phpfpm created
 		service/nginx-phpfpm created
@@ -2149,6 +1992,7 @@ thor@jump_host ~$ kubectl get secrets
 		mysql-user-pass       Opaque                                2      37s
  
 thor@jump_host ~$ cat mysql_deployment.yml 
+
 		apiVersion: apps/v1 
 		kind: PersistentVolume            
 		metadata:
@@ -2258,6 +2102,7 @@ thor@jump_host ~$ kubectl create -f mysql_deployment.yml
 
 thor@jump_host ~$ vi mysql_pv.yml
 thor@jump_host ~$ cat mysql_pv.yml
+
 		---
 		apiVersion: apps/v1 
 		kind: PersistentVolume            
@@ -2281,6 +2126,7 @@ thor@jump_host ~$ kubectl create -f mysql_pv.yml
 
 thor@jump_host ~$ vi mysql_pv.yml
 thor@jump_host ~$ cat mysql_pv.yml
+
 		---
 		apiVersion: v1 
 		kind: PersistentVolume            
@@ -2303,28 +2149,30 @@ thor@jump_host ~$ kubectl create -f mysql_pv.yml
 
 thor@jump_host ~$ vi mysql_pv.yml
 thor@jump_host ~$ cat mysql_pv.yml
+
 		---
 		apiVersion: v1 																																										<---------------
 		kind: PersistentVolume            
 		metadata:
 		  name: mysql-pv
 		  labels: 
-		    type: local 																																									<---------------
+		    type: local 																																									
 		spec:
 		  storageClassName: standard      
 		  capacity:
 		    storage: 250Mi
 		  accessModes: 
-		  - ReadWriteOnce																																									<---------------
+		  - ReadWriteOnce																																									
 		  hostPath:                       
 		    path: "/mnt/data" 
-		  persistentVolumeReclaimPolicy: Retain 																													<--------------- 
+		  persistentVolumeReclaimPolicy: Retain 																												
 
 thor@jump_host ~$ kubectl create -f mysql_pv.yml 
 		persistentvolume/mysql-pv created
  
 thor@jump_host ~$ vi mysql_pvc.yml
 thor@jump_host ~$ cat mysql_pvc.yml
+
 		---    
 		apiVersion: apps/v1 
 		kind: PersistentVolumeClaim 
@@ -2345,6 +2193,7 @@ thor@jump_host ~$ kubectl create -f  mysql_pvc.yml
 
 thor@jump_host ~$ vi mysql_pvc.yml
 thor@jump_host ~$ cat mysql_pvc.yml
+
 		---    
 		apiVersion: v1 																																									<---------------
 		kind: PersistentVolumeClaim 
@@ -2365,6 +2214,7 @@ thor@jump_host ~$ kubectl create -f  mysql_pvc.yml
  
 thor@jump_host ~$ vi mysql_service.yml
 thor@jump_host ~$ cat mysql_service.yml
+
 		---
 		apiVersion: v1                    
 		kind: Service                      
@@ -2387,6 +2237,7 @@ thor@jump_host ~$ kubectl create -f mysql_service.yml
 
 thor@jump_host ~$ vi mysql_service.yml
 thor@jump_host ~$ cat mysql_service.yml
+
 		---
 		apiVersion: v1                    
 		kind: Service                      
@@ -2408,6 +2259,7 @@ thor@jump_host ~$ kubectl create -f mysql_service.yml
 
 thor@jump_host ~$ vi mysql_deploy.yml
 thor@jump_host ~$ cat mysql_deploy.yml
+
 		---
 		apiVersion: v1 
 		kind: Deployment            
@@ -2468,6 +2320,7 @@ thor@jump_host ~$ kubectl create -f mysql_deploy.yml
 
 thor@jump_host ~$ vi mysql_deploy.yml
 thor@jump_host ~$ cat mysql_deploy.yml
+
 		---
 		apiVersion: v1 
 		kind: Deployment            
@@ -2533,8 +2386,9 @@ thor@jump_host ~$ kubectl create -f mysql_deploy.yml
 
 thor@jump_host ~$ vi mysql_deploy.yml
 thor@jump_host ~$ cat mysql_deploy.yml
+
 		---
-		apiVersion: apps/v1 																																	<---------------				
+		apiVersion: apps/v1 										<---------------				
 		kind: Deployment            
 		metadata:
 		  name: mysql-deployment       
@@ -2544,7 +2398,7 @@ thor@jump_host ~$ cat mysql_deploy.yml
 		  selector:
 		    matchLabels:
 		      app: mysql-app
-		      tier: mysql 																																		<---------------					
+		      tier: mysql 											<---------------					
 		  strategy:
 		    type: Recreate
 		  template:                    
@@ -2554,18 +2408,18 @@ thor@jump_host ~$ cat mysql_deploy.yml
 		        tier: mysql 
 		    spec:                       
 		      containers: 
-		      - image: mysql:5.6 																															<---------------		
+		      - image: mysql:5.6 									<---------------		
 		        name: mysql
 		        env:                        
 		        - name: MYSQL_ROOT_PASSWORD 
 		          valueFrom:                
-		            secretKeyRef: 																														<---------------
-		              name: mysql-root-pass 																									<---------------		
+		            secretKeyRef: 																				<---------------
+		              name: mysql-root-pass 																	<---------------		
 		              key: password 
 		        - name: MYSQL_DATABASE
 		          valueFrom:
-		            secretKeyRef: 																														<---------------				
-		              name: mysql-db-url 																											<---------------
+		            secretKeyRef: 																			<---------------				
+		              name: mysql-db-url 																	<---------------
 		              key: database 
 		        - name: MYSQL_USER
 		          valueFrom:
@@ -2585,7 +2439,7 @@ thor@jump_host ~$ cat mysql_deploy.yml
 		          mountPath: /var/lib/mysql
 		      volumes:                       
 		      - name: mysql-persistent-storage
-		        persistentVolumeClaim:																												<---------------			
+		        persistentVolumeClaim:																	<---------------			
 		          claimName: mysql-pv-claim
 
 thor@jump_host ~$ kubectl create -f mysql_deploy.yml
@@ -2615,6 +2469,7 @@ thor@jump_host ~$ kubectl get pvc
 		mysql-pv-claim   Bound    mysql-pv   250Mi      RWO            standard       12m
  
 thor@jump_host ~$ kubectl get all
+
 		NAME                                    READY   STATUS    RESTARTS   AGE
 		pod/mysql-deployment-74f5dd5cdf-gq5nd   1/1     Running   0          36s
 
@@ -2632,6 +2487,7 @@ thor@jump_host ~$ kubectl delete service mysql
 		service "mysql" deleted
 
 thor@jump_host ~$ kubectl get all
+
 		NAME                                    READY   STATUS    RESTARTS   AGE
 		pod/mysql-deployment-74f5dd5cdf-gq5nd   1/1     Running   0          69s
 
@@ -2674,7 +2530,8 @@ thor@jump_host ~$ kubectl get pvc
 thor@jump_host ~$ cp mysql_deployment.yml mysql_deployment_bkp.yml
 thor@jump_host ~$ vi mysql_deployment.yml 
 thor@jump_host ~$ cat mysql_pv.yml mysql_pvc.yml mysql_service.yml mysql_deploy.yml >> mysql_deployment.yml 
-thor@jump_host ~$ cat mysql_deployment.yml 
+thor@jump_host ~$ cat mysql_deployment.yml
+
 ---
 apiVersion: v1 
 kind: PersistentVolume            
@@ -2778,6 +2635,7 @@ spec:
 
 thor@jump_host ~$ ls -ahl
 total 56K
+
 		drwxr----- 1 thor thor 4.0K Nov 28 03:21 .
 		drwxr-xr-x 1 root root 4.0K Oct 31  2020 ..
 		-rwxrwx--- 1 thor thor   18 Oct 30  2018 .bash_logout
@@ -2794,6 +2652,7 @@ total 56K
 		drwx------ 2 thor thor 4.0K Nov 28 02:58 .ssh
 
 thor@jump_host ~$ kubectl create -f mysql_deployment.yml 
+
 		persistentvolume/mysql-pv created
 		persistentvolumeclaim/mysql-pv-claim created
 		service/mysql created
@@ -3522,6 +3381,7 @@ thor@jump_host ~/ansible$ ansible-playbook -i inventory playbook.yml
 4. Validate the task using inventory file and url
 
 thor@jump_host ~/ansible$ ansible -i inventory all -a 'ls -ahl /var/www/html/'
+
 		stapp02 | CHANGED | rc=0 >>
 		total 12K
 		drwxr-xr-x 2 root   root   4.0K Dec  5 16:31 .
@@ -5805,6 +5665,7 @@ thor@jump_host ~$ kubectl edit service python-service-nautilus
 		service/python-service-nautilus edited
 
 thor@jump_host ~$ kubectl get service
+
 		NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 		kubernetes                ClusterIP   10.96.0.1       <none>        443/TCP          76m
 		python-service-nautilus   NodePort    10.96.200.222   <none>        5000:32345/TCP   4m55s
@@ -5849,6 +5710,7 @@ Note: The kubectl utility on jump_host has been configured to work with the kube
 1. Get current running status and config
 
 thor@jump_host ~$ kubectl get all
+
 			NAME                                   READY   STATUS    RESTARTS   AGE
 			pod/nginx-phpfpm-dp-5cccd45499-52sfq   2/2     Running   0          72s
 
@@ -5863,10 +5725,12 @@ thor@jump_host ~$ kubectl get all
 			replicaset.apps/nginx-phpfpm-dp-5cccd45499   1         1         1       72s
 
 thor@jump_host ~$ kubectl get deploy
+
 		NAME              READY   UP-TO-DATE   AVAILABLE   AGE
 		nginx-phpfpm-dp   1/1     1            1           83s
 
 thor@jump_host ~$ kubectl describe deploy nginx-phpfpm-dp
+
 			Name:               nginx-phpfpm-dp
 			Namespace:          default
 			CreationTimestamp:  Mon, 02 Jan 2023 07:57:43 +0000
@@ -5925,6 +5789,7 @@ thor@jump_host ~$ kubectl get pods
 		nginx-phpfpm-dp-5cccd45499-52sfq   2/2     Running   0          2m14s
 
 thor@jump_host ~$ kubectl describe pod nginx-phpfpm-dp-5cccd45499-52sfq
+
 		Name:         nginx-phpfpm-dp-5cccd45499-52sfq
 		Namespace:    default
 		Priority:     0
@@ -6012,9 +5877,11 @@ thor@jump_host ~$ kubectl describe pod nginx-phpfpm-dp-5cccd45499-52sfq
 2. Check pod logs for error
 
 thor@jump_host ~$ kubectl logs nginx-phpfpm-dp-5cccd45499-52sfq
+
 	error: a container name must be specified for pod nginx-phpfpm-dp-5cccd45499-52sfq, choose one of: [nginx-container php-fpm-container]
 
 thor@jump_host ~$ kubectl logs nginx-phpfpm-dp-5cccd45499-52sfq -c nginx-container
+
 		/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
 		/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
 		/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
@@ -6075,6 +5942,7 @@ thor@jump_host ~$ kubectl edit configmap nginx-config
 		configmap/nginx-config edited
 
 thor@jump_host ~$ kubectl describe configmap nginx-config
+
 			Name:         nginx-config
 			Namespace:    default
 			Labels:       <none>
@@ -6117,6 +5985,7 @@ thor@jump_host ~$ kubectl get service
 		nginx-service   LoadBalancer   10.96.21.86   <pending>     8094:30008/TCP   5m32s                <----Port is different than 80
 
 thor@jump_host ~$ kubectl describe service nginx-service
+
 			Name:                     nginx-service
 			Namespace:                default
 			Labels:                   app=nginx-fpm
@@ -6220,9 +6089,10 @@ thor@jump_host ~$ kubectl get namespace
 
 3. Create YAML file to implement the requirements of deployment and service
 
-thor@jump_host ~$ vi /tmp/httpd_deploy.yaml
+thor@jump_host ~$ vi /tmp/httpd_deploy.yml
 
-thor@jump_host ~$ cat /tmp/httpd_deploy.yaml
+thor@jump_host ~$ cat /tmp/httpd_deploy.yml
+
 		---
 		apiVersion: apps/v1
 		kind: Deployment
@@ -6273,6 +6143,7 @@ thor@jump_host ~$ kubectl get all
 		service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   29m
 
 thor@jump_host ~$ kubectl get all -n nautilus
+
 		NAME                                READY   STATUS    RESTARTS   AGE
 		pod/httpd-deploy-5c68f9f7b7-bbczb   1/1     Running   0          38s
 		pod/httpd-deploy-5c68f9f7b7-txl6h   1/1     Running   0          38s
@@ -6372,7 +6243,6 @@ d. The user/group owner of /var/www/html/index.html file must be respective sudo
 
 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
 
-
 1. Check current inventory and playbook
 
 thor@jump_host ~$ cd /home/thor/ansible/
@@ -6390,7 +6260,8 @@ thor@jump_host ~/ansible$ cat inventory
 		stapp02 ansible_host=172.16.238.11 ansible_user=steve ansible_ssh_pass=Am3ric@
 		stapp03 ansible_host=172.16.238.12 ansible_user=banner ansible_ssh_pass=BigGr33n
 
-thor@jump_host ~/ansible$ cat playbook.yml 
+thor@jump_host ~/ansible$ cat playbook.yml
+
 		---
 		- hosts: 
 		  become: yes
@@ -6402,7 +6273,8 @@ thor@jump_host ~/ansible$ cat playbook.yml
 
 thor@jump_host ~/ansible$ vi playbook.yml 
 
-thor@jump_host ~/ansible$ cat playbook.yml 
+thor@jump_host ~/ansible$ cat playbook.yml
+
 		---
 		- hosts: stapp01 
 		  become: yes
@@ -6422,9 +6294,8 @@ thor@jump_host ~/ansible$ cat /home/thor/ansible/role/httpd/templates/index.html
 thor@jump_host ~/ansible$ vi /home/thor/ansible/role/httpd/tasks/main.yml
 
 thor@jump_host ~/ansible$ cat /home/thor/ansible/role/httpd/tasks/main.yml
-		---
-		# tasks file for role/test
 
+		# tasks file for role/test
 		- name: install the latest version of HTTPD
 		  yum:
 		    name: httpd
@@ -6519,12 +6390,14 @@ thor@jump_host ~/playbooks$ ls -ahl
 		-rw-r--r-- 1 thor thor  237 Jan  6 07:34 inventory
 		drwxr-xr-x 2 thor thor 4.0K Jan  6 07:34 secrets
 
-thor@jump_host ~/playbooks$ cat inventory 
+thor@jump_host ~/playbooks$ cat inventory
+
 		stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n ansible_user=tony
 		stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@ ansible_user=steve
 		stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n ansible_user=banner
 
 thor@jump_host ~/playbooks$ cat data/users.yml 
+
 		admins:
 		  - rob
 		  - david
@@ -6556,8 +6429,8 @@ thor@jump_host ~/playbooks$ cat ansible.cfg
 
 thor@jump_host ~/playbooks$ vi add_users.yml
 
-thor@jump_host ~/playbooks$ cat add_users.yml
-		---                                                                                                              
+thor@jump_host ~/playbooks$ cat add_users.yml                                                                                                              
+		
 		- name: Ansbile Add User & Group                                                                       
 		  hosts: stapp02                                                                                                
 		  become: yes                                                                                                    
@@ -6598,6 +6471,7 @@ thor@jump_host ~/playbooks$ cat add_users.yml
 4. Check connection by getting current users list on app server 2
 
 thor@jump_host ~/playbooks$ ansible -i inventory stapp02 -a "cat /etc/passwd"
+		
 		stapp02 | CHANGED | rc=0 >>
 		root:x:0:0:root:/root:/bin/bash
 		bin:x:1:1:bin:/bin:/sbin/nologin
@@ -6651,6 +6525,7 @@ thor@jump_host ~/playbooks$ ansible-playbook -i inventory add_users.yml
 6. Verify and validate task
 
 thor@jump_host ~/playbooks$ ansible -i inventory stapp02 -a "cat /etc/passwd"
+
 		stapp02 | CHANGED | rc=0 >>
 		root:x:0:0:root:/root:/bin/bash
 		bin:x:1:1:bin:/bin:/sbin/nologin
@@ -6746,6 +6621,7 @@ root@jump_host ~# cd /etc/puppetlabs/code/environments/production/manifests
 root@jump_host /etc/puppetlabs/code/environments/production/manifests# vi news.pp
 
 root@jump_host /etc/puppetlabs/code/environments/production/manifests# cat news.pp
+
 		class user_create {
 		  user { 
 		   'siva':
@@ -6830,10 +6706,9 @@ thor@jump_host ~/ansible$ ls -ahl
 thor@jump_host ~/ansible$ vi /home/thor/ansible/inventory
 
 thor@jump_host ~/ansible$ cat /home/thor/ansible/inventory
+
 		stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n  ansible_user=tony
-
 		stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@  ansible_user=steve
-
 		stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n  ansible_user=banner
 
 2. Verify the inventory file by running command via ansible
@@ -6857,16 +6732,12 @@ thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/devops"
 thor@jump_host ~/ansible$ vi playbook.yml
 
 thor@jump_host ~/ansible$ cat playbook.yml
+
 		- name: Ansible copy
-
 		  hosts: all
-
 		  become: yes
-
 		  tasks:
-
 		    - name: copy index.html to sysops folder
-
 		      copy: src=/usr/src/devops/index.html dest=/opt/devops
 
 4. Run the playbook
@@ -6944,10 +6815,10 @@ thor@jump_host ~/ansible$ ls -ahl
 		-rw-r--r-- 1 thor thor  237 Jan 10 04:42 inventory
 
 thor@jump_host ~/ansible$ cat inventory 
+
 		stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n ansible_user=tony
 		stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@ ansible_user=steve
 		stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n ansible_user=banner
-
 
 thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/itadmin/"
 		stapp02 | CHANGED | rc=0 >>
@@ -6968,26 +6839,17 @@ thor@jump_host ~/ansible$ ansible -i inventory all -a "ls -ahl /opt/itadmin/"
 thor@jump_host ~/ansible$ vi playbook.yml
 
 thor@jump_host ~/ansible$ cat playbook.yml
+
 		- name: Extract archive
-
 		  hosts: stapp01, stapp02, stapp03
-
 		  become: yes
-
 		  tasks:
-
 		    - name: Extract the archive and set the owner/permissions
-
 		      unarchive:
-
 		        src: /usr/src/itadmin/nautilus.zip
-
 		        dest: /opt/itadmin/
-
 		        owner: "{{ ansible_user }}"
-
 		        group: "{{ ansible_user }}"
-
 		        mode: "0755"
 
 3. Run ansible playbook
@@ -7066,6 +6928,7 @@ thor@jump_host ~$ vi /tmp/pvc_httpd.yml
 
 thor@jump_host ~$ cat /tmp/pvc_httpd.yml
 ---
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
