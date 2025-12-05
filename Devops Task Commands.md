@@ -1021,6 +1021,7 @@ b71b6813474d   ubuntu:latest   "bash"    About a minute ago   Up About a minute 
 
 [root@stapp01 ~]# docker exec -it kkloud /bin/sh
 
+```
 # 
 # 
 # apt install apache2 -y
@@ -1309,7 +1310,8 @@ IncludeOptional sites-enabled/*.conf
 # 
 # 
 # service apache2 start
- * Starting Apache httpd web server apache2                                                                                                  AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 192.168.3.2. Set the 'ServerName' directive globally to suppress this message
+ * Starting Apache httpd web server apache2
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 192.168.3.2. Set the 'ServerName' directive globally to suppress this message
  * 
 # 
 # 
@@ -1329,6 +1331,7 @@ Accept-Ranges: bytes
 Content-Length: 10918
 Vary: Accept-Encoding
 Content-Type: text/html
+```
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 47 : 20/Mar/2022
@@ -1715,25 +1718,6 @@ ETag: "63-5db092b69f1bb"
 Accept-Ranges: bytes
 Content-Length: 99
 Content-Type: text/html; charset=UTF-8
-
-# BEGIN ANSIBLE MANAGED BLOCK
-Ansible managed node IP is 172.16.238.10
-# END ANSIBLE MANAGED BLOCK
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ curl http://stapp01
-# BEGIN ANSIBLE MANAGED BLOCK
-Ansible managed node IP is 172.16.238.10
-# END ANSIBLE MANAGED BLOCK
-thor@jump_host ~/playbooks$ curl http://stapp02
-# BEGIN ANSIBLE MANAGED BLOCK
-Ansible managed node IP is 172.16.238.11
-# END ANSIBLE MANAGED BLOCK
-thor@jump_host ~/playbooks$ curl http://stapp03
-# BEGIN ANSIBLE MANAGED BLOCK
-Ansible managed node IP is 172.16.238.12
-# END ANSIBLE MANAGED BLOCK
-thor@jump_host ~/playbooks$ 
-thor@jump_host ~/playbooks$ 
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 Task 51 : 9/Apr/2022
@@ -2313,7 +2297,6 @@ Last week the Nautilus DevOps team met with the application development team and
 
 6. Install docker
 # yum install docker-ce docker-ce-cli containerd-io
-
 
 	Dependencies Resolved
 
