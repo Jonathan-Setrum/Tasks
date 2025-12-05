@@ -2893,7 +2893,7 @@ thor@jump_host ~$ kubectl describe pod httpd-84898796c-cxk8c
 		Containers:
 		  httpd:
 		    Container ID:   containerd://bd2e7069563795ec06f923fb9ade47569a6b88fc12e65a671c6df382c1c4770f
-		    Image:          httpd:latest 																														<-------------------
+		    Image:          httpd:latest 										<-------------------
 		    Image ID:       docker.io/library/httpd@sha256:f2e89def4c032b02c83e162c1819ccfcbd4ea6bdbc5ff784bbc68cba940a9046
 		    Port:           <none>
 		    Host Port:      <none>
@@ -4056,133 +4056,7 @@ thor@jump_host ~$ ssh natasha@ststor01
 		Install  1 Package  (+35 Dependent packages)
 		Upgrade             (  2 Dependent packages)
 
-		Total download size: 19 M
-		Downloading packages:
-		Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
-		(1/38): groff-base-1.22.2-8.el7.x86_64.rpm                                                                            | 942 kB  00:00:00     
-		(2/38): less-458-9.el7.x86_64.rpm                                                                                     | 120 kB  00:00:00     
-		(3/38): libedit-3.0-12.20121213cvs.el7.x86_64.rpm                                                                     |  92 kB  00:00:00     
-		(4/38): git-1.8.3.1-23.el7_8.x86_64.rpm                                                                               | 4.4 MB  00:00:00     
-		(5/38): openssh-7.4p1-22.el7_9.x86_64.rpm                                                                             | 510 kB  00:00:00     
-		(6/38): openssh-clients-7.4p1-22.el7_9.x86_64.rpm                                                                     | 655 kB  00:00:00     
-		(7/38): perl-Carp-1.26-244.el7.noarch.rpm                                                                             |  19 kB  00:00:00     
-		(8/38): perl-Error-0.17020-2.el7.noarch.rpm                                                                           |  32 kB  00:00:00     
-		(9/38): perl-Exporter-5.68-3.el7.noarch.rpm                                                                           |  28 kB  00:00:00     
-		(10/38): perl-File-Path-2.09-2.el7.noarch.rpm                                                                         |  26 kB  00:00:00     
-		(11/38): perl-File-Temp-0.23.01-3.el7.noarch.rpm                                                                      |  56 kB  00:00:00     
-		(12/38): perl-Filter-1.49-3.el7.x86_64.rpm                                                                            |  76 kB  00:00:00     
-		(13/38): openssh-server-7.4p1-22.el7_9.x86_64.rpm                                                                     | 459 kB  00:00:00     
-		(14/38): perl-Getopt-Long-2.40-3.el7.noarch.rpm                                                                       |  56 kB  00:00:00     
-		(15/38): perl-Git-1.8.3.1-23.el7_8.noarch.rpm                                                                         |  56 kB  00:00:00     
-		(16/38): perl-HTTP-Tiny-0.033-3.el7.noarch.rpm                                                                        |  38 kB  00:00:00     
-		(17/38): perl-PathTools-3.40-5.el7.x86_64.rpm                                                                         |  82 kB  00:00:00     
-		(18/38): perl-Pod-Perldoc-3.20-4.el7.noarch.rpm                                                                       |  87 kB  00:00:00     
-		(19/38): perl-Pod-Escapes-1.04-299.el7_9.noarch.rpm                                                                   |  52 kB  00:00:00     
-		(20/38): perl-Pod-Simple-3.28-4.el7.noarch.rpm                                                                        | 216 kB  00:00:00     
-		(21/38): perl-Pod-Usage-1.63-3.el7.noarch.rpm                                                                         |  27 kB  00:00:00     
-		(22/38): perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm                                                               |  36 kB  00:00:00     
-		(23/38): perl-Socket-2.010-5.el7.x86_64.rpm                                                                           |  49 kB  00:00:00     
-		(24/38): perl-Storable-2.45-3.el7.x86_64.rpm                                                                          |  77 kB  00:00:00     
-		(25/38): perl-TermReadKey-2.30-20.el7.x86_64.rpm                                                                      |  31 kB  00:00:00     
-		(26/38): perl-Encode-2.51-7.el7.x86_64.rpm                                                                            | 1.5 MB  00:00:00     
-		(27/38): perl-Text-ParseWords-3.29-4.el7.noarch.rpm                                                                   |  14 kB  00:00:00     
-		(28/38): perl-Time-HiRes-1.9725-3.el7.x86_64.rpm                                                                      |  45 kB  00:00:00     
-		(29/38): perl-Time-Local-1.2300-2.el7.noarch.rpm                                                                      |  24 kB  00:00:00     
-		(30/38): perl-constant-1.27-2.el7.noarch.rpm                                                                          |  19 kB  00:00:00     
-		(31/38): perl-libs-5.16.3-299.el7_9.x86_64.rpm                                                                        | 690 kB  00:00:00     
-		(32/38): perl-parent-0.225-244.el7.noarch.rpm                                                                         |  12 kB  00:00:00     
-		(33/38): perl-threads-1.87-4.el7.x86_64.rpm                                                                           |  49 kB  00:00:00     
-		(34/38): perl-macros-5.16.3-299.el7_9.x86_64.rpm                                                                      |  44 kB  00:00:00     
-		(35/38): perl-threads-shared-1.43-6.el7.x86_64.rpm                                                                    |  39 kB  00:00:00     
-		(36/38): perl-podlators-2.5.1-3.el7.noarch.rpm                                                                        | 112 kB  00:00:00     
-		(37/38): rsync-3.1.2-11.el7_9.x86_64.rpm                                                                              | 408 kB  00:00:00     
-		(38/38): perl-5.16.3-299.el7_9.x86_64.rpm                                                                             | 8.0 MB  00:00:04     
-		---------------------------------------------------------------------------------------------------------------------------------------------
-		Total                                                                                                        3.2 MB/s |  19 MB  00:00:05     
-		Running transaction check
-		Running transaction test
-		Transaction test succeeded
-		Running transaction
-		  Installing : groff-base-1.22.2-8.el7.x86_64                                                                                           1/40 
-		  Updating   : openssh-7.4p1-22.el7_9.x86_64                                                                                            2/40 
-		  Installing : 1:perl-parent-0.225-244.el7.noarch                                                                                       3/40 
-		  Installing : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                                        4/40 
-		  Installing : perl-podlators-2.5.1-3.el7.noarch                                                                                        5/40 
-		  Installing : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                                       6/40 
-		  Installing : 1:perl-Pod-Escapes-1.04-299.el7_9.noarch                                                                                 7/40 
-		  Installing : perl-Encode-2.51-7.el7.x86_64                                                                                            8/40 
-		  Installing : perl-Text-ParseWords-3.29-4.el7.noarch                                                                                   9/40 
-		  Installing : perl-Pod-Usage-1.63-3.el7.noarch                                                                                        10/40 
-		  Installing : 4:perl-macros-5.16.3-299.el7_9.x86_64                                                                                   11/40 
-		  Installing : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                                                   12/40 
-		  Installing : perl-Exporter-5.68-3.el7.noarch                                                                                         13/40 
-		  Installing : perl-constant-1.27-2.el7.noarch                                                                                         14/40 
-		  Installing : perl-Socket-2.010-5.el7.x86_64                                                                                          15/40 
-		  Installing : perl-Time-Local-1.2300-2.el7.noarch                                                                                     16/40 
-		  Installing : perl-Carp-1.26-244.el7.noarch                                                                                           17/40 
-		  Installing : perl-Storable-2.45-3.el7.x86_64                                                                                         18/40 
-		  Installing : perl-PathTools-3.40-5.el7.x86_64                                                                                        19/40 
-		  Installing : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                                              20/40 
-		  Installing : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                                     21/40 
-		  Installing : perl-File-Temp-0.23.01-3.el7.noarch                                                                                     22/40 
-		  Installing : perl-File-Path-2.09-2.el7.noarch                                                                                        23/40 
-		  Installing : perl-threads-shared-1.43-6.el7.x86_64                                                                                   24/40 
-		  Installing : perl-threads-1.87-4.el7.x86_64                                                                                          25/40 
-		  Installing : perl-Filter-1.49-3.el7.x86_64                                                                                           26/40 
-		  Installing : 4:perl-libs-5.16.3-299.el7_9.x86_64                                                                                     27/40 
-		  Installing : perl-Getopt-Long-2.40-3.el7.noarch                                                                                      28/40 
-		  Installing : 4:perl-5.16.3-299.el7_9.x86_64                                                                                          29/40 
-		  Installing : 1:perl-Error-0.17020-2.el7.noarch                                                                                       30/40 
-		  Installing : perl-TermReadKey-2.30-20.el7.x86_64                                                                                     31/40 
-		  Installing : less-458-9.el7.x86_64                                                                                                   32/40 
-		  Installing : libedit-3.0-12.20121213cvs.el7.x86_64                                                                                   33/40 
-		  Installing : openssh-clients-7.4p1-22.el7_9.x86_64                                                                                   34/40 
-		  Installing : rsync-3.1.2-11.el7_9.x86_64                                                                                             35/40 
-		  Installing : perl-Git-1.8.3.1-23.el7_8.noarch                                                                                        36/40 
-		  Installing : git-1.8.3.1-23.el7_8.x86_64                                                                                             37/40 
-		  Updating   : openssh-server-7.4p1-22.el7_9.x86_64                                                                                    38/40 
-		  Cleanup    : openssh-server-7.4p1-21.el7.x86_64                                                                                      39/40 
-		  Cleanup    : openssh-7.4p1-21.el7.x86_64                                                                                             40/40 
-		  Verifying  : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                                        1/40 
-		  Verifying  : perl-threads-shared-1.43-6.el7.x86_64                                                                                    2/40 
-		  Verifying  : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                                                    3/40 
-		  Verifying  : openssh-clients-7.4p1-22.el7_9.x86_64                                                                                    4/40 
-		  Verifying  : perl-Exporter-5.68-3.el7.noarch                                                                                          5/40 
-		  Verifying  : perl-constant-1.27-2.el7.noarch                                                                                          6/40 
-		  Verifying  : perl-PathTools-3.40-5.el7.x86_64                                                                                         7/40 
-		  Verifying  : openssh-7.4p1-22.el7_9.x86_64                                                                                            8/40 
-		  Verifying  : 4:perl-macros-5.16.3-299.el7_9.x86_64                                                                                    9/40 
-		  Verifying  : git-1.8.3.1-23.el7_8.x86_64                                                                                             10/40 
-		  Verifying  : 1:perl-parent-0.225-244.el7.noarch                                                                                      11/40 
-		  Verifying  : perl-Socket-2.010-5.el7.x86_64                                                                                          12/40 
-		  Verifying  : rsync-3.1.2-11.el7_9.x86_64                                                                                             13/40 
-		  Verifying  : perl-TermReadKey-2.30-20.el7.x86_64                                                                                     14/40 
-		  Verifying  : groff-base-1.22.2-8.el7.x86_64                                                                                          15/40 
-		  Verifying  : perl-File-Temp-0.23.01-3.el7.noarch                                                                                     16/40 
-		  Verifying  : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                                     17/40 
-		  Verifying  : perl-Time-Local-1.2300-2.el7.noarch                                                                                     18/40 
-		  Verifying  : 1:perl-Pod-Escapes-1.04-299.el7_9.noarch                                                                                19/40 
-		  Verifying  : perl-Git-1.8.3.1-23.el7_8.noarch                                                                                        20/40 
-		  Verifying  : perl-Carp-1.26-244.el7.noarch                                                                                           21/40 
-		  Verifying  : 1:perl-Error-0.17020-2.el7.noarch                                                                                       22/40 
-		  Verifying  : perl-Storable-2.45-3.el7.x86_64                                                                                         23/40 
-		  Verifying  : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                                              24/40 
-		  Verifying  : perl-Pod-Usage-1.63-3.el7.noarch                                                                                        25/40 
-		  Verifying  : perl-Encode-2.51-7.el7.x86_64                                                                                           26/40 
-		  Verifying  : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                                      27/40 
-		  Verifying  : perl-podlators-2.5.1-3.el7.noarch                                                                                       28/40 
-		  Verifying  : 4:perl-5.16.3-299.el7_9.x86_64                                                                                          29/40 
-		  Verifying  : perl-File-Path-2.09-2.el7.noarch                                                                                        30/40 
-		  Verifying  : libedit-3.0-12.20121213cvs.el7.x86_64                                                                                   31/40 
-		  Verifying  : perl-threads-1.87-4.el7.x86_64                                                                                          32/40 
-		  Verifying  : openssh-server-7.4p1-22.el7_9.x86_64                                                                                    33/40 
-		  Verifying  : perl-Filter-1.49-3.el7.x86_64                                                                                           34/40 
-		  Verifying  : perl-Getopt-Long-2.40-3.el7.noarch                                                                                      35/40 
-		  Verifying  : perl-Text-ParseWords-3.29-4.el7.noarch                                                                                  36/40 
-		  Verifying  : 4:perl-libs-5.16.3-299.el7_9.x86_64                                                                                     37/40 
-		  Verifying  : less-458-9.el7.x86_64                                                                                                   38/40 
-		  Verifying  : openssh-7.4p1-21.el7.x86_64                                                                                             39/40 
-		  Verifying  : openssh-server-7.4p1-21.el7.x86_64                                                                                      40/40 
+		Total download size: 19 M 
 
 		Installed:
 		  git.x86_64 0:1.8.3.1-23.el7_8                                                                                                              
@@ -4284,7 +4158,8 @@ thor@jump_host ~/ansible$ cat ansible.cfg
 
 thor@jump_host ~/ansible$ vi playbook.yml
 
-thor@jump_host ~/ansible$ cat playbook.yml 
+thor@jump_host ~/ansible$ cat playbook.yml
+
 		- name: Install httpd and setup index.html
 		  hosts: stapp01, stapp02, stapp03
 		  become: yes
@@ -4482,132 +4357,6 @@ thor@jump_host ~$ ssh natasha@ststor01
 		Upgrade             (  2 Dependent packages)
 
 		Total download size: 19 M
-		Downloading packages:
-		Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
-		(1/38): groff-base-1.22.2-8.el7.x86_64.rpm                                                                            | 942 kB  00:00:00     
-		(2/38): less-458-9.el7.x86_64.rpm                                                                                     | 120 kB  00:00:00     
-		(3/38): git-1.8.3.1-23.el7_8.x86_64.rpm                                                                               | 4.4 MB  00:00:00     
-		(4/38): libedit-3.0-12.20121213cvs.el7.x86_64.rpm                                                                     |  92 kB  00:00:00     
-		(5/38): openssh-clients-7.4p1-22.el7_9.x86_64.rpm                                                                     | 655 kB  00:00:00     
-		(6/38): openssh-7.4p1-22.el7_9.x86_64.rpm                                                                             | 510 kB  00:00:00     
-		(7/38): openssh-server-7.4p1-22.el7_9.x86_64.rpm                                                                      | 459 kB  00:00:00     
-		(8/38): perl-Carp-1.26-244.el7.noarch.rpm                                                                             |  19 kB  00:00:00     
-		(9/38): perl-Error-0.17020-2.el7.noarch.rpm                                                                           |  32 kB  00:00:00     
-		(10/38): perl-Exporter-5.68-3.el7.noarch.rpm                                                                          |  28 kB  00:00:00     
-		(11/38): perl-File-Path-2.09-2.el7.noarch.rpm                                                                         |  26 kB  00:00:00     
-		(12/38): perl-File-Temp-0.23.01-3.el7.noarch.rpm                                                                      |  56 kB  00:00:00     
-		(13/38): perl-Filter-1.49-3.el7.x86_64.rpm                                                                            |  76 kB  00:00:00     
-		(14/38): perl-Getopt-Long-2.40-3.el7.noarch.rpm                                                                       |  56 kB  00:00:00     
-		(15/38): perl-Git-1.8.3.1-23.el7_8.noarch.rpm                                                                         |  56 kB  00:00:00     
-		(16/38): perl-HTTP-Tiny-0.033-3.el7.noarch.rpm                                                                        |  38 kB  00:00:00     
-		(17/38): perl-Pod-Escapes-1.04-299.el7_9.noarch.rpm                                                                   |  52 kB  00:00:00     
-		(18/38): perl-Encode-2.51-7.el7.x86_64.rpm                                                                            | 1.5 MB  00:00:00     
-		(19/38): perl-PathTools-3.40-5.el7.x86_64.rpm                                                                         |  82 kB  00:00:00     
-		(20/38): perl-Pod-Perldoc-3.20-4.el7.noarch.rpm                                                                       |  87 kB  00:00:00     
-		(21/38): perl-Pod-Simple-3.28-4.el7.noarch.rpm                                                                        | 216 kB  00:00:00     
-		(22/38): perl-Pod-Usage-1.63-3.el7.noarch.rpm                                                                         |  27 kB  00:00:00     
-		(23/38): perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm                                                               |  36 kB  00:00:00     
-		(24/38): perl-Socket-2.010-5.el7.x86_64.rpm                                                                           |  49 kB  00:00:00     
-		(25/38): perl-Storable-2.45-3.el7.x86_64.rpm                                                                          |  77 kB  00:00:00     
-		(26/38): perl-TermReadKey-2.30-20.el7.x86_64.rpm                                                                      |  31 kB  00:00:00     
-		(27/38): perl-Text-ParseWords-3.29-4.el7.noarch.rpm                                                                   |  14 kB  00:00:00     
-		(28/38): perl-Time-HiRes-1.9725-3.el7.x86_64.rpm                                                                      |  45 kB  00:00:00     
-		(29/38): perl-Time-Local-1.2300-2.el7.noarch.rpm                                                                      |  24 kB  00:00:00     
-		(30/38): perl-constant-1.27-2.el7.noarch.rpm                                                                          |  19 kB  00:00:00     
-		(31/38): perl-libs-5.16.3-299.el7_9.x86_64.rpm                                                                        | 690 kB  00:00:00     
-		(32/38): perl-macros-5.16.3-299.el7_9.x86_64.rpm                                                                      |  44 kB  00:00:00     
-		(33/38): perl-parent-0.225-244.el7.noarch.rpm                                                                         |  12 kB  00:00:00     
-		(34/38): perl-threads-1.87-4.el7.x86_64.rpm                                                                           |  49 kB  00:00:00     
-		(35/38): perl-threads-shared-1.43-6.el7.x86_64.rpm                                                                    |  39 kB  00:00:00     
-		(36/38): rsync-3.1.2-12.el7_9.x86_64.rpm                                                                              | 408 kB  00:00:00     
-		(37/38): perl-podlators-2.5.1-3.el7.noarch.rpm                                                                        | 112 kB  00:00:00     
-		(38/38): perl-5.16.3-299.el7_9.x86_64.rpm                                                                             | 8.0 MB  00:00:00     
-		---------------------------------------------------------------------------------------------------------------------------------------------
-		Total                                                                                                         15 MB/s |  19 MB  00:00:01     
-		Running transaction check
-		Running transaction test
-		Transaction test succeeded
-		Running transaction
-		  Installing : groff-base-1.22.2-8.el7.x86_64                                                                                           1/40 
-		  Updating   : openssh-7.4p1-22.el7_9.x86_64                                                                                            2/40 
-		  Installing : 1:perl-parent-0.225-244.el7.noarch                                                                                       3/40 
-		  Installing : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                                        4/40 
-		  Installing : perl-podlators-2.5.1-3.el7.noarch                                                                                        5/40 
-		  Installing : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                                       6/40 
-		  Installing : 1:perl-Pod-Escapes-1.04-299.el7_9.noarch                                                                                 7/40 
-		  Installing : perl-Encode-2.51-7.el7.x86_64                                                                                            8/40 
-		  Installing : perl-Text-ParseWords-3.29-4.el7.noarch                                                                                   9/40 
-		  Installing : perl-Pod-Usage-1.63-3.el7.noarch                                                                                        10/40 
-		  Installing : 4:perl-macros-5.16.3-299.el7_9.x86_64                                                                                   11/40 
-		  Installing : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                                                   12/40 
-		  Installing : perl-Exporter-5.68-3.el7.noarch                                                                                         13/40 
-		  Installing : perl-constant-1.27-2.el7.noarch                                                                                         14/40 
-		  Installing : perl-Socket-2.010-5.el7.x86_64                                                                                          15/40 
-		  Installing : perl-Time-Local-1.2300-2.el7.noarch                                                                                     16/40 
-		  Installing : perl-Carp-1.26-244.el7.noarch                                                                                           17/40 
-		  Installing : perl-Storable-2.45-3.el7.x86_64                                                                                         18/40 
-		  Installing : perl-PathTools-3.40-5.el7.x86_64                                                                                        19/40 
-		  Installing : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                                              20/40 
-		  Installing : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                                     21/40 
-		  Installing : perl-File-Temp-0.23.01-3.el7.noarch                                                                                     22/40 
-		  Installing : perl-File-Path-2.09-2.el7.noarch                                                                                        23/40 
-		  Installing : perl-threads-shared-1.43-6.el7.x86_64                                                                                   24/40 
-		  Installing : perl-threads-1.87-4.el7.x86_64                                                                                          25/40 
-		  Installing : perl-Filter-1.49-3.el7.x86_64                                                                                           26/40 
-		  Installing : 4:perl-libs-5.16.3-299.el7_9.x86_64                                                                                     27/40 
-		  Installing : perl-Getopt-Long-2.40-3.el7.noarch                                                                                      28/40 
-		  Installing : 4:perl-5.16.3-299.el7_9.x86_64                                                                                          29/40 
-		  Installing : 1:perl-Error-0.17020-2.el7.noarch                                                                                       30/40 
-		  Installing : perl-TermReadKey-2.30-20.el7.x86_64                                                                                     31/40 
-		  Installing : less-458-9.el7.x86_64                                                                                                   32/40 
-		  Installing : libedit-3.0-12.20121213cvs.el7.x86_64                                                                                   33/40 
-		  Installing : openssh-clients-7.4p1-22.el7_9.x86_64                                                                                   34/40 
-		  Installing : rsync-3.1.2-12.el7_9.x86_64                                                                                             35/40 
-		  Installing : perl-Git-1.8.3.1-23.el7_8.noarch                                                                                        36/40 
-		  Installing : git-1.8.3.1-23.el7_8.x86_64                                                                                             37/40 
-		  Updating   : openssh-server-7.4p1-22.el7_9.x86_64                                                                                    38/40 
-		  Cleanup    : openssh-server-7.4p1-21.el7.x86_64                                                                                      39/40 
-		  Cleanup    : openssh-7.4p1-21.el7.x86_64                                                                                             40/40 
-		  Verifying  : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                                        1/40 
-		  Verifying  : rsync-3.1.2-12.el7_9.x86_64                                                                                              2/40 
-		  Verifying  : perl-threads-shared-1.43-6.el7.x86_64                                                                                    3/40 
-		  Verifying  : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                                                    4/40 
-		  Verifying  : openssh-clients-7.4p1-22.el7_9.x86_64                                                                                    5/40 
-		  Verifying  : perl-Exporter-5.68-3.el7.noarch                                                                                          6/40 
-		  Verifying  : perl-constant-1.27-2.el7.noarch                                                                                          7/40 
-		  Verifying  : perl-PathTools-3.40-5.el7.x86_64                                                                                         8/40 
-		  Verifying  : openssh-7.4p1-22.el7_9.x86_64                                                                                            9/40 
-		  Verifying  : 4:perl-macros-5.16.3-299.el7_9.x86_64                                                                                   10/40 
-		  Verifying  : git-1.8.3.1-23.el7_8.x86_64                                                                                             11/40 
-		  Verifying  : 1:perl-parent-0.225-244.el7.noarch                                                                                      12/40 
-		  Verifying  : perl-Socket-2.010-5.el7.x86_64                                                                                          13/40 
-		  Verifying  : perl-TermReadKey-2.30-20.el7.x86_64                                                                                     14/40 
-		  Verifying  : groff-base-1.22.2-8.el7.x86_64                                                                                          15/40 
-		  Verifying  : perl-File-Temp-0.23.01-3.el7.noarch                                                                                     16/40 
-		  Verifying  : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                                     17/40 
-		  Verifying  : perl-Time-Local-1.2300-2.el7.noarch                                                                                     18/40 
-		  Verifying  : 1:perl-Pod-Escapes-1.04-299.el7_9.noarch                                                                                19/40 
-		  Verifying  : perl-Git-1.8.3.1-23.el7_8.noarch                                                                                        20/40 
-		  Verifying  : perl-Carp-1.26-244.el7.noarch                                                                                           21/40 
-		  Verifying  : 1:perl-Error-0.17020-2.el7.noarch                                                                                       22/40 
-		  Verifying  : perl-Storable-2.45-3.el7.x86_64                                                                                         23/40 
-		  Verifying  : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                                              24/40 
-		  Verifying  : perl-Pod-Usage-1.63-3.el7.noarch                                                                                        25/40 
-		  Verifying  : perl-Encode-2.51-7.el7.x86_64                                                                                           26/40 
-		  Verifying  : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                                      27/40 
-		  Verifying  : perl-podlators-2.5.1-3.el7.noarch                                                                                       28/40 
-		  Verifying  : 4:perl-5.16.3-299.el7_9.x86_64                                                                                          29/40 
-		  Verifying  : perl-File-Path-2.09-2.el7.noarch                                                                                        30/40 
-		  Verifying  : libedit-3.0-12.20121213cvs.el7.x86_64                                                                                   31/40 
-		  Verifying  : perl-threads-1.87-4.el7.x86_64                                                                                          32/40 
-		  Verifying  : openssh-server-7.4p1-22.el7_9.x86_64                                                                                    33/40 
-		  Verifying  : perl-Filter-1.49-3.el7.x86_64                                                                                           34/40 
-		  Verifying  : perl-Getopt-Long-2.40-3.el7.noarch                                                                                      35/40 
-		  Verifying  : perl-Text-ParseWords-3.29-4.el7.noarch                                                                                  36/40 
-		  Verifying  : 4:perl-libs-5.16.3-299.el7_9.x86_64                                                                                     37/40 
-		  Verifying  : less-458-9.el7.x86_64                                                                                                   38/40 
-		  Verifying  : openssh-7.4p1-21.el7.x86_64                                                                                             39/40 
-		  Verifying  : openssh-server-7.4p1-21.el7.x86_64                                                                                      40/40 
 
 		Installed:
 		  git.x86_64 0:1.8.3.1-23.el7_8                                                                                                              
@@ -4953,6 +4702,7 @@ thor@jump_host ~$ cat /tmp/nginx.yaml |grep mountPath
 thor@jump_host ~$ vi /tmp/nginx.yaml 
 
 thor@jump_host ~$ cat /tmp/nginx.yaml |grep mountPath
+
       {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"app":"php-app"},"name":"nginx-phpfpm","namespace":"default"},"spec":{"containers":[{"image":"php:7.2-fpm","name":"php-fpm-container","volumeMounts":[{"mountPath":"/var/www/html","name":"shared-files"}]},{"image":"nginx:latest","name":"nginx-container","volumeMounts":[{"mountPath":"/var/www/html","name":"shared-files"},{"mountPath":"/etc/nginx/nginx.conf","name":"nginx-config-volume","subPath":"nginx.conf"}]}],"volumes":[{"emptyDir":{},"name":"shared-files"},{"configMap":{"name":"nginx-config"},"name":"nginx-config-volume"}]}}
               k:{"mountPath":"/etc/nginx/nginx.conf"}:
                 f:mountPath: {}
